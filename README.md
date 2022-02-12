@@ -2,3 +2,6 @@
 
 Team project ideas discussed here!
 Our ideas for the android app...
+
+Resources used:
+storyboard - https://app.milanote.com/
