@@ -10,3 +10,5 @@ Resources used:
 storyboard - https://app.milanote.com/
 CRC cards - https://www.edrawsoft.com/crc-card-software.html
 
+Assumptions:
+    -please download the storyboard pdf to view it since it is blurry on github
