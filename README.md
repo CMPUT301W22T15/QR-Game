@@ -18,7 +18,8 @@ ProjectBacklog:
     - US 06.01.01
 
 StoryBoard:
-- please download the storyboard pdf to view it since it is blurry on github
+- Please download the storyboard pdf to view it since it is blurry on github
+
 
 Resources used:
 - Storyboard - https://app.milanote.com/
