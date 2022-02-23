@@ -61,6 +61,7 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
         super.onPause();
         scannerView.stopCamera();
     }
+    
 
     @Override
     protected void onResume() {
