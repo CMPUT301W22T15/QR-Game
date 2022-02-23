@@ -36,6 +36,10 @@ public class ScannerView extends AppCompatActivity {
     CodeScannerView scannerView;
     TextView resultData;
 
+    /**
+     * This method creates the inital interface and obtains the necessary permissions
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +59,9 @@ public class ScannerView extends AppCompatActivity {
                     public void run() {
                         resultData.setText(result.getText());
                         Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
-//                        intent.putExtra("result", result.getText());
-//                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
+                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
+                        intent.putExtra("result", result.getText());
+                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
                     }
                 });
             }
@@ -73,8 +77,9 @@ public class ScannerView extends AppCompatActivity {
         });
     }
 
-
-
+    /**
+     * Overwritten to start camera and search for codes to scan
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -89,16 +94,19 @@ public class ScannerView extends AppCompatActivity {
      */
     private void requestForCamera(){
         Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+            // If permission is granted, then open camera
             @Override
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                 codeScanner.startPreview();
             }
 
+            // If permission is denied, warn user that it is required
             @Override
             public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
                 Toast.makeText(ScannerView.this, "Camera Permission is Required", Toast.LENGTH_SHORT).show();
             }
 
+            // Display permission
             @Override
             public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
                 permissionToken.continuePermissionRequest();

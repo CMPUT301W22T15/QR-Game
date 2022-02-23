@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ScannerView">
 
+    <!-- Information regarding scanner interface was obtained from
+        Video By: SmallAcademy
+        Date: Nov. 10, 2019
+        URL: https://youtu.be/Iuj4CuWjYF8 -->
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/scanner_view"
         android:layout_width="match_parent"

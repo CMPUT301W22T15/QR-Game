@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <!-- TextView id: test_text and Button id: scan
+         Were created for the purposes of testing ScannerView and
+         may later be removed -->
     <TextView
         android:id="@+id/test_text"
         android:layout_width="wrap_content"

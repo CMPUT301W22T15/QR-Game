@@ -13,7 +13,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
+/**
+ * This class is responsible for editing details about the scanned code
+ * It allows user to either take a photo of the object or track geolocation
+ * Displays score obtained from the code
+ * Users can also comment on the image
+ */
 public class QRCodeEditor extends AppCompatActivity {
     // Initialize variables
     TextView newScan;
@@ -42,23 +47,23 @@ public class QRCodeEditor extends AppCompatActivity {
         Intent intent = this.getIntent();
         String name = getIntent().getStringExtra("result");
 
-        // Hash Key
-        MessageDigest message = null;
-        try {
-            message = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+//        // Hash Key
+//        MessageDigest message = null;
+//        try {
+//            message = MessageDigest.getInstance("SHA-256");
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        byte[]hashInBytes = message.digest(name.getBytes(StandardCharsets.UTF_8));
+//
+//        //bytes to hex
+//        StringBuilder key = new StringBuilder();
+//        for (byte b : hashInBytes) {
+//            key.append(String.format("%02x", b));
         }
-        byte[]hashInBytes = message.digest(name.getBytes(StandardCharsets.UTF_8));
-
-        //bytes to hex
-        StringBuilder key = new StringBuilder();
-        for (byte b : hashInBytes) {
-            key.append(String.format("%02x", b));
-        }
 
 
-    }
+
 
     private View.OnClickListener saveQRCodeData() {
         return new View.OnClickListener() {

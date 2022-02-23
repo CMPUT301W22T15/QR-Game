@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    // All code seen here that relates to ScannerView was added for purposes of testing and may later be removed
     static TextView testText;
 
     @Override
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ScannerView2.class));
+                startActivity(new Intent(getApplicationContext(), ScannerView.class));
             }
         });
     }
