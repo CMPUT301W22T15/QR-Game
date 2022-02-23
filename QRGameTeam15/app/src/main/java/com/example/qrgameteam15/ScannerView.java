@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
  * Ensures that users grant camera permission prior to use
  */
 
-// The concept of this class was obtained from the following video:
+// The concept of scanning and creating this class was obtained from the following video:
     // Video By: SmallAcademy
     // Date: Nov. 10, 2019
     // URL: https://youtu.be/Iuj4CuWjYF8
@@ -43,6 +44,7 @@ public class ScannerView extends AppCompatActivity {
         // Set variable data
         scannerView = findViewById(R.id.scanner_view);
         codeScanner = new CodeScanner(this, scannerView);
+        resultData = findViewById(R.id.code_result);
 
         // Decode data from QR code
         codeScanner.setDecodeCallback(new DecodeCallback() {
@@ -52,6 +54,10 @@ public class ScannerView extends AppCompatActivity {
                     @Override
                     public void run() {
                         resultData.setText(result.getText());
+                        Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
+//                        intent.putExtra("result", result.getText());
+//                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
                     }
                 });
             }
