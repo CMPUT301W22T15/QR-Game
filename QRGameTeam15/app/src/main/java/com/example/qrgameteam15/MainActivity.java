@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         // This button is just here for testing, it should later be moved to User Menu
         Button scanButton = (Button) findViewById(R.id.scan);
+        // moved it here
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Players");
 
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Access a Cloud FireStore instance from Activity
-                db = FirebaseFirestore.getInstance();
-                final CollectionReference collectionReference = db.collection("Players");
+
 
                 final String userName = addUserNameText.getText().toString();
                 final String score = addScore.getText().toString();
@@ -101,20 +103,26 @@ public class MainActivity extends AppCompatActivity {
                 addUserNameText.setText("");
                 addScore.setText("");
 
-                collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                        //Clear the old list
-                        playerDataList.clear();
-                        for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
-                            Log.d(TAG, String.valueOf(doc.getData().get("score")));
-                            String user = doc.getId();
-                            String score = (String) doc.getData().get("score");
-                            playerDataList.add(new Player(user,score));
-                        }
-                        playerAdapter.notifyDataSetChanged();
-                    }
-                });
+
+            }
+        });
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.d(TAG, "ERROR: " + error.getMessage());
+                    return;
+                }
+
+                //Clear the old list
+                playerDataList.clear();
+                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
+                    Log.d(TAG, String.valueOf(doc.getData().get("score")));
+                    String user = doc.getId();
+                    String score = (String) doc.getData().get("score");
+                    playerDataList.add(new Player(user,score));
+                }
+                playerAdapter.notifyDataSetChanged();
             }
         });
     }
