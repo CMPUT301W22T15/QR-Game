@@ -1,6 +1,6 @@
 package com.example.qrgameteam15;
 
-public class Player{
+public class Player {
     private String username;
     //private static Collection<QRCode> qrCodes;
     private String score;
@@ -16,7 +16,7 @@ public class Player{
     }
 
     //public static Collection<QRCode> getQrCodes() {
-        //return qrCodes;
+    //return qrCodes;
     //}
 
     public String getScore() {
