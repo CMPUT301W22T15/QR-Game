@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         // This button is just here for testing, it should later be moved to User Menu
         Button scanButton = (Button) findViewById(R.id.scan);
         // moved it here
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("Players");
+
 
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +70,13 @@ public class MainActivity extends AppCompatActivity {
         playerAdapter = new CustomList(this, playerDataList);
         playerList.setAdapter(playerAdapter);
 
+        // Access a Cloud FireStore instance from Activity
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Players");
+
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Access a Cloud FireStore instance from Activity
-
 
                 final String userName = addUserNameText.getText().toString();
                 final String score = addScore.getText().toString();
@@ -103,16 +104,12 @@ public class MainActivity extends AppCompatActivity {
                 addUserNameText.setText("");
                 addScore.setText("");
 
-
             }
         });
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.d(TAG, "ERROR: " + error.getMessage());
-                    return;
-                }
+
 
                 //Clear the old list
                 playerDataList.clear();
