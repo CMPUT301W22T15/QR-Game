@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 final String score = addScore.getText().toString();
 
                 HashMap<String,String> data = new HashMap<>();
+                HashMap<String, Object>jsonData = new HashMap<>();
 
                 data.put("score", score);
-
+                //collectionReference.document(userName).update("scannedcodes", FieldValue.arrayUnion(score));
                 collectionReference
                         .document(userName)
                         .set(data)
@@ -100,7 +103,9 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d(TAG,"Data could not be added!" + e.toString());
                             }
                         });
-
+                // add scannedcodes: ["array", "nano"]
+                collectionReference.document(userName).update("scannedcodes", FieldValue.arrayUnion("array"));
+                collectionReference.document(userName).update("scannedcodes", FieldValue.arrayUnion("nano"));
                 addUserNameText.setText("");
                 addScore.setText("");
 
@@ -118,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
                     String user = doc.getId();
                     String score = (String) doc.getData().get("score");
                     playerDataList.add(new Player(user,score));
+                    // ACCESS the "scannedcoes" array element
+                    List<String> scannedCOdes = (List<String>) (doc.getData().get("scannedcodes"));
+                    for (int i = 0; i < scannedCOdes.size(); i++) {
+                        Log.d(TAG, scannedCOdes.get(i));
+                    }
                 }
                 playerAdapter.notifyDataSetChanged();
             }

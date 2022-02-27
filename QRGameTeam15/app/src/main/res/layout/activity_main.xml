@@ -19,14 +19,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="318dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
         <EditText
             android:id="@+id/score"
-            android:layout_width="62dp"
+            android:layout_width="115dp"
             android:layout_height="match_parent"
             android:ems="8"
             android:hint="Add Score">
@@ -35,13 +35,13 @@
 
         <Button
             android:id="@+id/scan"
-            android:layout_width="77dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Scan" />
 
         <Button
             android:id="@+id/addPlayer"
-            android:layout_width="97dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="addPlayer" />
 
