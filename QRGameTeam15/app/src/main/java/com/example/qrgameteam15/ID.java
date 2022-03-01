@@ -1,14 +1,30 @@
 package com.example.qrgameteam15;
 
-public class ID {
-    private String username;
-    private String hashedID;  // hashed ID to make it unique
 
-    public ID(String username) {
-        this.username = username;
-        //hashedID =
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+// ID FOR QRCODE
+public class ID {
+    private String name;
+    private String hashedID;  // hashed ID to make it unique(hash it with)
+    private String locationStr;
+
+
+    public ID(String name, String location) {
+        this.name = name;
+        this.locationStr = location;
+        hashedID = name +  "-" + this.locationStr;
     }
-    public String getUsername() {
-        return this.username;
+
+    public String getName() {
+        return this.name;
+    }
+
+
+    public String getHashedID() {
+        return this.hashedID;
     }
 }
