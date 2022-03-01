@@ -16,7 +16,7 @@ public class ID {
     public ID(String name, String location) {
         this.name = name;
         this.locationStr = location;
-        hashedID = name + this.locationStr;
+        hashedID = name +  "-" + this.locationStr;
     }
 
     public String getName() {
