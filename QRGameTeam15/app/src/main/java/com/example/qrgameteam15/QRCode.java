@@ -7,12 +7,14 @@ public class QRCode {
     Date date;
     String key;
     int score;
+    ID id;
 
     // Constructor
     public QRCode(String key) {
         this.key = key;
         this.date = new Date();
         this.score = 0; // Add a method to calculate score
+        id = new ID(key);
     }
 
     // Getters and Setters

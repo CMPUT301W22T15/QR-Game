@@ -108,14 +108,11 @@ public class MainActivity extends AppCompatActivity {
                 collectionReference.document(userName).update("scannedcodes", FieldValue.arrayUnion("nano"));
                 addUserNameText.setText("");
                 addScore.setText("");
-
             }
         });
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-
-
                 //Clear the old list
                 playerDataList.clear();
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
