@@ -18,7 +18,7 @@ public class IDtest {
     @Test
     public void constructorTest() {
         String name = "helloworld";
-        ID id = new ID(name);
+        ID id = new ID(name, "edmonton");
         System.out.printf("name = %s, hashed=%s", id.getName(), id.getHashedID());
         assertEquals(0, 0);
     }

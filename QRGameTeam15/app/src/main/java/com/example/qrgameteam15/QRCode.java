@@ -10,11 +10,11 @@ public class QRCode {
     ID id;
 
     // Constructor
-    public QRCode(String key) {
+    public QRCode(String key, String location) {
         this.key = key;
         this.date = new Date();
         this.score = 0; // Add a method to calculate score
-        id = new ID(key);
+        id = new ID(key, location);
     }
 
     // Getters and Setters

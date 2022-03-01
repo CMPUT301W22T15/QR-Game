@@ -9,15 +9,14 @@ import java.util.Date;
 // ID FOR QRCODE
 public class ID {
     private String name;
-    private String hashedID;  // hashed ID to make it unique(hash it with
+    private String hashedID;  // hashed ID to make it unique(hash it with)
+    private String locationStr;
 
 
-    public ID(String name) {
+    public ID(String name, String location) {
         this.name = name;
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
-        hashedID = name + strDate;
+        this.locationStr = location;
+        hashedID = name + this.locationStr;
     }
 
     public String getName() {
