@@ -74,7 +74,7 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
      */
     @Override
     public void handleResult(Result rawResult) {
-        MainActivity.playerName.setText(rawResult.getText());
+        TakePhoto.playerName.setText(rawResult.getText());
         Toast.makeText(ScannerView2.this, rawResult.getText(), Toast.LENGTH_SHORT).show();
         System.out.print(rawResult.getText());
         onBackPressed();
