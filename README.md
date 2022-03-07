@@ -27,6 +27,7 @@ Resources used:
 - CRC cards - https://www.edrawsoft.com/crc-card-software.html
 
 
+
 #Project Part 3: Half-way CheckPoint 
 
 Stories that are fully completed:
