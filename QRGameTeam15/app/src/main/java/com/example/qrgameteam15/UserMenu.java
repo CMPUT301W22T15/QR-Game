@@ -16,36 +16,24 @@ import java.util.Arrays;
 
 public class UserMenu extends AppCompatActivity {
     ListView menuList;
-    EditText newName;
-    //LinearLayout nameField;
+    //EditText menuItem;
     ArrayAdapter<String> menuAdapter;
-    ArrayList<String> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_menu);
-
-        //nameField = findViewById(R.id.field_nameEntry);
-        newName  = findViewById(R.id.editText1_name);
+        //menuItem = findViewById(R.id.menu_nameEntry);
 
         menuList = findViewById(R.id.userMenu_list);
-
-        String []menuOptions ={"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List"};
-
-        dataList = new ArrayList<>();
-
-        dataList.addAll(Arrays.asList(menuOptions));
-
-        menuAdapter = new ArrayAdapter<>(this, R.layout.content, dataList);
-
-
+        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List"};
+        menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);
-
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //String menuOption = dataList.get(position);
+                /** To do ... call different activities when any menu item is clicked... so far only scan
+                 * new code has been implemented */
                 if (position == 0) {
 
                 } else if (position == 1) {
