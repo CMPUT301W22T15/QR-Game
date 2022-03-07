@@ -37,11 +37,11 @@ public class UserMenu extends AppCompatActivity {
                 if (position == 0) {
 
                 } else if (position == 1) {
+
+                } else if (position == 2) {
                     Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
                     intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
-                } else if (position == 2) {
-
                 } else if (position == 3) {
 
                 } else if (position == 4) {
