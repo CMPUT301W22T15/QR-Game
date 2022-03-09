@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 
 public class NewUser extends AppCompatActivity {
+    SingletonPlayer singletonPlayer = new SingletonPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class NewUser extends AppCompatActivity {
 
                     }
                 });
-
+        singletonPlayer.player.setUsername(username);
         collectionReference.document(username).update("scannedcodes", FieldValue.arrayUnion("array"));
         usernameEdit.setText("");
 

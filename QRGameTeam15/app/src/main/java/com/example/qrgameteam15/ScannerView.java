@@ -43,7 +43,7 @@ public class ScannerView extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannerView;
     TextView resultData;
-    SingletonPlayer singletonPlayer;
+    SingletonPlayer singletonPlayer = new SingletonPlayer();
     FirebaseFirestore db;
 
 
@@ -73,17 +73,20 @@ public class ScannerView extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        resultData.setText(result.getText());
+                        //resultData.setText(result.getText());
                         Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
 
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO add the location string
+
+                        // ---------------------------------------
                         singletonPlayer.player.addQrcode(qrcode);
-
-                        String TAG = "tag";
-
+                        // ----------------------------------------
+                        String TAG = "tag_LOG";
+                        HashMap<String, Integer> scoreData = new HashMap<>();
+                        scoreData.put("score", qrcode.score);
                         collectionReferenceQR
                                 .document(qrcode.id.getHashedID())
-                                .set(qrcode.score)
+                                .set(scoreData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {

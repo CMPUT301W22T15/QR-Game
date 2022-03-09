@@ -50,7 +50,7 @@ public class UserMenu extends AppCompatActivity {
 
                 } else if (position == 1) {
 
-                    Intent intent = new Intent(getApplicationContext(), ScannerView2.class);
+                    Intent intent = new Intent(getApplicationContext(), ScannerView.class);
                     intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 2) {
