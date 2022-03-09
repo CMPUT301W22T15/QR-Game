@@ -47,8 +47,8 @@ public class NewUser extends AppCompatActivity {
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
-        HashMap<String,String> data = new HashMap<>();
-        data.put("score", "0");
+        HashMap<String,Integer> data = new HashMap<>();
+        data.put("score", 0);
 
         // create new document
         collectionReference

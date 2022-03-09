@@ -109,13 +109,14 @@ public class ScannerView extends AppCompatActivity {
                                 scannedcodes: [code1msg, code2msg, ,,,,]
                                 scannedcodesHash: [code1Hash, code2Hash, ...]
                                 Dates: [code1Date, code2Date, ....]    // TODO: not yet done this
-                                scocire: integer
+                                score: integer
                         }
-
                         */
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodes", FieldValue.arrayUnion(result.getText()));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodesHash", FieldValue.arrayUnion(qrcode.getID()));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("Dates", FieldValue.arrayUnion("none"));
+
+
 
 //                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
 //                        intent.putExtra("result", result.getText());
