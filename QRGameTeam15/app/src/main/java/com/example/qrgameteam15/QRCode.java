@@ -37,7 +37,7 @@ public class QRCode {
             System.err.println("Constructor in QRCode error, sha-256 no such algorithm exception");
         }
         // -------------------------------------------
-        id = new ID(key, sha256Hex);
+        id = new ID(this.sha256Hex, location);
     }
 
     // Getters and Setters
