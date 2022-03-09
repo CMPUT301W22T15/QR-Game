@@ -2,6 +2,7 @@
 
 ##PLEASE READ THE FILE##
 
+#Project Part 2: Preparation
 
 ProjectBacklog:
 - Created an issue for each user story. 
@@ -24,3 +25,39 @@ StoryBoard:
 Resources used:
 - Storyboard - https://app.milanote.com/
 - CRC cards - https://www.edrawsoft.com/crc-card-software.html
+
+
+
+#Project Part 3: Half-way CheckPoint 
+
+Stories that are fully completed:
+- Player:
+    - None 
+- Game QR code:
+    - None
+- Searching:
+    - None
+- Location:
+    - None
+
+Stories that are work in progress:
+- Player:
+    - US 01.01.01 (In progress with database)
+    - US 01.02.01 (In progress with database)
+    - US 01.03.01 (In progress with database)
+- Game QR code:
+    - US 02.01.01 (Add the feature of "record a photo of the location or object, and the geolocation of the location or object")
+- Searching:
+    - None
+- Location:
+    - US 06.01.01 (Initialized variable must be implemented)
+
+Stories that have not been started:
+- Player:
+    - US 01.04.01 - US 01.07.01 
+- Game QR code:
+    - US 02.02.01 - US 02.05.01
+- Searching:
+    - US 05.01.01 - US 05.02.01
+- Location:
+    - None

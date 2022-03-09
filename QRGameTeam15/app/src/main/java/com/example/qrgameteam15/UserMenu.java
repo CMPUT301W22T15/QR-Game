@@ -28,11 +28,13 @@ public class UserMenu extends AppCompatActivity {
     ArrayAdapter<String> menuAdapter;
     FirebaseFirestore db;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_menu);
         //menuItem = findViewById(R.id.menu_nameEntry);
+
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReferenceQR = db.collection("QRCodes");
@@ -50,11 +52,14 @@ public class UserMenu extends AppCompatActivity {
 
                 } else if (position == 1) {
 
+
                     Intent intent = new Intent(getApplicationContext(), ScannerView.class);
+
+                } else if (position == 2) {
+                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+
                     intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
-                } else if (position == 2) {
-
                 } else if (position == 3) {
 
                 } else if (position == 4) {
