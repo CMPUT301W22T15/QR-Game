@@ -1,5 +1,6 @@
 package com.example.qrgameteam15;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,19 +12,32 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class UserMenu extends AppCompatActivity {
     ListView menuList;
     //EditText menuItem;
     ArrayAdapter<String> menuAdapter;
+    FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_menu);
         //menuItem = findViewById(R.id.menu_nameEntry);
+
+        // Access a Cloud FireStore instance from Activity
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
         menuList = findViewById(R.id.userMenu_list);
         String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List"};
@@ -38,8 +52,12 @@ public class UserMenu extends AppCompatActivity {
 
                 } else if (position == 1) {
 
+
+                    Intent intent = new Intent(getApplicationContext(), ScannerView.class);
+
                 } else if (position == 2) {
                     Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+
                     intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 3) {
