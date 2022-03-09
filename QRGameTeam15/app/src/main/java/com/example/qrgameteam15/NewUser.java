@@ -9,6 +9,10 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class NewUser extends AppCompatActivity {
 
     @Override
@@ -28,8 +32,19 @@ public class NewUser extends AppCompatActivity {
         String email = emailEdit.getText().toString();
         EditText cityEdit = (EditText) findViewById(R.id.city_region);
         String cityRegion = cityEdit.getText().toString();
+
+
+        FirebaseFirestore db;
+        // Access a Cloud FireStore instance from Activity
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Players");
+
+        // create new document
+        collectionReference.document(username);
+
         Intent intent = new Intent(getApplicationContext(), UserMenu.class);
         intent.putExtra("userMenu_act", (String) null);
         startActivity(intent);
     }
+
 }
