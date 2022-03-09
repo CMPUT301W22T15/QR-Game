@@ -76,7 +76,7 @@ public class ScannerView extends AppCompatActivity {
                         //resultData.setText(result.getText());
                         Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
 
-                        QRCode qrcode = new QRCode(result.getText(),""); //TODO add the location string
+                        QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
 
                         // ---------------------------------------
                         singletonPlayer.player.addQrcode(qrcode);
@@ -85,7 +85,7 @@ public class ScannerView extends AppCompatActivity {
                         HashMap<String, Integer> scoreData = new HashMap<>();
                         scoreData.put("score", qrcode.score);
                         collectionReferenceQR
-                                .document(qrcode.id.getHashedID())
+                                .document(qrcode.getID())
                                 .set(scoreData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

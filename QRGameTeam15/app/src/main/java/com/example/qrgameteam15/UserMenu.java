@@ -51,9 +51,8 @@ public class UserMenu extends AppCompatActivity {
                 if (position == 0) {
 
                 } else if (position == 1) {
-
-
                     Intent intent = new Intent(getApplicationContext(), ScannerView.class);
+                    startActivity(intent);
 
                 } else if (position == 2) {
                     Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
