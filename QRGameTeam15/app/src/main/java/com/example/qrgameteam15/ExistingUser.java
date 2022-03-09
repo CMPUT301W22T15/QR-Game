@@ -14,7 +14,12 @@ public class ExistingUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_user);
     }
-    /** Called when the user taps the login button */
+    /**
+     * This method is called when the user taps the Log In button, and it opens the user menu activity 
+     * if the user successfully logs in.
+     * @param view
+     * Expects an object from the View class
+     */
     public void login(View view) {
         /** To do.. verify it is a valid user */
         EditText usernameEdit = (EditText) findViewById(R.id.username1_text);

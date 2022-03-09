@@ -35,15 +35,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    /** Called when the user taps the New User button */
+    /**
+     * This method is called when the user taps the New User button, and it opens a new activity corresponding
+     * to the new user sign up.
+     * @param view
+     * Expects an object from the View class
+     */
     public void newUser(View view) {
         Intent intent = new Intent(getApplicationContext(), NewUser.class);
         intent.putExtra("newUser_info", (String) null);
         startActivity(intent);
     }
-
-    /** Called when the user taps the Sign In button */
+    /**
+     * This method is called when the user taps the Sign In button, and it opens a new activity corresponding
+     * to the user sign in.
+     * @param view
+     * Expects an object from the View class
+     */
     public void SignIn(View view) {
         Intent intent = new Intent(getApplicationContext(), ExistingUser.class);
         intent.putExtra("userLogin_info", (String) null);

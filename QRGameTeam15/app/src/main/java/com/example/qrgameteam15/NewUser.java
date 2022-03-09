@@ -20,8 +20,12 @@ public class NewUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
     }
-    /** Called when the user taps the createUser button */
-
+    /**
+     * This method is called when the user taps the Create Account button, and it opens the user menu activity 
+     * if a new user successfully signs up.
+     * @param view
+     * Expects an object from the View class
+     */
     public void createUser(View view) {
         /** Basic layout, will have to ensure user enters info and that the info is correct later */
         EditText usernameEdit = (EditText) findViewById(R.id.username_text);
@@ -32,7 +36,6 @@ public class NewUser extends AppCompatActivity {
         String email = emailEdit.getText().toString();
         EditText cityEdit = (EditText) findViewById(R.id.city_region);
         String cityRegion = cityEdit.getText().toString();
-
 
         FirebaseFirestore db;
         // Access a Cloud FireStore instance from Activity
