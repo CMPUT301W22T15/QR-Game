@@ -48,7 +48,7 @@ public class NewUser extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
         HashMap<String,String> data = new HashMap<>();
-        data.put("score", username);
+        data.put("score", "0");
 
         // create new document
         collectionReference
@@ -67,7 +67,7 @@ public class NewUser extends AppCompatActivity {
                     }
                 });
         singletonPlayer.player.setUsername(username);
-        collectionReference.document(username).update("scannedcodes", FieldValue.arrayUnion("array"));
+        //collectionReference.document(username).update("scannedcodes", FieldValue.arrayUnion("array"));
         usernameEdit.setText("");
 
         Intent intent = new Intent(getApplicationContext(), UserMenu.class);

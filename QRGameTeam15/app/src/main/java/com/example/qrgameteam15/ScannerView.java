@@ -81,9 +81,11 @@ public class ScannerView extends AppCompatActivity {
                         // ---------------------------------------
                         singletonPlayer.player.addQrcode(qrcode);
                         // ----------------------------------------
+
                         String TAG = "tag_LOG";
                         HashMap<String, Integer> scoreData = new HashMap<>();
                         scoreData.put("score", qrcode.score);
+                        // ADD qrcode object to "Qrcodes" collection in firebase -----------
                         collectionReferenceQR
                                 .document(qrcode.getID())
                                 .set(scoreData)
@@ -99,10 +101,22 @@ public class ScannerView extends AppCompatActivity {
                                         Log.d(TAG,"Data could not be added!" + e.toString());
                                     }
                                 });
+                        // ---------------------------------------------------------------------
+                        // ADD to this username's database
+                        /*
+                        eg what this username document looks like in firebase
+                        username: {
+                                scannedcodes: [code1msg, code2msg, ,,,,]
+                                scannedcodesHash: [code1Hash, code2Hash, ...]
+                                Dates: [code1Date, code2Date, ....]    // TODO: not yet done this
+                                scocire: integer
+                        }
 
-
+                        */
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodes", FieldValue.arrayUnion(result.getText()));
-                        
+                        collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodesHash", FieldValue.arrayUnion(qrcode.getID()));
+                        collectionReference.document(singletonPlayer.player.getUsername()).update("Dates", FieldValue.arrayUnion("none"));
+
 //                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
 //                        intent.putExtra("result", result.getText());
 //                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
