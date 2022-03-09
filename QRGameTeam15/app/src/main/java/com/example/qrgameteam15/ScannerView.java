@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,11 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -20,6 +26,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.util.HashMap;
 
 /**
  * This class is responsible for the interface that allows Users to scan codes
@@ -35,6 +43,9 @@ public class ScannerView extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannerView;
     TextView resultData;
+    SingletonPlayer singletonPlayer;
+    FirebaseFirestore db;
+
 
     /**
      * This method creates the inital interface and obtains the necessary permissions
@@ -44,6 +55,11 @@ public class ScannerView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner_view);
+
+        // Access a Cloud FireStore instance from Activity
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Players");
+        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
         // Set variable data
         scannerView = findViewById(R.id.scanner_view);
@@ -59,9 +75,34 @@ public class ScannerView extends AppCompatActivity {
                     public void run() {
                         resultData.setText(result.getText());
                         Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
-                        intent.putExtra("result", result.getText());
-                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
+
+                        QRCode qrcode = new QRCode(result.getText(),""); //TODO add the location string
+                        singletonPlayer.player.addQrcode(qrcode);
+
+                        String TAG = "tag";
+
+                        collectionReferenceQR
+                                .document(qrcode.id.getHashedID())
+                                .set(qrcode.score)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG,"Data has been added successfully");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG,"Data could not be added!" + e.toString());
+                                    }
+                                });
+
+
+                        collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodes", FieldValue.arrayUnion(result.getText()));
+                        
+//                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
+//                        intent.putExtra("result", result.getText());
+//                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
                     }
                 });
             }

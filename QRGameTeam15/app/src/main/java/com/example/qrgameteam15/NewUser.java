@@ -1,5 +1,6 @@
 package com.example.qrgameteam15;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -10,11 +11,15 @@ import android.view.View;
 import android.widget.EditText;
 
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class NewUser extends AppCompatActivity {
+import java.util.HashMap;
 
+public class NewUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +46,28 @@ public class NewUser extends AppCompatActivity {
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
+        HashMap<String,String> data = new HashMap<>();
+        data.put("score", username);
 
         // create new document
-        collectionReference.document(username);
+        collectionReference
+                .document(username)
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+        collectionReference.document(username).update("scannedcodes", FieldValue.arrayUnion("array"));
+        usernameEdit.setText("");
 
         Intent intent = new Intent(getApplicationContext(), UserMenu.class);
         intent.putExtra("userMenu_act", (String) null);
