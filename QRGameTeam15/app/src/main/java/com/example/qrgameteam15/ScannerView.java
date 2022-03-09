@@ -81,7 +81,7 @@ public class ScannerView extends AppCompatActivity {
                         // ---------------------------------------
                         singletonPlayer.player.addQrcode(qrcode);
                         // ----------------------------------------
-
+                        String userName_1 = singletonPlayer.player.getUsername();
                         String TAG = "tag_LOG";
                         HashMap<String, Integer> scoreData = new HashMap<>();
                         scoreData.put("score", qrcode.score);
@@ -114,7 +114,10 @@ public class ScannerView extends AppCompatActivity {
                         */
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodes", FieldValue.arrayUnion(result.getText()));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodesHash", FieldValue.arrayUnion(qrcode.getID()));
-                        collectionReference.document(singletonPlayer.player.getUsername()).update("Dates", FieldValue.arrayUnion("none"));
+                        collectionReference.document(singletonPlayer.player.getUsername()).update("Dates", FieldValue.arrayUnion(qrcode.dateStr));
+                        collectionReference.document(singletonPlayer.player.getUsername()).update("Locations", FieldValue.arrayUnion("none"));
+
+
 
 
 
