@@ -9,6 +9,7 @@ public class Location {
     private String countryName;
     private String cityName;
     private String address;
+    private String locationString;
 
     /**
      *
@@ -24,6 +25,10 @@ public class Location {
         this.countryName = countryName;
         this.cityName = cityName;
         this.address = address;
+        String latitudeString = Double.toString(this.latitude);
+        String longitudeString = Double.toString(this.longitude);
+        // location is written as a "latitude,longitude" pair
+        this.locationString = latitudeString+","+longitudeString;
     }
 
     /**
@@ -60,6 +65,14 @@ public class Location {
      */
     public String getAddress() {
         return address;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getLocationString() {
+        return locationString;
     }
 
     /**
