@@ -5,6 +5,8 @@ import android.text.format.DateFormat;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class QRCode {
@@ -23,6 +25,11 @@ public class QRCode {
         this.key = key;
         this.date = new Date();
         this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();
+//        LocalDateTime date = LocalDateTime.now();
+//        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        String dateStr = date.format(format);
+
+
         this.score = 0; // Add a method to calculate score
         this.location = location;
         if (location != ""){
@@ -59,6 +66,10 @@ public class QRCode {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getScore() {

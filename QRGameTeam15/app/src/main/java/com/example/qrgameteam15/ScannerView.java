@@ -83,12 +83,24 @@ public class ScannerView extends AppCompatActivity {
                         // ----------------------------------------
                         String userName_1 = singletonPlayer.player.getUsername();
                         String TAG = "tag_LOG";
-                        HashMap<String, Integer> scoreData = new HashMap<>();
-                        scoreData.put("score", qrcode.score);
+                        // save scannedQrcode  to firebase in "QRCodes" collection
+                        /*
+                            qrCodeHash: {
+                                name: ""
+                                date: ""
+                                location: ""
+                                score: ""
+                            }
+                         */
+                        HashMap<String, String> Data = new HashMap<>();
+                        Data.put("score", "0");
+                        Data.put("name", qrcode.getKey());
+                        Data.put("Location", qrcode.location);
+                        Data.put("Date", qrcode.dateStr);
                         // ADD qrcode object to "Qrcodes" collection in firebase -----------
                         collectionReferenceQR
                                 .document(qrcode.getID())
-                                .set(scoreData)
+                                .set(Data)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
@@ -112,13 +124,12 @@ public class ScannerView extends AppCompatActivity {
                                 score: integer
                         }
                         */
+
+
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodes", FieldValue.arrayUnion(result.getText()));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodesHash", FieldValue.arrayUnion(qrcode.getID()));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("Dates", FieldValue.arrayUnion(qrcode.dateStr));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("Locations", FieldValue.arrayUnion("none"));
-
-
-
 
 
 //                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
