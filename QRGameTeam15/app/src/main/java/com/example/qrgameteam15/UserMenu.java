@@ -21,19 +21,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserMenu extends AppCompatActivity {
     ListView menuList;
     //EditText menuItem;
     ArrayAdapter<String> menuAdapter;
     FirebaseFirestore db;
-
+    SingletonPlayer singletonPlayer = new SingletonPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_menu);
         //menuItem = findViewById(R.id.menu_nameEntry);
+        List<QRCode> qarray = singletonPlayer.player.qrCodes;
 
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();

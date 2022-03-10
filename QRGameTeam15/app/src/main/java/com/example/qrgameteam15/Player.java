@@ -34,4 +34,8 @@ public class Player {
     public void setUsername(String user) {
         this.username = user;
     }
+
+    public int numberOfCode() {
+        return this.qrCodes.size();
+    }
 }

@@ -97,6 +97,7 @@ public class ScannerView extends AppCompatActivity {
                         Data.put("name", qrcode.getKey());
                         Data.put("Location", qrcode.location);
                         Data.put("Date", qrcode.dateStr);
+                        Data.put("HashedID", qrcode.getID());
                         // ADD qrcode object to "Qrcodes" collection in firebase -----------
                         collectionReferenceQR
                                 .document(qrcode.getID())
@@ -124,13 +125,12 @@ public class ScannerView extends AppCompatActivity {
                                 score: integer
                         }
                         */
-
-
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodes", FieldValue.arrayUnion(result.getText()));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodesHash", FieldValue.arrayUnion(qrcode.getID()));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("Dates", FieldValue.arrayUnion(qrcode.dateStr));
                         collectionReference.document(singletonPlayer.player.getUsername()).update("Locations", FieldValue.arrayUnion("none"));
 
+                        collectionReference.document(singletonPlayer.player.getUsername()).update("QRLIST", FieldValue.arrayUnion(Data));
 
 //                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
 //                        intent.putExtra("result", result.getText());
