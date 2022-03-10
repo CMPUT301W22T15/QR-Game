@@ -17,7 +17,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ExistingUser extends AppCompatActivity {
@@ -27,14 +29,13 @@ public class ExistingUser extends AppCompatActivity {
     // ---------------------------------
     // each qrcode we fetch from database from "QRCodes" collection set these value so we can easily
     // create document
-    boolean qrExistInDB = false;
-    int individualQRcodescore = -1;
-    String individualQRcodeDate = "";
-    String individualQRcodeName = "";
-    String individualQRcodeLocation = "";
+    public boolean qrExistInDB = false;
+    public int individualQRcodescore = -1;
+    public String individualQRcodeDate = "";
+    public String individualQRcodeName = "";
+    public String individualQRcodeLocation = "";
     // ------------------------------------
     // Access a Cloud FireStore instance from Activity
-
     String TAG = "tag";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +55,8 @@ public class ExistingUser extends AppCompatActivity {
 
         singletonPlayer.player.setUsername(username);
         db = FirebaseFirestore.getInstance();
-
-
         final CollectionReference collectionReference = db.collection("Players");
         final CollectionReference collectionReferenceQR = db.collection("QRCodes");
-
-
         /*
             ON NEW USER, we fetch from firebase and recreate the Player class
          */
@@ -76,27 +73,32 @@ public class ExistingUser extends AppCompatActivity {
                         List<String> scannedCodesHash = (List<String>) (document.getData().get("scannedcodesHash"));
                         List<String> dateList = (List<String>) (document.getData().get("Dates"));
                         List<String> locationList = (List<String>) (document.getData().get("Locations"));
+                        List<HashMap<String, Object>> qrCodesList = (List<HashMap<String, Object>>) (document.getData().get("QRLIST"));
+
                         //TODO retrieve location.
                         //int PlayerScore = (int) document.getData().get("score");
                         int numberOfCodes = scannedCodesHash.size();
 
+                        // RETRIEVE ALL SCANNED QRCODES AND ADD THEM TO THE ARRAYLIST IN PLAYER
                         for (int i = 0; i < numberOfCodes; i++) {
-                            // retrieve            collection(QRcode).document(hash) --------------
-                            DocumentReference qrDocRef = db.collection("QRCodes").document(scannedCodesHash.get(i));
-                            getQrcodeFields(qrDocRef);  // individualQRcodescore = qrcodeScore
-                            if (qrExistInDB) {  // if this qrCode exists in firebase
-                                QRCode qrcode = new QRCode(individualQRcodeName, individualQRcodeLocation);
-                                String hash = scannedCodesHash.get(i);
-                                qrcode.setDate(individualQRcodeDate);
-                                qrcode.setScore(individualQRcodescore);
-                                qrcode.setKey(individualQRcodeName);  // this is just setName()
-                                if (!individualQRcodeLocation.equals("")) {  // if location exist
-                                    qrcode.setLocation(individualQRcodeLocation);
-                                }
-                                singletonPlayer.player.addQrcode(qrcode);
+                            String hash = scannedCodesHash.get(i);
+                            // -------------------------------------------------
+                            HashMap<String, Object> qrCode = qrCodesList.get(i);
+                            String qrName = (String)qrCode.get("name");
+                            String qrLocation = (String)qrCode.get("Location");
+                            String qrDate = (String)qrCode.get("Date");
+                            String qrScore = (String)qrCode.get("score");
+                            // individualQRcodescore = qrcodeScore
+                            QRCode qrcode = new QRCode(qrName, qrLocation);
+                            qrcode.setDate(qrDate);
+                            qrcode.setScore(parseInt(qrScore));
+                            qrcode.setKey(qrName);  // this is just setName()
+                            if (!qrLocation.equals("")) {  // if location exist
+                                qrcode.setLocation(qrLocation);
                             }
-                            // -----------------------------------------------------------------------------
+                            singletonPlayer.player.addQrcode(qrcode);
                             resetIndividualQRcodeVars();
+                            // -----------------------------------------------------------------------------
                         }
                         Intent intent = new Intent(getApplicationContext(), UserMenu.class);
                         intent.putExtra("userMenu_session", (String) null);
@@ -110,13 +112,15 @@ public class ExistingUser extends AppCompatActivity {
             }
         });
     }
+
     /**
-     * set indivialqrcodeScore, individualQRcodeDate, individualQRcodeName from  QRCode in @param in
-     * "QRCodes" collection
      *
-     * @param docRef: reference to a QRCode object in firebase with a QRCodeHash.
+     * NO LONGER IN USE
+     *
+     * @param hash: reference to a QRCode object in firebase with a QRCodeHash.
      */
-    void getQrcodeFields(DocumentReference docRef) {
+    void getQrcodeFields(String hash) {
+        DocumentReference docRef = db.collection("QRCodes").document(hash);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -130,7 +134,6 @@ public class ExistingUser extends AppCompatActivity {
                         individualQRcodeDate = (String) (document.getData().get("Date"));
                         individualQRcodeName = (String) (document.getData().get("name"));
                         individualQRcodeLocation = (String) (document.getData().get("Location"));
-                        return;
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -140,8 +143,9 @@ public class ExistingUser extends AppCompatActivity {
             }
         });
     }
+
     /**
-     * reset the global attribute
+     * reset the global attribute(NO LONGER IN USER)
      */
     void resetIndividualQRcodeVars() {
         qrExistInDB = false;
