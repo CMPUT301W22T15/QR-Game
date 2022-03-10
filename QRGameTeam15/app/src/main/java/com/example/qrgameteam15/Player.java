@@ -30,4 +30,8 @@ public class Player {
     public void addQrcode(QRCode newQrCode) {
         qrCodes.add(newQrCode);
     }
+
+    public void setUsername(String user) {
+        this.username = user;
+    }
 }

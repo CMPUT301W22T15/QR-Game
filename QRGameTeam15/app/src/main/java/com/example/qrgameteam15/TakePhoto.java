@@ -109,24 +109,26 @@ public class TakePhoto extends AppCompatActivity {
                 addScore.setText("");
             }
         });
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                //Clear the old list
-                playerDataList.clear();
-                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
-                    Log.d(TAG, String.valueOf(doc.getData().get("score")));
-                    String user = doc.getId();
-                    String score = (String) doc.getData().get("score");
-                    playerDataList.add(new Player(user,score));
-                    // ACCESS the "scannedcoes" array element
-                    List<String> scannedCOdes = (List<String>) (doc.getData().get("scannedcodes"));
-                    for (int i = 0; i < scannedCOdes.size(); i++) {
-                        Log.d(TAG, scannedCOdes.get(i));
-                    }
-                }
-                playerAdapter.notifyDataSetChanged();
-            }
-        });
+
+//        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+//                //Clear the old list
+//                playerDataList.clear();
+//                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
+//                    Log.d(TAG, String.valueOf(doc.getData().get("score")));
+//                    String user = doc.getId();
+//                    String score = (String) doc.getData().get("score");
+//                    playerDataList.add(new Player(user,score));
+//                    // ACCESS the "scannedcoes" array element
+//                    List<String> scannedCOdes = (List<String>) (doc.getData().get("scannedcodes"));
+//                    for (int i = 0; i < scannedCOdes.size(); i++) {
+//                        Log.d(TAG, scannedCOdes.get(i));
+//                    }
+//                }
+//                playerAdapter.notifyDataSetChanged();
+//            }
+//        });
+
     }
 }

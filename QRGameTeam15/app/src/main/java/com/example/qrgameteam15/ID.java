@@ -13,10 +13,10 @@ public class ID {
     private String locationStr;
 
 
-    public ID(String name, String location) {
-        this.name = name;
-        this.locationStr = location;
-        hashedID = locationStr +  "-" + this.locationStr;
+    public ID(String sha256hash, String location) {
+        //this.name = name;
+        //this.locationStr = location;
+        hashedID = sha256hash + "-" + location;
     }
 
     public String getName() {

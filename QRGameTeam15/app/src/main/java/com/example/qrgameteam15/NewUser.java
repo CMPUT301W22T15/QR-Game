@@ -1,5 +1,6 @@
 package com.example.qrgameteam15;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -9,8 +10,17 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 
-public class NewUser extends AppCompatActivity {
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+
+public class NewUser extends AppCompatActivity {
+    SingletonPlayer singletonPlayer = new SingletonPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +42,37 @@ public class NewUser extends AppCompatActivity {
         String email = emailEdit.getText().toString();
         EditText cityEdit = (EditText) findViewById(R.id.city_region);
         String cityRegion = cityEdit.getText().toString();
-        
-        
+
+        FirebaseFirestore db;
+        // Access a Cloud FireStore instance from Activity
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Players");
+        HashMap<String,String> data = new HashMap<>();
+        data.put("score", username);
+
+        // create new document
+        collectionReference
+                .document(username)
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+        singletonPlayer.player.setUsername(username);
+        collectionReference.document(username).update("scannedcodes", FieldValue.arrayUnion("array"));
+        usernameEdit.setText("");
+
         Intent intent = new Intent(getApplicationContext(), UserMenu.class);
         intent.putExtra("userMenu_act", (String) null);
         startActivity(intent);
     }
+
 }

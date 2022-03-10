@@ -12,12 +12,18 @@ public class QRCode {
     int score;
     ID id;
     String sha256Hex;
+    Boolean hasLocation = false;
+    String location;
 
     // Constructor
     public QRCode(String key, String location) {
         this.key = key;
         this.date = new Date();
         this.score = 0; // Add a method to calculate score
+        this.location = location;
+        if (location != ""){
+            hasLocation = true;  //TODO implement Geolocation for location
+        }
 
         // create the sha256 hash (hex) ------------------
         MessageDigest digest;
@@ -31,7 +37,7 @@ public class QRCode {
             System.err.println("Constructor in QRCode error, sha-256 no such algorithm exception");
         }
         // -------------------------------------------
-        id = new ID(key, sha256Hex);
+        id = new ID(this.sha256Hex, location);
     }
 
     // Getters and Setters
