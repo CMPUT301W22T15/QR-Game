@@ -12,11 +12,15 @@ public class ID {
     private String hashedID;  // hashed ID to make it unique(hash it with)
     private String locationStr;
 
+    public ID(){
+
+    }
 
     public ID(String sha256hash, String location) {
         //this.name = name;
         //this.locationStr = location;
         hashedID = sha256hash + "-" + location;
+        locationStr = location;
     }
 
     public String getName() {
@@ -26,5 +30,9 @@ public class ID {
 
     public String getHashedID() {
         return this.hashedID;
+    }
+
+    public String getLocationStr() {
+        return locationStr;
     }
 }

@@ -11,19 +11,23 @@ import java.util.Date;
 
 public class QRCode {
     // Initialize variables
-    Date date;
     String dateStr;
     String key;
     int score;
-    ID id;
+    ID idObject;
     String sha256Hex;
     Boolean hasLocation = false;
     String location;
+    String id;
 
     // Constructor
+    public QRCode(){
+
+    }
+
     public QRCode(String key, String location) {
         this.key = key;
-        this.date = new Date();
+        Date date = new Date();
         this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();
 //        LocalDateTime date = LocalDateTime.now();
 //        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -48,13 +52,11 @@ public class QRCode {
             System.err.println("Constructor in QRCode error, sha-256 no such algorithm exception");
         }
         // -------------------------------------------
-        id = new ID(this.sha256Hex, location);
+        idObject = new ID(this.sha256Hex, location);
+        id = idObject.getHashedID();
     }
 
     // Getters and Setters
-    public Date getDate() {
-        return date;
-    }
 
     public void setDate(String date) {
         this.dateStr = date;
@@ -84,8 +86,12 @@ public class QRCode {
         return this.sha256Hex;
     }
 
-    public String getID() {
-        return this.id.getHashedID();
+    public ID getIdObject() {
+        return idObject;
+    }
+
+    public String getId() {
+        return id;
     }
 
     // https://www.baeldung.com/sha-256-hashing-java
@@ -100,5 +106,17 @@ public class QRCode {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    public String getDateStr() {
+        return dateStr;
+    }
+
+    public Boolean getHasLocation() {
+        return hasLocation;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }
