@@ -167,8 +167,8 @@ public class TakePhoto extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void uploadFile(String name, Uri uri){
-        if(uri != null){
+    private void uploadFile(String name, Uri uri) {
+        if (uri != null) {
             //give it a unique file name
             StorageReference fileReference = storageReference.child(name);
 
@@ -195,12 +195,11 @@ public class TakePhoto extends AppCompatActivity {
 //                            //not needed for now
 //                        }
 //                    });
+        } else {
+            Toast.makeText(this, "No file selected.", Toast.LENGTH_SHORT).show();
         }
-        else{
-            Toast.makeText(this,"No file selected.", Toast.LENGTH_SHORT).show();
-        }
-    }
 
+    }
 
     private File createImageFile() throws IOException {
         // Create an image file name

@@ -1,23 +1,40 @@
 package com.example.qrgameteam15;
 
+import android.text.format.DateFormat;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class QRCode {
     // Initialize variables
     Date date;
+    String dateStr;
     String key;
     int score;
     ID id;
     String sha256Hex;
+    Boolean hasLocation = false;
+    String location;
 
     // Constructor
     public QRCode(String key, String location) {
         this.key = key;
         this.date = new Date();
+        this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();
+//        LocalDateTime date = LocalDateTime.now();
+//        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        String dateStr = date.format(format);
+
+
         this.score = 0; // Add a method to calculate score
+        this.location = location;
+        if (location != ""){
+            hasLocation = true;  //TODO implement Geolocation for location
+        }
 
         // create the sha256 hash (hex) ------------------
         MessageDigest digest;
@@ -31,7 +48,7 @@ public class QRCode {
             System.err.println("Constructor in QRCode error, sha-256 no such algorithm exception");
         }
         // -------------------------------------------
-        id = new ID(key, sha256Hex);
+        id = new ID(this.sha256Hex, location);
     }
 
     // Getters and Setters
@@ -39,8 +56,8 @@ public class QRCode {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String date) {
+        this.dateStr = date;
     }
 
     public String getKey() {
@@ -49,6 +66,10 @@ public class QRCode {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getScore() {

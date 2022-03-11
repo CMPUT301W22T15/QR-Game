@@ -7,6 +7,6 @@ public class Score {
 
     public Score(String codeName) {
         this.codeName = codeName;
-        this.score = 0;  // need code that cmput score
+        this.score = 0;  // need code that compute score
     }
 }

@@ -7,9 +7,9 @@ import java.util.List;
 public class Player {
     private String username;
     public static List<QRCode> qrCodes;
-    private String score;
+    private int score;
 
-    Player(String username, String score) {
+    Player(String username, int score) {
         this.username = username;
         this.qrCodes = new ArrayList<>();
         this.score = score;
@@ -23,11 +23,19 @@ public class Player {
     //return qrCodes;
     //}
 
-    public String getScore() {
+    public int getScore() {
         return this.score;
     }
 
     public void addQrcode(QRCode newQrCode) {
         qrCodes.add(newQrCode);
+    }
+
+    public void setUsername(String user) {
+        this.username = user;
+    }
+
+    public int numberOfCode() {
+        return this.qrCodes.size();
     }
 }
