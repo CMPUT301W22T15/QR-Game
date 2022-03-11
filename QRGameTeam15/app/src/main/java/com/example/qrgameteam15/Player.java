@@ -1,13 +1,15 @@
 package com.example.qrgameteam15;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class Player {
     private String username;
-    public static List<QRCode> qrCodes;
+    public ArrayList<QRCode> qrCodes;
     private int score;
+
+    Player(){
+
+    }
 
     Player(String username, int score) {
         this.username = username;
@@ -19,12 +21,12 @@ public class Player {
         return this.username;
     }
 
-    //public static Collection<QRCode> getQrCodes() {
-    //return qrCodes;
-    //}
-
     public int getScore() {
         return this.score;
+    }
+
+    public ArrayList<QRCode> getQrCodes() {
+        return this.qrCodes;
     }
 
     public void addQrcode(QRCode newQrCode) {

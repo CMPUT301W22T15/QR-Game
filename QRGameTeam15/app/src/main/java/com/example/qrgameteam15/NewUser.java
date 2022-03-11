@@ -17,10 +17,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class NewUser extends AppCompatActivity {
-    SingletonPlayer singletonPlayer = new SingletonPlayer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,14 +48,13 @@ public class NewUser extends AppCompatActivity {
         FirebaseFirestore db;
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
+        SingletonPlayer singletonPlayer = new SingletonPlayer();
         final CollectionReference collectionReference = db.collection("Players");
-        HashMap<String,String> data = new HashMap<>();
-        data.put("score", "0");
+        singletonPlayer.player = new Player(username,0);
 
-        // create new document
         collectionReference
                 .document(username)
-                .set(data)
+                .set(SingletonPlayer.player)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -66,8 +67,6 @@ public class NewUser extends AppCompatActivity {
 
                     }
                 });
-        singletonPlayer.player.setUsername(username);
-        //collectionReference.document(username).update("scannedcodes", FieldValue.arrayUnion("array"));
         usernameEdit.setText("");
 
         Intent intent = new Intent(getApplicationContext(), UserMenu.class);
