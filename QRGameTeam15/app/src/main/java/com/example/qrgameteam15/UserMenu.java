@@ -42,7 +42,7 @@ public class UserMenu extends AppCompatActivity {
         final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
         menuList = findViewById(R.id.userMenu_list);
-        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List"};
+        String dataList[] = new String[]{"Player Name", "Scan New Code", "Take a photo", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List"};
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
