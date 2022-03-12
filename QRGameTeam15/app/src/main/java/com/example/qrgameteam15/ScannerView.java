@@ -99,9 +99,9 @@ public class ScannerView extends AppCompatActivity {
                                     }
                                 });
 //
-//                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
-//                        intent.putExtra("result", result.getText());
-//                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
+                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
+                        intent.putExtra("result", result.getText());
+                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
                     }
                 });
             }
