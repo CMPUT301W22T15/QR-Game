@@ -17,6 +17,7 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
@@ -43,7 +44,7 @@ public class ScannerView extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannerView;
     TextView resultData;
-    SingletonPlayer singletonPlayer = new SingletonPlayer();
+    SingletonPlayer singletonPlayer;
     FirebaseFirestore db;
 
 
@@ -78,63 +79,29 @@ public class ScannerView extends AppCompatActivity {
 
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
 
-                        // ---------------------------------------
                         singletonPlayer.player.addQrcode(qrcode);
-                        // ----------------------------------------
-                        String userName_1 = singletonPlayer.player.getUsername();
-                        String TAG = "tag_LOG";
-                        // save scannedQrcode  to firebase in "QRCodes" collection
-                        /*
-                            qrCodeHash: {
-                                name: ""
-                                date: ""
-                                location: ""
-                                score: ""
-                            }
-                         */
-                        HashMap<String, String> Data = new HashMap<>();
-                        Data.put("score", "0");
-                        Data.put("name", qrcode.getKey());
-                        Data.put("Location", qrcode.location);
-                        Data.put("Date", qrcode.dateStr);
-                        Data.put("HashedID", qrcode.getID());
-                        // ADD qrcode object to "Qrcodes" collection in firebase -----------
-                        collectionReferenceQR
-                                .document(qrcode.getID())
-                                .set(Data)
+
+                        String TAG = "working";
+                        collectionReference
+                                .document(singletonPlayer.player.getUsername())
+                                .set(singletonPlayer.player)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Log.d(TAG,"Data has been added successfully");
+                                        Log.d(TAG,"message");
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.d(TAG,"Data could not be added!" + e.toString());
+                                        Log.e("MYAPP", "exception: " + e.getMessage());
+                                        Log.e("MYAPP", "exception: " + e.toString());
                                     }
                                 });
-                        // ---------------------------------------------------------------------
-                        // ADD to this username's database
-                        /*
-                        eg what this username document looks like in firebase
-                        username: {
-                                scannedcodes: [code1msg, code2msg, ,,,,]
-                                scannedcodesHash: [code1Hash, code2Hash, ...]
-                                Dates: [code1Date, code2Date, ....]    // TODO: not yet done this
-                                score: integer
-                        }
-                        */
-                        collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodes", FieldValue.arrayUnion(result.getText()));
-                        collectionReference.document(singletonPlayer.player.getUsername()).update("scannedcodesHash", FieldValue.arrayUnion(qrcode.getID()));
-                        collectionReference.document(singletonPlayer.player.getUsername()).update("Dates", FieldValue.arrayUnion(qrcode.dateStr));
-                        collectionReference.document(singletonPlayer.player.getUsername()).update("Locations", FieldValue.arrayUnion("none"));
-
-                        collectionReference.document(singletonPlayer.player.getUsername()).update("QRLIST", FieldValue.arrayUnion(Data));
-
-//                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
-//                        intent.putExtra("result", result.getText());
-//                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
+//
+                        Intent intent = new Intent(getApplicationContext(), QRCodeEditor.class);
+                        intent.putExtra("result", result.getText());
+                        startActivity(new Intent(getApplicationContext(), QRCodeEditor.class));
                     }
                 });
             }

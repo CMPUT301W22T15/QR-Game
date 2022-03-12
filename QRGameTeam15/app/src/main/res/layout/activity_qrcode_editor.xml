@@ -54,29 +54,56 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="183dp" />
 
-    <TextView
+    <ListView
         android:id="@+id/comments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         android:text="Comments"
-        android:layout_marginTop="200dp"
-        android:layout_marginBottom="60dp"
-        android:height = "450dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        android:height = "300dp"
+        app:layout_constraintBottom_toTopOf="@id/comment_editor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/object_photo_option" >
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/comment_editor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Type Comment Here"
+        app:layout_constraintBottom_toTopOf="@id/save"
+        app:layout_constraintEnd_toStartOf="@id/submit_comment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/comments"
+        />
+
+
 
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="2dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comments" />
+        app:layout_constraintTop_toBottomOf="@id/comment_editor" />
+
+    <Button
+        android:id="@+id/submit_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        tools:layout_editor_absoluteX="315dp"
+        tools:layout_editor_absoluteY="614dp"
+        app:layout_constraintBottom_toTopOf="@id/save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/comment_editor"
+        app:layout_constraintTop_toBottomOf="@id/comments"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
