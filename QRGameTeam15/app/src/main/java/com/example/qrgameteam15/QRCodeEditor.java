@@ -107,7 +107,6 @@ public class QRCodeEditor extends AppCompatActivity {
         String username = SingletonPlayer.player.getUsername();
 
         // Check a message has been entered
-        // !(commentInput.equals(""))
         if (newComment.trim().length() > 0) {
             //commentAdapter.add(newComment);
             comments.add(username + ": " + newComment);
