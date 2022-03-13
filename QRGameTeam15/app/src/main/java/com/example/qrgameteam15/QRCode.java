@@ -11,12 +11,13 @@ import java.util.Date;
 
 public class QRCode {
     // Initialize variables
-    String dateStr;
+    static String dateStr;
     String key;
-    int score;
+    static int score;
     ID idObject;
     String sha256Hex;
-    Boolean hasLocation = false;
+    static Boolean hasLocation = false;
+    static Boolean hasPhoto = false;
     String location;
     String id;
 
@@ -74,7 +75,7 @@ public class QRCode {
         this.location = location;
     }
 
-    public int getScore() {
+    public static int getScore() {
         return score;
     }
 
@@ -108,15 +109,23 @@ public class QRCode {
         return hexString.toString();
     }
 
-    public String getDateStr() {
+    public static String getDateStr() {
         return dateStr;
     }
 
-    public Boolean getHasLocation() {
+    public static Boolean getHasLocation() {
         return hasLocation;
     }
 
     public String getLocation() {
         return location;
+    }
+
+    public static Boolean getHasPhoto() {
+        return hasPhoto;
+    }
+
+    public void setHasPhoto(Boolean hasPhoto) {
+        this.hasPhoto = hasPhoto;
     }
 }

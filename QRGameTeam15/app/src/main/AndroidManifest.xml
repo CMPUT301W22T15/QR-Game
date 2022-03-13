@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QRGameTeam15">
         <activity
+            android:name=".MyScans"
+            android:exported="false" />
+        <activity
             android:name=".TakePhoto"
             android:exported="false" />
         <activity
