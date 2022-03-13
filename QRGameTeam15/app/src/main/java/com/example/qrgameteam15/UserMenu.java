@@ -57,7 +57,7 @@ public class UserMenu extends AppCompatActivity {
                     startActivity(intent);
 
                 } else if (position == 2) {
-                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+                    Intent intent = new Intent(getApplicationContext(), MyScans.class);
 
                     intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
