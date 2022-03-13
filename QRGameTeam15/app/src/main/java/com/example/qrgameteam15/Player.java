@@ -26,7 +26,7 @@ public class Player {
     }
 
     public ArrayList<QRCode> getQrCodes() {
-        return this.qrCodes;
+        return qrCodes;
     }
 
     public void addQrcode(QRCode newQrCode) {
