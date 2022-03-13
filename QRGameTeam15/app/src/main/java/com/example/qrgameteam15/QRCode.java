@@ -35,7 +35,7 @@ public class QRCode {
 //        String dateStr = date.format(format);
 
 
-        this.score = 0; // Add a method to calculate score
+
         this.location = location;
         if (location != ""){
             hasLocation = true;  //TODO implement Geolocation for location
@@ -55,6 +55,8 @@ public class QRCode {
         // -------------------------------------------
         idObject = new ID(this.sha256Hex, location);
         id = idObject.getHashedID();
+        Score scoreTest = new Score(this.sha256Hex);
+        this.score = scoreTest.getScore();
     }
 
     // Getters and Setters
@@ -95,6 +97,8 @@ public class QRCode {
         return id;
     }
 
+
+
     // https://www.baeldung.com/sha-256-hashing-java
     // copied from here
     private static String bytesToHex(byte[] hash) {
@@ -128,4 +132,9 @@ public class QRCode {
     public void setHasPhoto(Boolean hasPhoto) {
         this.hasPhoto = hasPhoto;
     }
+
+//    public int findScore(QRCode qrCode){
+//        score = new Score(qrCode).getScore();
+//        return score;
+//    }
 }
