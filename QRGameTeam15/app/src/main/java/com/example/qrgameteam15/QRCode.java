@@ -75,8 +75,8 @@ public class QRCode {
         this.location = location;
     }
 
-    public static int getScore() {
-        return score;
+    public int getScore() {
+        return this.score;
     }
 
     public void setScore(int score) {
@@ -109,20 +109,20 @@ public class QRCode {
         return hexString.toString();
     }
 
-    public static String getDateStr() {
-        return dateStr;
+    public String getDateStr() {
+        return this.dateStr;
     }
 
-    public static Boolean getHasLocation() {
-        return hasLocation;
+    public Boolean getHasLocation() {
+        return this.hasLocation;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public static Boolean getHasPhoto() {
-        return hasPhoto;
+    public Boolean getHasPhoto() {
+        return this.hasPhoto;
     }
 
     public void setHasPhoto(Boolean hasPhoto) {
