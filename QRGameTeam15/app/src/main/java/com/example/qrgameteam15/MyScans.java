@@ -3,9 +3,12 @@ package com.example.qrgameteam15;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,5 +31,7 @@ public class MyScans extends AppCompatActivity {
         // Create list adapter
         ScanListAdapter scanAdapter = new ScanListAdapter(this, R.layout.my_scans_adapter, qrCodes);
         scanList.setAdapter(scanAdapter);
+
+
     }
 }

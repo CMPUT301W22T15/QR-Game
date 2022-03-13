@@ -41,8 +41,9 @@ public class ScanListAdapter extends ArrayAdapter<QRCode> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String scanDate = QRCode.getDateStr();
+        System.out.print("position");
         int scanScore = QRCode.getScore();
-        Boolean scanHasLocation = QRCode.getHasLocation();
+        boolean scanHasLocation = QRCode.getHasLocation();
         boolean scanHasPhoto = QRCode.getHasPhoto();
 
         LayoutInflater inflater = LayoutInflater.from(myContext);
@@ -54,7 +55,10 @@ public class ScanListAdapter extends ArrayAdapter<QRCode> {
         TextView hasLocation = view.findViewById(R.id.has_location);
         TextView hasPhoto = view.findViewById(R.id.has_photo);
 
-        //date.setText(QRCode.getDateStr());
+        date.setText(scanDate);
+        score.setText("Score: " + String.valueOf(scanScore));
+        hasLocation.setText("Has Location: " + String.valueOf(scanHasLocation));
+        hasPhoto.setText("Has Photo: " + String.valueOf(scanHasPhoto));
 
         return view;
     }
