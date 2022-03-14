@@ -33,9 +33,6 @@ public class QRCode {
 //        LocalDateTime date = LocalDateTime.now();
 //        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //        String dateStr = date.format(format);
-
-
-
         this.location = location;
         if (location != ""){
             hasLocation = true;  //TODO implement Geolocation for location
@@ -60,7 +57,6 @@ public class QRCode {
     }
 
     // Getters and Setters
-
     public void setDate(String date) {
         this.dateStr = date;
     }

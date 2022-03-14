@@ -40,4 +40,16 @@ public class Player {
     public int numberOfCode() {
         return this.qrCodes.size();
     }
+
+
+    public boolean hasQRcode(QRCode q) {
+        String qID = q.getId();
+        for (int i = 0; i < numberOfCode(); i++) {
+            String thisID = this.qrCodes.get(i).getId();
+            if (qID.equals(thisID)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
