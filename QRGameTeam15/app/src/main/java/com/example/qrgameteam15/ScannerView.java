@@ -60,7 +60,6 @@ public class ScannerView extends AppCompatActivity {
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
-        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
         // Set variable data
         scannerView = findViewById(R.id.scanner_view);

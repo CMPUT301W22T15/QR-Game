@@ -43,7 +43,6 @@ public class ScanListAdapter extends ArrayAdapter<QRCode> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         View view = convertView;
 
         if (view == null){
