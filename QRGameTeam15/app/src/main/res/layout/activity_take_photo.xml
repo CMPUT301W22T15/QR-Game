@@ -6,40 +6,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TakePhoto">
+    tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btn_TakePhoto"
+        android:id="@+id/button_takePhotoUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Take Photo"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Take Photo and Upload"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_UploadPhoto"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:text="Upload Photo"
-        app:layout_constraintStart_toEndOf="@+id/btn_TakePhoto"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_displayCaptureImage"
-        android:layout_width="376dp"
-        android:layout_height="654dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/imageView_capturePhoto"
+        android:layout_width="406dp"
+        android:layout_height="620dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_takePhotoUpload"
         app:srcCompat="@drawable/ic_launcher_background" />
-</androidx.constraintlayout.widget.ConstraintLayout>
 
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 <!-- updated by emily with take photo code (END)-->

@@ -58,4 +58,8 @@ dependencies {
         // Apache License 2.0
         // URL: https://github.com/zxing/zxing
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:29.2.0')
+
 }
