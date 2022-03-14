@@ -26,16 +26,16 @@ import java.util.ArrayList;
  */
 public class QRCodeEditor extends AppCompatActivity {
     // Initialize variables
-    TextView newScan;
-    TextView score;
-    Button addGeolocation;
-    Button addPhoto;
-    Button save;
-    ListView commentSection;
+    private TextView newScan;
+    private TextView score;
+    private Button addGeolocation;
+    private Button addPhoto;
+    private Button save;
+    private ListView commentSection;
     private ArrayList<String> comments;
     private ArrayAdapter<String> commentAdapter;
-    EditText commentInput;
-    Button postComment;
+    private EditText commentInput;
+    private Button postComment;
 
     /**
      * This method creates the inital interface and obtains the necessary permissions
@@ -56,6 +56,12 @@ public class QRCodeEditor extends AppCompatActivity {
         commentInput = findViewById(R.id.comment_editor);
         postComment = findViewById(R.id.submit_comment);
 
+        // Get intent
+        Intent intent = this.getIntent();
+        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
+
+        // Set score value
+        score.setText("Score: " + String.valueOf(scoreValue));
 
         // Create the button listener
         save.setOnClickListener(saveQRCodeData());
@@ -77,23 +83,7 @@ public class QRCodeEditor extends AppCompatActivity {
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
         commentSection.setAdapter(commentAdapter);
 
-        // Get intent
-        Intent intent = this.getIntent();
-        String name = getIntent().getStringExtra("result");
 
-//        // Hash Key
-//        MessageDigest message = null;
-//        try {
-//            message = MessageDigest.getInstance("SHA-256");
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-//        byte[]hashInBytes = message.digest(name.getBytes(StandardCharsets.UTF_8));
-//
-//        //bytes to hex
-//        StringBuilder key = new StringBuilder();
-//        for (byte b : hashInBytes) {
-//            key.append(String.format("%02x", b));
         }
 
     /**
