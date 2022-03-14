@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <TextView
+            android:id="@+id/scan_date"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="15dp"
+            android:gravity="center"
+            android:text="Date"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:layout_weight="33.3">
+        </TextView>
+
+        <TextView
+            android:id="@+id/scan_score"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="15dp"
+            android:gravity="center"
+            android:text="Score"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:layout_weight="33.3">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="33.3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/has_photo"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Has Photo: "
+                android:textSize="15dp"
+                android:textAlignment="center">
+            </TextView>
+
+            <TextView
+                android:id="@+id/has_location"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Has Location: "
+                android:textSize="15dp"
+                android:textAlignment="center">
+            </TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,18 +28,18 @@ public class UserMenu extends AppCompatActivity {
     //EditText menuItem;
     ArrayAdapter<String> menuAdapter;
     FirebaseFirestore db;
-    SingletonPlayer singletonPlayer = new SingletonPlayer();
+//    SingletonPlayer singletonPlayer = new SingletonPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_menu);
         //menuItem = findViewById(R.id.menu_nameEntry);
-        List<QRCode> qarray = singletonPlayer.player.qrCodes;
-
-        // Access a Cloud FireStore instance from Activity
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
+//        List<QRCode> qarray = singletonPlayer.player.qrCodes;
+//
+//        // Access a Cloud FireStore instance from Activity
+//        db = FirebaseFirestore.getInstance();
+//        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
         menuList = findViewById(R.id.userMenu_list);
         String dataList[] = new String[]{"Player Name", "Scan New Code", "Take a photo", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List"};
@@ -57,9 +57,9 @@ public class UserMenu extends AppCompatActivity {
                     startActivity(intent);
 
                 } else if (position == 2) {
-                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+                    Intent intent = new Intent(getApplicationContext(), MyScans.class);
 
-                    intent.putExtra("scan_new_code", (String) null);
+//                    intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 3) {
 

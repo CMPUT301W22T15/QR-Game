@@ -11,6 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
         android:text="New Scan"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -24,59 +27,102 @@
         android:layout_height="wrap_content"
         android:text="Score: "
         android:textSize="20dp"
-        android:height="25dp"
-        android:width="100dp"
+        android:padding="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
         app:layout_constraintTop_toBottomOf="@+id/new_scan"
         app:layout_constraintBottom_toTopOf="@id/geolocation_option"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="58dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/geolocation_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Track Geolocation"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
         app:layout_constraintTop_toBottomOf="@+id/score"
         app:layout_constraintBottom_toTopOf="@id/object_photo_option"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="108dp" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/object_photo_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Take Photo of Object"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
         app:layout_constraintTop_toBottomOf="@+id/geolocation_option"
         app:layout_constraintBottom_toTopOf="@id/comments"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="183dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <ListView
         android:id="@+id/comments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="380dp"
         android:text="Comments"
-        android:layout_marginTop="200dp"
-        android:layout_marginBottom="60dp"
-        android:height = "450dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@id/comment_editor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/object_photo_option" >
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/comment_editor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Type Comment Here"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@id/save"
+        app:layout_constraintEnd_toStartOf="@id/submit_comment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/comments"
+        />
+
+
 
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comments" />
+        app:layout_constraintTop_toBottomOf="@id/comment_editor" />
+
+    <Button
+        android:id="@+id/submit_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@id/save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/comment_editor"
+        app:layout_constraintTop_toBottomOf="@id/comments"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
