@@ -66,7 +66,7 @@ public class MyScans extends AppCompatActivity {
                                 scanAdapter.notifyDataSetChanged();
 
                                 // Update Total Count
-                                updateTotalCount();
+                                updateTotalScans();
                             }
                         })
                         .setNegativeButton("No", null)
@@ -78,7 +78,10 @@ public class MyScans extends AppCompatActivity {
 
     }
 
-    private void updateTotalCount() {
+    /**
+     * Updates the total scans after user deletes
+     */
+    private void updateTotalScans() {
         // Initialize Variable
         int total = 0;
 
