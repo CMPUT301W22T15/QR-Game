@@ -1,9 +1,11 @@
 package com.example.qrgameteam15;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class MyScans extends AppCompatActivity {
+public class MyScans extends AppCompatActivity implements ViewQRCodeFragment.OnFragmentInteractionListener {
     SingletonPlayer singletonPlayer;
     // Initialize list of content
     ArrayList<QRCode> qrCodes;
@@ -31,7 +33,7 @@ public class MyScans extends AppCompatActivity {
     TextView totalScans;
     TextView totalScore;
     Button sortByDate;
-    Button sortByScore;
+    Button displayExtremum;
     FirebaseFirestore db;
 
 
@@ -52,14 +54,58 @@ public class MyScans extends AppCompatActivity {
         totalScans = findViewById(R.id.total_scans);
         totalScore = findViewById(R.id.total_score);
         sortByDate = findViewById(R.id.sort_by_date);
-        sortByScore = findViewById(R.id.sort_by_score);
-
+        displayExtremum = findViewById(R.id.display_minMax);
         totalScans.setText("Total Scans: " + qrCodes.size());
         totalScore.setText("Total Score: 0");
 
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
+
+        displayExtremum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //display minimum and max
+                QRCode minQRcode = qrCodes.get(0);
+                QRCode maxQRcode = qrCodes.get(0);
+                for (int i = 0; i < qrCodes.size(); i++) {
+                    //Less than minScore
+                    if (qrCodes.get(i).getScore() < minQRcode.getScore()){
+                        minQRcode = qrCodes.get(i);
+                    }
+                    //Bigger than maxScore
+                    else if (qrCodes.get(i).getScore() > maxQRcode.getScore()){
+                        maxQRcode = qrCodes.get(i);
+                    }
+                    //Else do nothing
+                }
+                String minQR = "QR Code with Minimum Score:" + "\n\n"+ "hashedID: " + minQRcode.getId() + "\n" + "Date: " + minQRcode.getDateStr() + "\n" +
+                        "Score: " + String.valueOf(minQRcode.getScore()) + "\n"
+                        + "hasPhoto: " + String.valueOf(minQRcode.getHasPhoto()) + "\n"
+                        + "hasLocation: " + String.valueOf(minQRcode.getHasLocation());
+
+                String maxQR = "QR Code with Maximum Score:" + "\n\n"+ "hashedID: " + maxQRcode.getId() + "\n" + "Date: " + maxQRcode.getDateStr() + "\n" +
+                        "Score: " + String.valueOf(maxQRcode.getScore()) + "\n"
+                        + "hasPhoto: " + String.valueOf(maxQRcode.getHasPhoto()) + "\n"
+                        + "hasLocation: " + String.valueOf(maxQRcode.getHasLocation());
+
+                new AlertDialog.Builder(MyScans.this)
+                        .setIcon(android.R.drawable.ic_menu_info_details)
+                        .setTitle("STATISTICS")
+                        .setMessage(minQR + "\n\n\n" + maxQR)
+                        .setPositiveButton("OK", null).show();
+
+            }
+        });
+
+        scanList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //get the item clicked from the list.
+                QRCode qrcode = qrCodes.get(i);
+                new ViewQRCodeFragment(qrcode).show(getSupportFragmentManager(), "View QR code");
+            }
+        });
 
         // Add ability to delete QRCodes
         scanList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -97,8 +143,8 @@ public class MyScans extends AppCompatActivity {
                                                 Log.e("MYAPP", "exception: " + e.toString());
                                             }
                                         });
-                                // Update Total Count
                                 updateTotalScans();
+
                             }
                         })
                         .setNegativeButton("No", null)
@@ -107,23 +153,54 @@ public class MyScans extends AppCompatActivity {
                 return true;
             }
         });
-
+        // Update Total Count
+        updateTotalScans();
     }
 
     /**
-     * Updates the total scans after user deletes
+     * Updates the total scans aafter user deletes
      */
     private void updateTotalScans() {
         // Initialize Variable
-        int total = 0;
+        int totalNumberScans = 0;
+        int totalSums = 0;
 
         // Loop through scans
-        for (QRCode scan: qrCodes) {
-            total += 1;
+        for (int i = 0; i < qrCodes.size(); i++) {
+            totalNumberScans += 1;
+            totalSums = totalSums + qrCodes.get(i).getScore();
+
         }
 
         // Update count
-        totalScans.setText("Total Scans: " + String.valueOf(total));
+        totalScans.setText("Total Scans: " + String.valueOf(totalNumberScans));
 
+        //Update sum
+        totalScore.setText("Total Score: " + String.valueOf(totalSums));
+
+        //Update user information
+        singletonPlayer.player.setScore(totalSums);
+
+        // Access a Cloud FireStore instance from Activity
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Players");
+
+        String TAG = "working";
+        collectionReference
+                .document(singletonPlayer.player.getUsername())
+                .set(singletonPlayer.player)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG,"message");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("MYAPP", "exception: " + e.getMessage());
+                        Log.e("MYAPP", "exception: " + e.toString());
+                    }
+                });
     }
 }

@@ -79,6 +79,7 @@ public class ScannerView extends AppCompatActivity {
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
 
                         singletonPlayer.player.addQrcode(qrcode);
+                        singletonPlayer.player.setScore(qrcode.getScore());
 
                         String TAG = "working";
                         collectionReference
