@@ -117,12 +117,9 @@ public class QRCodeEditor extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-
-
-
-                // Create QRCode object
-                //String key = DigestUtils.sha256Hex();
-                //QRCode code = new QRCode();
+                Intent intent = new Intent(QRCodeEditor.this, UserMenu.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
             }
         };
