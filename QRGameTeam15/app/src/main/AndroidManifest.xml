@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QRGameTeam15">
         <activity
+            android:name=".GameMap"
+            android:exported="false" />
+        <activity
             android:name=".TakePhoto"
             android:exported="false" />
         <activity
@@ -43,9 +46,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!--EL-start: save the full size photo and the upload to firesbase -->
+        </activity> <!-- EL-start: save the full size photo and the upload to firesbase -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
@@ -53,10 +54,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
-        <!--EL-end: save the full size photo and the upload to firesbase -->
-
     </application>
 
 </manifest>

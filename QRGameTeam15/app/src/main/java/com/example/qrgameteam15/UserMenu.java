@@ -64,7 +64,11 @@ public class UserMenu extends AppCompatActivity {
                 } else if (position == 3) {
 
                 } else if (position == 4) {
-
+                    //EL-start
+                    Intent intent = new Intent(getApplicationContext(), GameMap.class);
+                    intent.putExtra("Codes Near Me", (String) null);
+                    startActivity(intent);
+                    //EL-end
                 } else if (position == 5) {
 
                 }
