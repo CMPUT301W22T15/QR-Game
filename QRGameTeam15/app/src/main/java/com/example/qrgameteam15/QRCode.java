@@ -63,58 +63,115 @@ public class QRCode {
     }
 
     // Getters and Setters
+
+    /**
+     * setter for date
+     * @param date
+     */
     public void setDate(String date) {
         this.dateStr = date;
     }
 
+    /**
+     * getter for QRcode key/name
+     * @return: the qrcode key
+     */
     public String getKey() {
         return key;
     }
 
+    /**
+     * setter for qrcode Key
+     * @param key
+     */
     public void setKey(String key) {
         this.key = key;
     }
 
+    /**
+     * setter for location string
+     * @param location: "longtitude-latitude" strign
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * getter for score
+     * @return: score
+     */
     public int getScore() {
         return this.score;
     }
 
+    /**
+     * setter for score
+     * @param score
+     */
     public void setScore(int score) {
         this.score = score;
     }
 
+    /**
+     * getter for the pure sha256 hash of the qrcode key
+     * @return: pure sha256 hash of the qrcode key
+     */
     public String getSha256Hex() {
         return this.sha256Hex;
     }
 
+    /**
+     * getter for ID object which contains the sha256 and (sha256 + location)
+     * @return: ID object
+     */
     public ID getIdObject() {
         return idObject;
     }
 
+    /**
+     * getter for ID object
+     * @return: ID object
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * getter for the string of date, formatted using simpledateformate
+     * @return: nicely formatted date.
+     */
     public String getDateStr() {
         return this.dateStr;
     }
 
+    /**
+     *
+     * @return: true if this QRcode has location, false otherwise.
+     */
     public Boolean getHasLocation() {
         return this.hasLocation;
     }
 
+    /**
+     * getter for location String
+     * @return: "longitute-latitude" String
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     *
+     * @return True if this QRcode has photo attached to it, false otherwise
+     */
     public Boolean getHasPhoto() {
         return this.hasPhoto;
     }
 
+    /**
+     * setter for HasPhoto attribue
+     * @param hasPhoto
+     */
     public void setHasPhoto(Boolean hasPhoto) {
         this.hasPhoto = hasPhoto;
     }
