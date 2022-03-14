@@ -1,6 +1,7 @@
 package com.example.qrgameteam15;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ScanListAdapter extends ArrayAdapter<QRCode> {
     private Context myContext;
     int myResource;
+    private ArrayList<QRCode> qrCodes;
 
     /**
      * Constructor for the ScanListAdapter
@@ -28,37 +30,36 @@ public class ScanListAdapter extends ArrayAdapter<QRCode> {
      * Represents the context of the application
      * @param resource
      * Suggests the layout to be used
-     * @param objects
+     * @param qrCodes
      * Suggests the items that will be contained in the list
      */
-    public ScanListAdapter(Context context, int resource, ArrayList<QRCode> objects) {
-        super(context, resource, objects);
+    public ScanListAdapter(Context context, int resource, ArrayList<QRCode> qrCodes) {
+        super(context, resource, qrCodes);
         this.myContext = context;
-        myResource = resource;
+        this.myResource = resource;
+        this.qrCodes = qrCodes;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String scanDate = QRCode.getDateStr();
-        System.out.print("position");
-        int scanScore = QRCode.getScore();
-        boolean scanHasLocation = QRCode.getHasLocation();
-        boolean scanHasPhoto = QRCode.getHasPhoto();
-
-        LayoutInflater inflater = LayoutInflater.from(myContext);
         View view = convertView;
-        view = inflater.inflate(myResource, parent, false);
 
+        if (view == null){
+            view = LayoutInflater.from(myContext).inflate(myResource, parent,false);
+        }
+
+        QRCode qrcode = qrCodes.get(position);
         TextView date = view.findViewById(R.id.scan_date);
         TextView score = view.findViewById(R.id.scan_score);
         TextView hasLocation = view.findViewById(R.id.has_location);
         TextView hasPhoto = view.findViewById(R.id.has_photo);
+        String qrcode1 = qrcode.getDateStr();
 
-        date.setText(scanDate);
-        score.setText("Score: " + String.valueOf(scanScore));
-        hasLocation.setText("Has Location: " + String.valueOf(scanHasLocation));
-        hasPhoto.setText("Has Photo: " + String.valueOf(scanHasPhoto));
+        date.setText(qrcode.getDateStr());
+        score.setText("Score: " + String.valueOf(qrcode.getScore()));
+        hasLocation.setText("hasLocation: " + String.valueOf(qrcode.getHasLocation()));
+        hasPhoto.setText("hasPhoto: " + String.valueOf(qrcode.getHasPhoto()));
 
         return view;
     }

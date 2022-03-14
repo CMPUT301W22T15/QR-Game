@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.View;
 import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,6 +26,7 @@ public class MyScans extends AppCompatActivity {
     TextView totalScore;
     Button sortByDate;
     Button sortByScore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,5 +95,6 @@ public class MyScans extends AppCompatActivity {
 
         // Update count
         totalScans.setText("Total Scans: " + String.valueOf(total));
+
     }
 }
