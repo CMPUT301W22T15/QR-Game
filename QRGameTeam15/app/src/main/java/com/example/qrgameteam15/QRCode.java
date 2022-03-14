@@ -21,11 +21,16 @@ public class QRCode {
     String location;
     String id;
 
-    // Constructor
+    // Constructor required for adding this class to the firebase
     public QRCode(){
 
     }
 
+    /**
+     *
+     * @param key: the decoded msg of the QRcode
+     * @param location: the location,in "longtitude-latitute", where this code was scanned
+     */
     public QRCode(String key, String location) {
         this.key = key;
         Date date = new Date();
@@ -39,6 +44,7 @@ public class QRCode {
         }
 
         // create the sha256 hash (hex) ------------------
+        // Method from https://www.baeldung.com/sha-256-hashing-java
         MessageDigest digest;
         byte[] encodedhash;
         try {
@@ -93,22 +99,6 @@ public class QRCode {
         return id;
     }
 
-
-
-    // https://www.baeldung.com/sha-256-hashing-java
-    // copied from here
-    private static String bytesToHex(byte[] hash) {
-        StringBuilder hexString = new StringBuilder(2 * hash.length);
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
     public String getDateStr() {
         return this.dateStr;
     }
@@ -127,6 +117,23 @@ public class QRCode {
 
     public void setHasPhoto(Boolean hasPhoto) {
         this.hasPhoto = hasPhoto;
+    }
+    // ---------------------------------------------------------------------
+    /**
+     * This method was copied from https://www.baeldung.com/sha-256-hashing-java
+     * @param hash: byte hash of the input
+     * @return: the sha256 hash of the input
+     */
+    private static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
 //    public int findScore(QRCode qrCode){
