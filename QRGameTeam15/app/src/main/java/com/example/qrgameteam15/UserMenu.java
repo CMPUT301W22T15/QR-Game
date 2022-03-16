@@ -42,7 +42,7 @@ public class UserMenu extends AppCompatActivity {
 //        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
         menuList = findViewById(R.id.userMenu_list);
-        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List"};
+        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +67,9 @@ public class UserMenu extends AppCompatActivity {
 
                 } else if (position == 5) {
 
+                } else if (position == 6) {
+                    Intent intent = new Intent(getApplicationContext(), OtherPlayers.class);
+                    startActivity(intent);
                 }
 
             }

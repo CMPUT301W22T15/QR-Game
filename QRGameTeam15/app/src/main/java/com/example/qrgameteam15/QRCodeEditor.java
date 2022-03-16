@@ -120,7 +120,6 @@ public class QRCodeEditor extends AppCompatActivity {
                 Intent intent = new Intent(QRCodeEditor.this, UserMenu.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
             }
         };
 
