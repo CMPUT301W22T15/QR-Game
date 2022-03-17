@@ -58,4 +58,11 @@ dependencies {
         // Apache License 2.0
         // URL: https://github.com/zxing/zxing
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+
+    // QRGenerator
+        // MIT License
+        // URL: https://github.com/androidmads/QRGenerator
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
+    implementation 'com.google.zxing:core:3.3.2'
+
 }
