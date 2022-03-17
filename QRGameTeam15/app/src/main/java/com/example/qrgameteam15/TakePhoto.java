@@ -1,17 +1,18 @@
 package com.example.qrgameteam15;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
@@ -32,18 +33,14 @@ import java.util.Date;
 
 public class TakePhoto extends AppCompatActivity {
 
-    //updated by emily with take photo code (START)
-
     private Button takePhotoBtn;
     private ImageView imageView;
-
-    private static final int CAMERA_REQUEST_CODE = 1;
 
     private String currentPhotoPath;
     Uri imageUri = null;
 
-    // Create a storage reference from our app
-    StorageReference storageRef;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -58,6 +55,7 @@ public class TakePhoto extends AppCompatActivity {
                         //display the captured photo to the image view
                         imageView.setImageURI(imageUri);
 
+                        uploadImage(file.getName());
                     }
                 }
             }
@@ -68,12 +66,12 @@ public class TakePhoto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_photo);
 
+
         takePhotoBtn = (Button) findViewById(R.id.button_takePhotoUpload);
         imageView = (ImageView) findViewById(R.id.imageView_capturePhoto);
 
-
-        storageRef = FirebaseStorage.getInstance().getReference();
-
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         takePhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +98,8 @@ public class TakePhoto extends AppCompatActivity {
                     //startActivityForResult deprecated, use activityResult Launcher instead
 //                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                     activityResultLauncher.launch(takePictureIntent);
-                    uploadImage();
+
+
                 }
             }
         });
@@ -127,10 +126,15 @@ public class TakePhoto extends AppCompatActivity {
         return image;
     }
 
-    private void uploadImage(){
-        storageRef = FirebaseStorage.getInstance().getReference();
+    /**
+     *
+     * @param fileName
+     */
+    private void uploadImage(String fileName){
 
-        storageRef.putFile(imageUri)
+        StorageReference imageRef = storageReference.child("images_em/" + fileName);
+
+        imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -141,9 +145,8 @@ public class TakePhoto extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Handle unsuccessful uploads
-                        Toast.makeText(TakePhoto.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TakePhoto.this, "Failed to upload" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
 }

@@ -43,7 +43,7 @@ public class UserMenu extends AppCompatActivity {
 
         menuList = findViewById(R.id.userMenu_list);
 
-        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
+        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Take Photo", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
 
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);
@@ -64,11 +64,15 @@ public class UserMenu extends AppCompatActivity {
 //                    intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 3) {
+                    //EL-start
+                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+                    startActivity(intent);
+                    //EL-end
 
                 } else if (position == 4) {
                     //EL-start
                     Intent intent = new Intent(getApplicationContext(), GameMap.class);
-                    intent.putExtra("Codes_Near_Me", (String) null);
+//                    intent.putExtra("Codes_Near_Me", (String) null);
                     startActivity(intent);
                     //EL-end
                 } else if (position == 5) {

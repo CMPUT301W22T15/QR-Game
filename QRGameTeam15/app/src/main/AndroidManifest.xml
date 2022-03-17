@@ -52,7 +52,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- EL-start: save the full size photo and the upload to firesbase -->
+        </activity>
+
+        <!--EL Start-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
@@ -62,6 +64,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <!--EL End-->
+
     </application>
 
 </manifest>

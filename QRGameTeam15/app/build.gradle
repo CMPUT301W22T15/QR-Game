@@ -68,4 +68,9 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.0'
     implementation 'org.osmdroid:osmdroid-android:6.0.2'
     //el-end
+
+    //el-start:take photo
+    // Import the Firebase BoM
+    implementation 'com.google.firebase:firebase-bom:29.2.0'
+    //el-end:take photo
 }
