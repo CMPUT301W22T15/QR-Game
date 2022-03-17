@@ -18,11 +18,16 @@ import androidmads.library.qrgenearator.QRGEncoder;
  * This class displays the user's information
  * Also allows the option to generate a QRcode to log into their account on a different device
  */
+
+// The concept of generating QRCodes was obtained from the following video:
+    // Video By: SmallAcademy
+    // Date: Nov. 10, 2019
+    // URL: https://youtu.be/NpVRUhEpRI8
 public class PlayerProfile extends AppCompatActivity {
     // Initialize variables
     private SingletonPlayer singletonPlayer;
-    Button generateButton;
-    ImageView qrcodeImage;
+    private Button generateButton;
+    private ImageView qrcodeImage;
     private static final String TAG = "Create QRCode Image";
 
     @Override
