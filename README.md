@@ -96,3 +96,37 @@ Stories that have not been started:
 
 Resources used to update UML:
 https://online.visual-paradigm.com/
+
+### HUGE update in Project Part 3: Half-way CheckPoint 
+Stories that are fully completed:
+- Player:
+    - US 01.01.01 - US 01.06.01
+- Game QR code:
+    - US 02.01.01, US 02.03.01 - US 02.04.01
+- Searching:
+    - None
+- Location:
+    - None
+
+Stories that are work in progress:
+- Player:
+    - US 01.07.01
+- Game QR code:
+    - US 02.02.01 (Finalize design)
+- Searching:
+    - US 05.02.01 (Debug some minor errors and finalize design)
+- Location:
+    - US 06.01.01 (Debug some errors and finalize implementation)
+
+Stories that have not been started:
+- Player:
+    - None
+- Game QR code:
+    - US 02.05.01
+- Searching:
+    - US 05.01.01
+- Location:
+    - None
+
+Resources used to update UML:
+https://online.visual-paradigm.com/

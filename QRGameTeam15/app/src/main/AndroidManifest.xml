@@ -18,6 +18,9 @@
             android:name=".GameMap"
             android:exported="false" />
         <activity
+            android:name=".OtherPlayers"
+            android:exported="false" />
+        <activity
             android:name=".MyScans"
             android:exported="false" />
         <activity

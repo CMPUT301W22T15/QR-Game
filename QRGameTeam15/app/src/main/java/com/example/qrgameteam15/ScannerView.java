@@ -60,7 +60,6 @@ public class ScannerView extends AppCompatActivity {
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
-        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
         // Set variable data
         scannerView = findViewById(R.id.scanner_view);
@@ -80,6 +79,7 @@ public class ScannerView extends AppCompatActivity {
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
 
                         singletonPlayer.player.addQrcode(qrcode);
+                        singletonPlayer.player.setScore(qrcode.getScore());
 
                         String TAG = "working";
                         collectionReference

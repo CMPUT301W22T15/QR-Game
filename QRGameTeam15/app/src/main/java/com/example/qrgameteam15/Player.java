@@ -40,6 +40,10 @@ public class Player {
         return this.score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     /**
      * getter for the array of qrcodes
      * @return: arraylist of qrcodes
