@@ -88,53 +88,7 @@ public class ScannerView extends AppCompatActivity {
 
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
 
-                        // Test to see if this is a QRCode of a playerID
-
-
-                        //ArrayList<Player> allPlayers = new ArrayList<>();
-//                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-//                                allPlayers.clear();
-//                                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
-//                                    Player p = doc.toObject(Player.class);
-//                                    allPlayers.add(p);
-//                                }
-//                            }
-//                        });
-//                        collectionReference
-//                                .get()
-//                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                        if (task.isSuccessful()) {
-//                                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                                Player p = document.toObject(Player.class);
-//                                                allPlayers.add(p);
-//                                            }
-//                                            for (Player user: allPlayers) {
-//                                                if (user.getPlayerHash().equals(result.getText())) {
-//                                                    Intent returnIntent = new Intent();
-//                                                    returnIntent.putExtra("username", user.getUsername());
-//                                                    setResult(ExistingUser.RESULT_OK, returnIntent);
-//                                                    finish();
-//                                                }
-//                                            }
-//                                        } else {
-//                                            Log.d(TAG, "Error getting information: ", task.getException());
-//                                        }
-//                                    }
-//                                });
-
-//                        for (Player user: allPlayers) {
-//                            if (user.getPlayerHash().equals(result.getText())) {
-//                                Intent returnIntent = new Intent();
-//                                returnIntent.putExtra("username", user.getUsername());
-//                                setResult(ExistingUser.RESULT_OK, returnIntent);
-//                                finish();
-//                            }
-//                        }
-
+                        // Add scan to player in Database
                         singletonPlayer.player.addQrcode(qrcode);
                         singletonPlayer.player.setScore(qrcode.getScore());
 

@@ -32,8 +32,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class allows the user to scan a QRCode to log into their account from another device
+ */
 public class ExistingUser extends AppCompatActivity {
-
+    // Initialize variables
     SingletonPlayer singletonPlayer = new SingletonPlayer();
     FirebaseFirestore db;
     Button scanButton;
@@ -50,7 +53,10 @@ public class ExistingUser extends AppCompatActivity {
     // Access a Cloud FireStore instance from Activity
     String TAG = "tag";
 
-
+    /**
+     * This method creates the inital interface and obtains the necessary permissions
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +65,7 @@ public class ExistingUser extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection("Players");
 
-
+        // Obtain list of players
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -72,6 +78,7 @@ public class ExistingUser extends AppCompatActivity {
             }
         });
 
+        // Open ScannerView2 to scan a new QRcode
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,14 +102,11 @@ public class ExistingUser extends AppCompatActivity {
         EditText usernameEdit = (EditText) findViewById(R.id.username1_text);
         String username = usernameEdit.getText().toString();
 
-        //completeLogin(username);
+        // Setup player so that they can referenced throughout the app
         singletonPlayer.player.setUsername(username);
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
         final CollectionReference collectionReferenceQR = db.collection("QRCodes");
-        /*
-            ON NEW USER, we fetch from firebase and recreate the Player class
-         */
 
         DocumentReference playerDocRef = db.collection("Players").document(username);
         playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -117,12 +121,23 @@ public class ExistingUser extends AppCompatActivity {
                 }
             }
         });
+
+        // Open new activity
         Intent intent = new Intent(getApplicationContext(), UserMenu.class);
         intent.putExtra("userMenu_session", (String) null);
         startActivity(intent);
 
     }
 
+    /**
+     * This method obtains date from ScannerView2 upon return
+     * @param requestCode
+     * This code checks that activities are transitioning correctly
+     * @param resultCode
+     * This code should match that of the other activity that was called
+     * @param data
+     * Data contains the information that was returned from the previous activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,28 +153,13 @@ public class ExistingUser extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method checks if the user is already in the database
+     * @param playerHash
+     * The unique ID corresponding to a player in the database
+     */
     private void completeLogin(String playerHash) {
-        //singletonPlayer.player.setUsername(playerHash);
 
-//        db = FirebaseFirestore.getInstance();
-//        CollectionReference collectionReference = db.collection("Players");
-        //final CollectionReference collectionReferenceQR = db.collection("QRCodes");
-        /*
-            ON NEW USER, we fetch from firebase and recreate the Player class
-         */
-//        DocumentReference playerDocRef = db.collection("Players").document("mouse");
-//        playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()){
-//                    DocumentSnapshot documentSnapshot = task.getResult();
-//                    if (documentSnapshot.exists()){
-//                        singletonPlayer.player = documentSnapshot.toObject(Player.class);
-//                        Log.d("Success","12");
-//                    }
-//                }
-//            }
-//        });
         // at this point, the snapshot listener should fetch all the data
         for (int i = 0; i < allPlayers.size(); i++) {
             if (allPlayers.get(i).getPlayerHash().equals(playerHash)) {
