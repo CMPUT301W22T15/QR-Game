@@ -1,6 +1,7 @@
 package com.example.qrgameteam15;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -18,8 +19,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -28,6 +33,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -77,6 +83,8 @@ public class ScannerView extends AppCompatActivity {
                         Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
 
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
+
+                        
 
                         singletonPlayer.player.addQrcode(qrcode);
                         singletonPlayer.player.setScore(qrcode.getScore());

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class ExistingUser extends AppCompatActivity {
 
     SingletonPlayer singletonPlayer = new SingletonPlayer();
     FirebaseFirestore db;
+    Button scanButton;
     // ---------------------------------
     // each qrcode we fetch from database from "QRCodes" collection set these value so we can easily
     // create document
@@ -39,11 +41,23 @@ public class ExistingUser extends AppCompatActivity {
     // ------------------------------------
     // Access a Cloud FireStore instance from Activity
     String TAG = "tag";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_user);
+        scanButton = findViewById(R.id.scan_button);
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ExistingUser.this, ScannerView.class);
+                startActivityForResult(intent, 1);
+
+            }
+        });
     }
+
     /**
      * This method is called when the user taps the Log In button, and it opens the user menu activity 
      * if the user successfully logs in.

@@ -40,8 +40,7 @@ public class PlayerProfile extends AppCompatActivity {
         qrcodeImage = findViewById(R.id.user_qrcode);
 
         // Get user's name and ID
-        String username = singletonPlayer.player.getUsername();
-        String key = "$$123" + username + "456$$";
+        String key = singletonPlayer.player.getPlayerHash();
 
         // Set onclick listener to generate QRCode
         generateButton.setOnClickListener(new View.OnClickListener() {
