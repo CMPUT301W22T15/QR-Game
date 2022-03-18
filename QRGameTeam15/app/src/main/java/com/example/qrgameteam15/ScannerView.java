@@ -84,7 +84,27 @@ public class ScannerView extends AppCompatActivity {
 
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
 
-                        
+                        // Test to see if this is a QRCode of a playerID
+                        ArrayList<Player> allPlayers = new ArrayList<>();
+                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                                allPlayers.clear();
+                                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
+                                    Player p = doc.toObject(Player.class);
+                                    allPlayers.add(p);
+                                }
+                            }
+                        });
+
+                        for (Player user: allPlayers) {
+                            if (user.getPlayerHash().equals(result.getText())) {
+                                Intent returnIntent = new Intent();
+                                returnIntent.putExtra("username", user.getUsername());
+                                setResult(ExistingUser.RESULT_OK, returnIntent);
+                                finish();
+                            }
+                        }
 
                         singletonPlayer.player.addQrcode(qrcode);
                         singletonPlayer.player.setScore(qrcode.getScore());

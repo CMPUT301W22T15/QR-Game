@@ -3,6 +3,7 @@ package com.example.qrgameteam15;
 import static java.lang.Integer.parseInt;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -68,7 +69,25 @@ public class ExistingUser extends AppCompatActivity {
         /** To do.. verify it is a valid user */
         EditText usernameEdit = (EditText) findViewById(R.id.username1_text);
         String username = usernameEdit.getText().toString();
+        completeLogin(username);
 
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that the result came from the correct activity
+        if (requestCode == 1) {
+            if (resultCode == ExistingUser.RESULT_OK) {
+                String username = data.getStringExtra("username");
+                completeLogin(username);
+            }
+        }
+    }
+
+    private void completeLogin(String username) {
         singletonPlayer.player.setUsername(username);
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
