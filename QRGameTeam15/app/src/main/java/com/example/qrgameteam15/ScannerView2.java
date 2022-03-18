@@ -1,11 +1,24 @@
 package com.example.qrgameteam15;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -15,6 +28,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.Console;
+import java.util.ArrayList;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -30,7 +44,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     // Intialize Scanner
     ZXingScannerView scannerView;
-
+    FirebaseFirestore db;
+    ArrayList<Player> allPlayers = new ArrayList<>();
     /**
      * This method creates the inital interface and obtains the necessary permissions
      * @param savedInstanceState
@@ -38,6 +53,8 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Access a Cloud FireStore instance from Activity
 
         // Set scannerView data
         scannerView = new ZXingScannerView(this);
@@ -74,9 +91,13 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
      */
     @Override
     public void handleResult(Result rawResult) {
-        TakePhoto.playerName.setText(rawResult.getText());
+        //TakePhoto.playerName.setText(rawResult.getText());
         Toast.makeText(ScannerView2.this, rawResult.getText(), Toast.LENGTH_SHORT).show();
         System.out.print(rawResult.getText());
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("playerhash", rawResult.getText());
+        setResult(ExistingUser.RESULT_OK, returnIntent);
+        finish();
         onBackPressed();
 
     }
