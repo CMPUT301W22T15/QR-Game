@@ -6,8 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SingletonPlayer {
-    public static Player player = new Player("",0);
+    public static Player player = new Player("",0, "");
     public SingletonPlayer() {
     }
-
 }
