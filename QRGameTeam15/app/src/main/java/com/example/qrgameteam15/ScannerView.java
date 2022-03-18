@@ -1,5 +1,7 @@
 package com.example.qrgameteam15;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +17,10 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -85,17 +89,35 @@ public class ScannerView extends AppCompatActivity {
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
 
                         // Test to see if this is a QRCode of a playerID
+
+
                         ArrayList<Player> allPlayers = new ArrayList<>();
-                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                                allPlayers.clear();
-                                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
-                                    Player p = doc.toObject(Player.class);
-                                    allPlayers.add(p);
-                                }
-                            }
-                        });
+//                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                            @Override
+//                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+//                                allPlayers.clear();
+//                                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
+//                                    Player p = doc.toObject(Player.class);
+//                                    allPlayers.add(p);
+//                                }
+//                            }
+//                        });
+
+                        collectionReference
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                Player p = document.toObject(Player.class);
+                                                allPlayers.add(p);
+                                            }
+                                        } else {
+                                            Log.d(TAG, "Error getting information: ", task.getException());
+                                        }
+                                    }
+                                });
 
                         for (Player user: allPlayers) {
                             if (user.getPlayerHash().equals(result.getText())) {

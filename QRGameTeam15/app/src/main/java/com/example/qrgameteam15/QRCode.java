@@ -34,7 +34,7 @@ public class QRCode {
     public QRCode(String key, String location) {
         this.key = key;
         Date date = new Date();
-        //this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();
+        this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();
 //        LocalDateTime date = LocalDateTime.now();
 //        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //        String dateStr = date.format(format);
