@@ -50,7 +50,7 @@ public class NewUser extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         SingletonPlayer singletonPlayer = new SingletonPlayer();
         final CollectionReference collectionReference = db.collection("Players");
-        singletonPlayer.player = new Player(username,0);
+        singletonPlayer.player = new Player(username,0, email);
 
         collectionReference
                 .document(username)
