@@ -28,7 +28,7 @@ public class UserMenu extends AppCompatActivity {
     //EditText menuItem;
     ArrayAdapter<String> menuAdapter;
     FirebaseFirestore db;
-//    SingletonPlayer singletonPlayer = new SingletonPlayer();
+    SingletonPlayer singletonPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,11 @@ public class UserMenu extends AppCompatActivity {
 //        // Access a Cloud FireStore instance from Activity
 //        db = FirebaseFirestore.getInstance();
 //        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
+
+//        Intent intent = getIntent();
+//        String name = intent.getStringExtra("userMenu_act");
+//        SingletonPlayer.player.setUsername(name);
+
 
         menuList = findViewById(R.id.userMenu_list);
         String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
