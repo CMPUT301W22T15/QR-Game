@@ -51,7 +51,8 @@ public class UserMenu extends AppCompatActivity {
                 /** To do ... call different activities when any menu item is clicked... so far only scan
                  * new code has been implemented */
                 if (position == 0) {
-
+                    Intent intent = new Intent(getApplicationContext(), PlayerProfile.class);
+                    startActivity(intent);
                 } else if (position == 1) {
                     Intent intent = new Intent(getApplicationContext(), ScannerView.class);
                     startActivity(intent);
