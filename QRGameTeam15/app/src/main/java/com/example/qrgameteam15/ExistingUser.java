@@ -79,7 +79,6 @@ public class ExistingUser extends AppCompatActivity {
                     Player p = doc.toObject(Player.class);
                     allPlayers.add(p);
                 }
-
             }
         });
 
