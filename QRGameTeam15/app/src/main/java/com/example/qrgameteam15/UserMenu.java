@@ -68,6 +68,8 @@ public class UserMenu extends AppCompatActivity {
 //                    intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 3) {
+                    Intent intent = new Intent(getApplicationContext(), PlayerRanking.class);
+                    startActivity(intent);
 
                 } else if (position == 4) {
 
