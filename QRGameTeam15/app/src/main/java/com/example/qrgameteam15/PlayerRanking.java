@@ -17,9 +17,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This class displays the current user's information in respect to all players in the Database
+ */
 public class PlayerRanking extends AppCompatActivity {
     // Initialize variables
     private SingletonPlayer singletonPlayer;
+    private Player currentPlayer = singletonPlayer.player;
     private FirebaseFirestore db;
     private ArrayList<Player> allPlayers;
     private TextView highestScore;
@@ -28,7 +32,7 @@ public class PlayerRanking extends AppCompatActivity {
     private int highestScorePosition;
     private int totalScansPosition;
     private int totalSumPosition;
-    boolean valid = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,7 @@ public class PlayerRanking extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
         allPlayers = new ArrayList<>();
-        Player currentPlayer = singletonPlayer.player;
+        //Player currentPlayer = singletonPlayer.player;
 
         // Obtain list of players
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -52,16 +56,18 @@ public class PlayerRanking extends AppCompatActivity {
                     Player p = doc.toObject(Player.class);
                     allPlayers.add(p);
                 }
-                valid = true;
+
+                displayInformation();
             }
         });
 
-        while (!valid) {
 
-        }
+    }
 
-        Toast.makeText(PlayerRanking.this, "Size: " + String.valueOf(allPlayers.size()), Toast.LENGTH_SHORT).show();
-
+    /**
+     * This method calculated the relative position of the player, in terms of all players, for various categories
+     */
+    private void displayInformation() {
         // Obtain lists for allHighScores, allTotalScans, and allTotalSums
         ArrayList<Integer> allHighScores = new ArrayList<>();
         ArrayList<Integer> allTotalScans = new ArrayList<>();
