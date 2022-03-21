@@ -6,4 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".OtherPlayerProfile">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/OtherPlayerProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/OtherPlayerProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/OtherPlayerProfileScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/OtherPlayerProfileQRcodeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="TextView"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <ListView
+            android:id="@+id/OtherPlayerProfileListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
