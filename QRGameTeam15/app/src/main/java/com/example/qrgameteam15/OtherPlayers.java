@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -59,6 +62,38 @@ public class OtherPlayers extends AppCompatActivity {
                 intent.putExtra("playerUserName", playerUserName);
                 intent.putExtra("playerHash", playerHash);
                 startActivity(intent);
+            }
+        });
+        Button searchConfirmButton = findViewById(R.id.searchConfirmButton);
+        searchConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: could cause error when playerlist updates in DB while trying to do this.
+                EditText searchbox = findViewById(R.id.searchPlayerEditText);
+                String searchedPlayerName = searchbox.getText().toString();
+                searchedPlayerName = searchedPlayerName.trim(); // TRIM WHITESPACES, IMPORTANT
+                boolean exist = false;
+                // check if entered user exist
+                for (int i = 0; i < allPlayers.size(); i++) {
+                    String thisplayerUsername = allPlayers.get(i).getUsername();
+
+                    if (thisplayerUsername.trim().equals(searchedPlayerName)) {  // case: if found
+                        // go to activity
+                        exist = true;
+                        searchbox.setText("");
+                        String playerHash = allPlayers.get(i).getPlayerHash();
+                        Intent intent = new Intent(OtherPlayers.this, OtherPlayerProfile.class);
+                        intent.putExtra("playerUserName", thisplayerUsername);
+                        intent.putExtra("playerHash", playerHash);
+                        startActivity(intent);
+                        // since startActivity is asynchronous call, i needed to use "exist" loic to toast
+                    }
+                }
+                // case: invalid userName
+                if (!exist) {
+                    Toast.makeText(OtherPlayers.this, "Username Don't exist", Toast.LENGTH_SHORT).show();
+                }
+                searchbox.setText("");
             }
         });
     }
