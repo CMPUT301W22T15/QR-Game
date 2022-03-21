@@ -83,7 +83,7 @@ public class OtherPlayerProfile extends AppCompatActivity {
 
         TextView emailTextView = findViewById(R.id.OtherPlayerProfileEmail);
         emailTextView.setText("email: " + player.getEmail());
-        
+
         TextView qrCodeTitle = findViewById(R.id.OtherPlayerProfileQRcodeTitle);
         qrCodeTitle.setText(playerUserName + "'s QRCODES:");
     }
