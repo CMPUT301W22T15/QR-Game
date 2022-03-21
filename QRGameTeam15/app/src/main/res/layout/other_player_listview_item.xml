@@ -30,7 +30,7 @@
             android:padding="15dp"
             android:text="TotalScore"
             android:textAlignment="center"
-            android:textSize="20dp"></TextView>
+            android:textSize="14sp"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"

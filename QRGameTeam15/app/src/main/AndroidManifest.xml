@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QRGameTeam15">
         <activity
+            android:name=".OtherPlayerProfile"
+            android:exported="false" />
+        <activity
             android:name=".PlayerRanking"
             android:exported="false" />
         <activity
