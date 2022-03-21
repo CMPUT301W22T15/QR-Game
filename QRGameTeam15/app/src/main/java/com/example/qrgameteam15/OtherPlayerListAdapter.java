@@ -43,7 +43,7 @@ public class OtherPlayerListAdapter extends ArrayAdapter<Player> {
         TextView otherPlayerRank = view.findViewById(R.id.otherPlayerrankID);
 
         otherPlayerName.setText(player.getUsername());
-        otherPlayerScore.setText("total score: " + Integer.toString(player.getScore()));
+        otherPlayerScore.setText("totalScore: " + Integer.toString(player.getTotalScore()));
         otherPlayerNScanned.setText("scanned: " + Integer.toString(player.numberOfCode()) + "codes");
         otherPlayerRank.setText("rank: 0");  // TODO: cmput player rank
 

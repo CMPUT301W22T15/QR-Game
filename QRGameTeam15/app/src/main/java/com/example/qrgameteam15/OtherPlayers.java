@@ -3,7 +3,10 @@ package com.example.qrgameteam15;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -43,6 +46,19 @@ public class OtherPlayers extends AppCompatActivity {
                     allPlayers.add(p);
                 }
                 playerAdapter.notifyDataSetChanged();
+            }
+        });
+
+        playerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Player clickedPLayer = allPlayers.get(position);
+                String playerUserName = clickedPLayer.getUsername();
+                String playerHash = clickedPLayer.getPlayerHash();
+                Intent intent = new Intent(OtherPlayers.this, OtherPlayerProfile.class);
+                intent.putExtra("playerUserName", playerUserName);
+                intent.putExtra("playerHash", playerHash);
+                startActivity(intent);
             }
         });
     }
