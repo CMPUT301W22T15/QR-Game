@@ -11,6 +11,7 @@ public class Player {
     private int score;
     private String playerHash;
     private String email;
+    private Boolean isOwner;
 
     // this constructor is required for adding this class to firebase
     Player() {
@@ -28,6 +29,7 @@ public class Player {
         this.qrCodes = new ArrayList<>();
         this.score = score;
         this.email = email;
+        this.isOwner = false;
         // create the sha256 hash (hex) ------------------
         // Method from https://www.baeldung.com/sha-256-hashing-java
         MessageDigest digest;
@@ -81,6 +83,14 @@ public class Player {
             System.err.println("Constructor in QRCode error, sha-256 no such algorithm exception");
         }
         this.playerHash += ("-" + this.email);
+    }
+
+    public Boolean getOwner() {
+        return isOwner;
+    }
+
+    public void setOwner(Boolean owner) {
+        isOwner = owner;
     }
 
     /**

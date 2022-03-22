@@ -24,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -145,26 +146,44 @@ public class NewUser extends AppCompatActivity {
         final CollectionReference collectionReference = db.collection("Players");
         singletonPlayer.player = new Player(username,0, email);
 
-        collectionReference
-                .document(username)
-                .set(SingletonPlayer.player)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
+        if (username.equals("gaethje")){
+            singletonPlayer.player.setOwner(true);
+            collectionReference
+                    .document(username)
+                    .set(SingletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Intent intent = new Intent(getApplicationContext(), OwnerMenu.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                        }
+                    });
 
-                    }
-                });
-        usernameEdit.setText("");
+        }else{
+            collectionReference
+                    .document(username)
+                    .set(SingletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Intent intent = new Intent(getApplicationContext(), UserMenu.class);
+                            intent.putExtra("userMenu_act", username);
+                            startActivity(intent);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-        Intent intent = new Intent(getApplicationContext(), UserMenu.class);
-        intent.putExtra("userMenu_act", username);
-        startActivity(intent);
+                        }
+                    });
+        }
     }
 
 }

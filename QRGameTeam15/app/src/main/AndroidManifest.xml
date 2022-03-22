@@ -32,6 +32,8 @@
         <activity
             android:name=".TakePhoto"
             android:exported="false" />
+        <activity android:name=".OwnerMenu"
+            android:exported="false"/>
         <activity
             android:name=".UserMenu"
             android:exported="false" />
