@@ -1,5 +1,6 @@
 package com.example.qrgameteam15;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,8 +26,8 @@ public class OwnerMenu extends AppCompatActivity {
         ownerMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Do Something
-
+                Intent intent = new Intent(getApplicationContext(),ownerListPlayers.class);
+                startActivity(intent);
             }
         });
     }

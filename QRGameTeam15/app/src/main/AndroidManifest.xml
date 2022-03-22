@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QRGameTeam15">
         <activity
+            android:name=".ownerPlayerProfile"
+            android:exported="false" />
+        <activity
+            android:name=".ownerListPlayers"
+            android:exported="false" />
+        <activity
             android:name=".OtherPlayerProfile"
             android:exported="false" />
         <activity
@@ -32,8 +38,9 @@
         <activity
             android:name=".TakePhoto"
             android:exported="false" />
-        <activity android:name=".OwnerMenu"
-            android:exported="false"/>
+        <activity
+            android:name=".OwnerMenu"
+            android:exported="false" />
         <activity
             android:name=".UserMenu"
             android:exported="false" />

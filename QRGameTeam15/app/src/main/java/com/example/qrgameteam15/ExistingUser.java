@@ -137,15 +137,23 @@ public class ExistingUser extends AppCompatActivity {
                     if (documentSnapshot.exists()){
                         singletonPlayer.player = documentSnapshot.toObject(Player.class);
                         Log.d("Success","12");
+
+                        if (singletonPlayer.player.getOwner() == true){
+                            // Open new activity
+                            Intent intent = new Intent(getApplicationContext(), OwnerMenu.class);
+                            startActivity(intent);
+                        }else{
+                            // Open new activity
+                            Intent intent = new Intent(getApplicationContext(), UserMenu.class);
+                            intent.putExtra("userMenu_session", (String) null);
+                            startActivity(intent);
+                        }
                     }
                 }
             }
         });
 
-        // Open new activity
-        Intent intent = new Intent(getApplicationContext(), UserMenu.class);
-        intent.putExtra("userMenu_session", (String) null);
-        startActivity(intent);
+
 
     }
 
