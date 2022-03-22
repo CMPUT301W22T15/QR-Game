@@ -15,7 +15,7 @@
             android:id="@+id/ownerPlayerHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Other Players"
+            android:text="Players"
             android:textSize="34sp" />
 
         <ListView
