@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,6 +38,8 @@ public class QRCodeEditor extends AppCompatActivity {
     private EditText commentInput;
     private Button postComment;
 
+    private QRCode QR;
+
     /**
      * This method creates the inital interface and obtains the necessary permissions
      * @param savedInstanceState
@@ -58,8 +61,9 @@ public class QRCodeEditor extends AppCompatActivity {
 
         // Get intent
         Intent intent = this.getIntent();
-        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
-
+//        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
+        QR = (QRCode) getIntent().getParcelableExtra("QRCodeValue");
+        int scoreValue = QR.getScore();
         // Set score value
         score.setText("Score: " + String.valueOf(scoreValue));
 
@@ -83,6 +87,13 @@ public class QRCodeEditor extends AppCompatActivity {
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
         commentSection.setAdapter(commentAdapter);
 
+        addPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePhotoIntent = new Intent(getApplicationContext(), TakePhoto.class );
+                takePhotoIntent.putExtra("QRCodeFromEditor", (Parcelable) QR);
+            }
+        });
 
         }
 

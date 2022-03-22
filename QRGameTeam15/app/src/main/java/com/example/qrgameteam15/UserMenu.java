@@ -71,11 +71,6 @@ public class UserMenu extends AppCompatActivity {
                     startActivity(intent);
                 } else if (position == 3) {
 
-//                    //EL-start testing remove later
-//                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
-//                    startActivity(intent);
-//                    //EL-end testing remove later
-
                     Intent intent = new Intent(getApplicationContext(), PlayerRanking.class);
                     startActivity(intent);
 
@@ -87,6 +82,11 @@ public class UserMenu extends AppCompatActivity {
                     startActivity(intent);
                     //EL-end
                 } else if (position == 5) {
+
+                    //EL-start testing remove later
+                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+                    startActivity(intent);
+                    //EL-end testing remove later
 
                 } else if (position == 6) {
                     Intent intent = new Intent(getApplicationContext(), OtherPlayers.class);

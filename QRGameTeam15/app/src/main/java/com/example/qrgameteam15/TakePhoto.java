@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,10 +40,18 @@ public class TakePhoto extends AppCompatActivity {
     private ImageView imageView;
 
     private String currentPhotoPath;
+    private String filename;
     Uri imageUri = null;
+
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
+
+    //EL Start - added 20220321, need testing
+    private FirebaseFirestore db;
+    private CollectionReference collectionReference;
+    private QRCode QR;
+    //EL End - added 20220321, need testing
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -55,7 +66,12 @@ public class TakePhoto extends AppCompatActivity {
                         //display the captured photo to the image view
                         imageView.setImageURI(imageUri);
 
-                        uploadImage(file.getName());
+                        filename = file.getName();
+                        uploadImage();
+
+                        //EL Start - added 20220321, need testing
+                        addPhotoToQRCode();
+                        //EL End - added 20220321, need testing
                     }
                 }
             }
@@ -72,6 +88,13 @@ public class TakePhoto extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        //EL Start - added 20220321, need testing
+        db = FirebaseFirestore.getInstance();
+        collectionReference = db.collection("Players");
+
+        QR = (QRCode) getIntent().getParcelableExtra("QRCodeFromEditor");
+        //EL End - added 20220321, need testing
 
         takePhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,9 +153,11 @@ public class TakePhoto extends AppCompatActivity {
      *
      * @param fileName
      */
-    private void uploadImage(String fileName){
+    private void uploadImage(){
+        String username = SingletonPlayer.player.getUsername();
+//        StorageReference imageRef = storageReference.child("images_em/" + fileName);
+        StorageReference imageRef = storageReference.child(username + "/" + filename);
 
-        StorageReference imageRef = storageReference.child("images_em/" + fileName);
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -149,4 +174,31 @@ public class TakePhoto extends AppCompatActivity {
                     }
                 });
     }
+
+    //EL Start - added 20220321, need testing
+    public void addPhotoToQRCode() {
+        QR.setImageIDString(filename);
+        String TAG = "add photo to QRCode working";
+        collectionReference
+                .document(SingletonPlayer.player.getUsername())
+                .set(SingletonPlayer.player)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG,"message");
+                        Toast.makeText(TakePhoto.this, "Add to QRCode successful.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("MYAPP", "exception: " + e.getMessage());
+                        Log.e("MYAPP", "exception: " + e.toString());
+                        Toast.makeText(TakePhoto.this, "Add to QRCode FAILED.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+    //EL End - added 20220321, need testing
+
 }
