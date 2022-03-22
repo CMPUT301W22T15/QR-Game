@@ -5,5 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ownerPlayerProfile">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/ownerPlayerProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/ownerPlayerProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/ownerPlayerProfileScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/ownerPlayerProfileQRcodeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="TextView"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <ListView
+            android:id="@+id/ownerPlayerProfileListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

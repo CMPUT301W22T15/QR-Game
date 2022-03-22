@@ -1,10 +1,14 @@
 package com.example.qrgameteam15;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +34,7 @@ public class ownerListPlayers extends AppCompatActivity {
     FirebaseFirestore db;
     ArrayAdapter<Player> playerAdapter;
     ListView playerList;
+    SingletonPlayer singletonPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,53 @@ public class ownerListPlayers extends AppCompatActivity {
                 intent.putExtra("playerUserName", playerUserName);
                 intent.putExtra("playerHash", playerHash);
                 startActivity(intent);
+            }
+        });
+
+        playerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Item to be deleted
+                final int deletePlayer = i;
+
+                new AlertDialog.Builder(ownerListPlayers.this)
+                        .setIcon(android.R.drawable.ic_delete)
+                        .setTitle("Confirm removal")
+                        .setMessage("Would you like to remove player?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                // Delete any players we chose
+                                // URL: https://firebase.google.com/docs/firestore/manage-data/delete-data
+                                // Date: 2021-11-11 UTC
+
+                                // Update database with the removed data
+                                String TAG = "working";
+                                collectionReference
+                                        .document(allPlayers.get(deletePlayer).getUsername())
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Log.d(TAG,"message");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("MYAPP", "exception: " + e.getMessage());
+                                                Log.e("MYAPP", "exception: " + e.toString());
+                                            }
+                                        });
+                                // Update ranking again
+
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+
+                return true;
             }
         });
 //        Button searchConfirmButton = findViewById(R.id.searchConfirmButton);
