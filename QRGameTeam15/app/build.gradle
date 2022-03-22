@@ -61,6 +61,7 @@ dependencies {
         // URL: https://github.com/zxing/zxing
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
 
+
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:29.2.0')
 
@@ -73,4 +74,12 @@ dependencies {
     // Import the Firebase BoM
     implementation 'com.google.firebase:firebase-bom:29.2.0'
     //el-end:take photo
+
+    // QRGenerator
+        // MIT License
+        // URL: https://github.com/androidmads/QRGenerator
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
+    implementation 'com.google.zxing:core:3.3.2'
+
+
 }

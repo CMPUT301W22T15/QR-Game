@@ -25,9 +25,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * This activity displays a list of all the user's scans
+ * User can click on a scan to obtain more information
+ * User can long click on a scan to delete
+ */
 public class MyScans extends AppCompatActivity implements ViewQRCodeFragment.OnFragmentInteractionListener {
-    SingletonPlayer singletonPlayer;
     // Initialize list of content
+    SingletonPlayer singletonPlayer;
     ArrayList<QRCode> qrCodes;
     ArrayAdapter<QRCode> scanAdapter;
     TextView totalScans;
@@ -36,14 +41,19 @@ public class MyScans extends AppCompatActivity implements ViewQRCodeFragment.OnF
     Button displayExtremum;
     FirebaseFirestore db;
 
-
+    /**
+     * This method sets up the initial user interface
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_scans);
 
+        // Set up variable
         ListView scanList =  findViewById(R.id.scan_list);
 
+        // Obtain list of QRCodes
         qrCodes = singletonPlayer.player.getQrCodes();
 
         // Create list adapter

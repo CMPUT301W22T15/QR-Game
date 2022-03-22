@@ -28,7 +28,7 @@ public class UserMenu extends AppCompatActivity {
     //EditText menuItem;
     ArrayAdapter<String> menuAdapter;
     FirebaseFirestore db;
-//    SingletonPlayer singletonPlayer = new SingletonPlayer();
+    SingletonPlayer singletonPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,11 @@ public class UserMenu extends AppCompatActivity {
 //        db = FirebaseFirestore.getInstance();
 //        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
 
+//        Intent intent = getIntent();
+//        String name = intent.getStringExtra("userMenu_act");
+//        SingletonPlayer.player.setUsername(name);
+
+        
         menuList = findViewById(R.id.userMenu_list);
 
         String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Take Photo", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
@@ -53,7 +58,8 @@ public class UserMenu extends AppCompatActivity {
                 /** To do ... call different activities when any menu item is clicked... so far only scan
                  * new code has been implemented */
                 if (position == 0) {
-
+                    Intent intent = new Intent(getApplicationContext(), PlayerProfile.class);
+                    startActivity(intent);
                 } else if (position == 1) {
                     Intent intent = new Intent(getApplicationContext(), ScannerView.class);
                     startActivity(intent);
@@ -64,10 +70,15 @@ public class UserMenu extends AppCompatActivity {
 //                    intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 3) {
-                    //EL-start
-                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+
+//                    //EL-start testing remove later
+//                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
+//                    startActivity(intent);
+//                    //EL-end testing remove later
+
+                    Intent intent = new Intent(getApplicationContext(), PlayerRanking.class);
                     startActivity(intent);
-                    //EL-end
+
 
                 } else if (position == 4) {
                     //EL-start

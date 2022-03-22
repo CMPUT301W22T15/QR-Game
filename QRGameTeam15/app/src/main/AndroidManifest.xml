@@ -16,6 +16,15 @@
         android:theme="@style/Theme.QRGameTeam15">
         <activity
             android:name=".GameMap"
+        android:exported="false" />
+        <activity
+            android:name=".OtherPlayerProfile"
+            android:exported="false" />
+        <activity
+            android:name=".PlayerRanking"
+            android:exported="false" />
+        <activity
+            android:name=".PlayerProfile"
             android:exported="false" />
         <activity
             android:name=".OtherPlayers"
@@ -26,6 +35,8 @@
         <activity
             android:name=".TakePhoto"
             android:exported="false" />
+        <activity android:name=".OwnerMenu"
+            android:exported="false"/>
         <activity
             android:name=".UserMenu"
             android:exported="false" />

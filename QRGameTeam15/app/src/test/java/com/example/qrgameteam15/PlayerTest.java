@@ -19,7 +19,7 @@ public class PlayerTest {
     @Test
     public void addQRCodeTest() {
         String username = "manny pacquiao";
-        testPlayer = new Player(username, 0);
+        testPlayer = new Player(username, 0, "@email");
         QRCode qrToAdd = new QRCode("hello", "edmonton");
         testPlayer.addQrcode(qrToAdd);
         assertEquals(1, testPlayer.numberOfCode());
@@ -27,7 +27,7 @@ public class PlayerTest {
     @Test
     public void hasQRcodeTest() {
         String username = "manny pacquiao";
-        testPlayer = new Player(username, 0);
+        testPlayer = new Player(username, 0, "@emmail");
         QRCode qrToAdd = new QRCode("hello", "edmonton");
         testPlayer.addQrcode(qrToAdd);
 
@@ -40,5 +40,14 @@ public class PlayerTest {
     //TODO test remove qrcode after you guys implement it
 
     // TODO UNCOMMENT OUT "this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();" in QRCode constructor
-
+    @Test
+    public void createPlayerHashTest() {
+        String username = "john";
+        testPlayer = new Player(username, 0, "");
+        System.out.printf("player hash before: %s\n", testPlayer.getPlayerHash());
+        testPlayer.setEmail("bob@gmail.com");
+        testPlayer.createPlayerHash();
+        System.out.printf("player hash after : %s", testPlayer.getPlayerHash());
+        assertEquals(0, 0);
+    }
 }
