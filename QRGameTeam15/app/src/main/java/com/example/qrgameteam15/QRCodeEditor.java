@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -80,6 +81,8 @@ public class QRCodeEditor extends AppCompatActivity {
         commentInput = findViewById(R.id.comment_editor);
         postComment = findViewById(R.id.submit_comment);
         db = FirebaseFirestore.getInstance();
+        // Initialize fusedLocationProviderClient
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         collectionReference = db.collection("Players");
 
 
