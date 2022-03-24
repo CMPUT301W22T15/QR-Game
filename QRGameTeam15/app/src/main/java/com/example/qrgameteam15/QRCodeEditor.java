@@ -151,11 +151,14 @@ public class QRCodeEditor extends AppCompatActivity {
                         String latitudeString = Double.toString(addresses.get(0).getLatitude());
                         String longitudeString = Double.toString(addresses.get(0).getLongitude());
                         int lengthQRCode = singletonPlayer.player.qrCodes.size();
-                        String locationString = latitudeString+"-"+longitudeString;
+                        String locationString = latitudeString+" "+longitudeString;  //TODO changed "-" to ""
                         QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+                        // [0, 1, 2]
                         qrCode.idObject.setLocationStr(locationString);
                         String hashLoc = qrCode.getSha256Hex();
                         qrCode.idObject.setHashedID(hashLoc +"-"+ locationString);
+                        qrCode.setLocation(locationString);
+                        qrCode.hasLocation = true;
                         singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
                         String TAG = "working";
                         collectionReference
@@ -218,7 +221,6 @@ public class QRCodeEditor extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-
     }
     public void addPhotos(View view) {
         Intent takePhotoIntent = new Intent(getApplicationContext(), TakePhoto.class );
