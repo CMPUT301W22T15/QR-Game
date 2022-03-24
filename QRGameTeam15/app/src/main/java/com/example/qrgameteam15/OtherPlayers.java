@@ -112,6 +112,7 @@ public class OtherPlayers extends AppCompatActivity {
             }
         });
 
+        // Be able to scan a button to search for a user
         Button scanCodeButton = findViewById(R.id.scan_player_code);
         scanCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
