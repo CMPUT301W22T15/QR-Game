@@ -3,6 +3,8 @@
     package="com.example.qrgameteam15">
     <!-- Add permission to use camera and autofocus -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -16,7 +18,13 @@
         android:theme="@style/Theme.QRGameTeam15">
         <activity
             android:name=".GameMap"
-        android:exported="false" />
+            android:exported="false" />
+        <activity
+            android:name=".ownerPlayerProfile"
+            android:exported="false" />
+        <activity
+            android:name=".ownerListPlayers"
+            android:exported="false" />
         <activity
             android:name=".OtherPlayerProfile"
             android:exported="false" />
@@ -35,8 +43,9 @@
         <activity
             android:name=".TakePhoto"
             android:exported="false" />
-        <activity android:name=".OwnerMenu"
-            android:exported="false"/>
+        <activity
+            android:name=".OwnerMenu"
+            android:exported="false" />
         <activity
             android:name=".UserMenu"
             android:exported="false" />
