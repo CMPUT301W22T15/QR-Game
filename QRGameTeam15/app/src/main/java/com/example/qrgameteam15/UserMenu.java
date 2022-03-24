@@ -59,7 +59,7 @@ public class UserMenu extends AppCompatActivity {
 
         menuList = findViewById(R.id.userMenu_list);
 
-        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Take Photo", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
+        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
 
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);
