@@ -3,6 +3,7 @@ package com.example.qrgameteam15;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -16,7 +17,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.Result;
@@ -94,11 +97,63 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
         //TakePhoto.playerName.setText(rawResult.getText());
         Toast.makeText(ScannerView2.this, rawResult.getText(), Toast.LENGTH_SHORT).show();
         System.out.print(rawResult.getText());
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("playerhash", rawResult.getText());
-        setResult(ExistingUser.RESULT_OK, returnIntent);
-        finish();
-        onBackPressed();
+
+        // Check to see which activity this came from
+        Intent intent = this.getIntent();
+        Bundle extras = intent.getExtras();
+        boolean playerProfile = false;
+        if (extras != null) {
+            playerProfile = (boolean) extras.get("scanProfileCode");
+        }
+
+        if (playerProfile) {
+            // Get User Information
+            db = FirebaseFirestore.getInstance();
+            CollectionReference collectionReference = db.collection("Players");
+
+            // Obtain list of players
+            collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                    allPlayers.clear();
+                    for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
+                        Player p = doc.toObject(Player.class);
+                        allPlayers.add(p);
+                    }
+                    openPlayerProfile(rawResult.getText().toString());
+                }
+            });
+
+        } else  {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("playerhash", rawResult.getText());
+            setResult(ExistingUser.RESULT_OK, returnIntent);
+            finish();
+            onBackPressed();
+        }
+
+
+    }
+
+    /**
+     * This method will open the OtherPlayerProfile activity depending on the userScan
+     * @param playerHash
+     * This string represents the HashedID of the user
+     */
+    private void openPlayerProfile(String playerHash) {
+        String userName;
+        for (Player user: allPlayers) {
+            if (user.getPlayerHash().equals(playerHash)) {
+                userName = user.getUsername();
+
+                Intent profileIntent = new Intent(ScannerView2.this, OtherPlayerProfile.class);
+                profileIntent.putExtra("playerUserName", userName);
+                profileIntent.putExtra("playerHash", playerHash);
+                startActivity(profileIntent);
+                break;
+            }
+        }
+
 
     }
 

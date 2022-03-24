@@ -27,10 +27,9 @@
             android:layout_height="60dp"
             android:layout_weight="33.3"
             android:gravity="center"
-            android:padding="15dp"
             android:text="TotalScore"
             android:textAlignment="center"
-            android:textSize="14sp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:text="scanned:"
+                android:text="Scanned:"
                 android:textAlignment="center"
                 android:textSize="15dp"></TextView>
 
@@ -52,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:text="rank:"
+                android:text="High Score:"
                 android:textAlignment="center"
                 android:textSize="15dp"></TextView>
 
