@@ -177,7 +177,9 @@ public class TakePhoto extends AppCompatActivity {
 
     //EL Start - added 20220321, need testing
     public void addPhotoToQRCode() {
+        SingletonPlayer.player.qrCodes.remove(QR);
         QR.setImageIDString(filename);
+        SingletonPlayer.player.qrCodes.add(QR);
         String TAG = "add photo to QRCode working";
         collectionReference
                 .document(SingletonPlayer.player.getUsername())
