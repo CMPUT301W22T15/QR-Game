@@ -109,9 +109,12 @@ public class GameMap extends AppCompatActivity {
         map.onResume();
     }
 
+    /**
+     * given an array of All players. get all location of the qrcode and put it on the OSM
+     */
     public void populateMap() {
         ArrayList<QRCode> qrCodes = new ArrayList<>();
-        assert(globalAllPlayers.allPlayers.size() > 0);
+        //assert(globalAllPlayers.allPlayers.size() > 0);
         for (int i = 0; i < globalAllPlayers.allPlayers.size(); i++) {
             qrCodes = globalAllPlayers.allPlayers.get(i).qrCodes;
             for (int j = 0; j < qrCodes.size(); j++) {

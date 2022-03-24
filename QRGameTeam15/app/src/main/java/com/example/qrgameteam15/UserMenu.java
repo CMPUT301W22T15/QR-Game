@@ -36,7 +36,7 @@ public class UserMenu extends AppCompatActivity {
     ArrayAdapter<String> menuAdapter;
     FirebaseFirestore db;
     SingletonPlayer singletonPlayer;
-    public GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();
+    public GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();  // to fetch all aplayers from database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +108,7 @@ public class UserMenu extends AppCompatActivity {
             }
         });
 
-        // FOR the sore purpose to fetch all player document to
+        // FOR the sore purpose to have all the players before going to Gamemap activity.
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
