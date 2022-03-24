@@ -30,7 +30,7 @@ public class QRCodeEditor extends AppCompatActivity {
     private TextView newScan;
     private TextView score;
     private Button addGeolocation;
-    private Button addPhoto;
+    //private Button addPhoto;
     private Button save;
     private ListView commentSection;
     private ArrayList<String> comments;
@@ -53,7 +53,7 @@ public class QRCodeEditor extends AppCompatActivity {
         newScan = findViewById(R.id.new_scan);
         score = findViewById(R.id.score);
         addGeolocation = findViewById(R.id.geolocation_option);
-        addPhoto = findViewById(R.id.object_photo_option);
+        //addPhoto = findViewById(R.id.object_photo_option);
         save = findViewById(R.id.save);
         commentSection = findViewById(R.id.comments);
         commentInput = findViewById(R.id.comment_editor);
@@ -86,14 +86,6 @@ public class QRCodeEditor extends AppCompatActivity {
         comments = new ArrayList<>();
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
         commentSection.setAdapter(commentAdapter);
-
-        addPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent takePhotoIntent = new Intent(getApplicationContext(), TakePhoto.class );
-                takePhotoIntent.putExtra("QRCodeFromEditor", (Parcelable) QR);
-            }
-        });
 
         }
 
@@ -135,6 +127,10 @@ public class QRCodeEditor extends AppCompatActivity {
         };
 
     }
-
+    public void addPhotos(View view) {
+        Intent takePhotoIntent = new Intent(getApplicationContext(), TakePhoto.class );
+        takePhotoIntent.putExtra("QRCodeFromEditor", (Parcelable) QR);
+        startActivity(takePhotoIntent);
+    }
 
 }

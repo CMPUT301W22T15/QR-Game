@@ -149,10 +149,7 @@ public class TakePhoto extends AppCompatActivity {
         return image;
     }
 
-    /**
-     *
-     * @param fileName
-     */
+
     private void uploadImage(){
         String username = SingletonPlayer.player.getUsername();
 //        StorageReference imageRef = storageReference.child("images_em/" + fileName);
@@ -179,8 +176,10 @@ public class TakePhoto extends AppCompatActivity {
     public void addPhotoToQRCode() {
         SingletonPlayer.player.qrCodes.remove(QR);
         QR.setImageIDString(filename);
+        QR.setHasPhoto(true);
+        //Toast.makeText(TakePhoto.this, filename, Toast.LENGTH_LONG).show();
         SingletonPlayer.player.qrCodes.add(QR);
-        String TAG = "add photo to QRCode working";
+        String TAG = "add photo QR working";
         collectionReference
                 .document(SingletonPlayer.player.getUsername())
                 .set(SingletonPlayer.player)
