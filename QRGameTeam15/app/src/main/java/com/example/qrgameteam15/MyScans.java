@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 import android.view.View;
@@ -113,7 +115,10 @@ public class MyScans extends AppCompatActivity implements ViewQRCodeFragment.OnF
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //get the item clicked from the list.
                 QRCode qrcode = qrCodes.get(i);
-                new ViewQRCodeFragment(qrcode).show(getSupportFragmentManager(), "View QR code");
+                Intent intent = new Intent(getApplicationContext(), ViewQRCode.class);
+                intent.putExtra("qrcode_info", (Parcelable) qrcode);
+                startActivity(intent);
+                //new ViewQRCodeFragment(qrcode).show(getSupportFragmentManager(), "View QR code");
             }
         });
 

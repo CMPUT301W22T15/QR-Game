@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QRGameTeam15">
         <activity
+            android:name=".ViewQRCode"
+            android:exported="false" />
+        <activity
             android:name=".PlayerProfile"
             android:exported="false" />
         <activity

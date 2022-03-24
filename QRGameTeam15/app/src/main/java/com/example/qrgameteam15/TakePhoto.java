@@ -35,7 +35,7 @@ public class TakePhoto extends AppCompatActivity {
     ArrayAdapter<Player> playerAdapter;
     ArrayList<Player> playerDataList;
 
-    CustomList customList;
+    //CustomList customList;
 
     final String TAG = "Player";
     Button addPlayerButton;

@@ -1,5 +1,7 @@
 package com.example.qrgameteam15;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.format.DateFormat;
 
 import java.nio.charset.StandardCharsets;
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class QRCode {
+public class QRCode implements Parcelable {
     // Initialize variables
     static String dateStr;
     String key;
@@ -63,6 +65,25 @@ public class QRCode {
     }
 
     // Getters and Setters
+
+    protected QRCode(Parcel in) {
+        key = in.readString();
+        sha256Hex = in.readString();
+        location = in.readString();
+        id = in.readString();
+    }
+
+    public static final Creator<QRCode> CREATOR = new Creator<QRCode>() {
+        @Override
+        public QRCode createFromParcel(Parcel in) {
+            return new QRCode(in);
+        }
+
+        @Override
+        public QRCode[] newArray(int size) {
+            return new QRCode[size];
+        }
+    };
 
     /**
      * setter for date
@@ -191,6 +212,19 @@ public class QRCode {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(key);
+        parcel.writeString(sha256Hex);
+        parcel.writeString(location);
+        parcel.writeString(id);
     }
 
 //    public int findScore(QRCode qrCode){

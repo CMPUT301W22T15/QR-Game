@@ -52,6 +52,7 @@ public class ViewQRCodeFragment extends DialogFragment {
 //
 //        attributes.setText(attributesQR);
 
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
