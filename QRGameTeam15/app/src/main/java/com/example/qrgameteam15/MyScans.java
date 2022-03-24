@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * User can click on a scan to obtain more information
  * User can long click on a scan to delete
  */
-public class MyScans extends AppCompatActivity implements ViewQRCodeFragment.OnFragmentInteractionListener {
+public class MyScans extends AppCompatActivity {
     // Initialize list of content
     SingletonPlayer singletonPlayer;
     ArrayList<QRCode> qrCodes;
