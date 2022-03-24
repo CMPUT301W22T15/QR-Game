@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -50,7 +51,7 @@ public class QRCodeEditor extends AppCompatActivity {
     private TextView newScan;
     private TextView score;
     private Button addGeolocation;
-    private Button addPhoto;
+    //private Button addPhoto;
     private Button save;
     private ListView commentSection;
     private ArrayList<String> comments;
@@ -61,6 +62,8 @@ public class QRCodeEditor extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
     FirebaseFirestore db;
     CollectionReference collectionReference;
+
+    private QRCode QR;
 
     /**
      * This method creates the inital interface and obtains the necessary permissions
@@ -75,7 +78,7 @@ public class QRCodeEditor extends AppCompatActivity {
         newScan = findViewById(R.id.new_scan);
         score = findViewById(R.id.score);
         addGeolocation = findViewById(R.id.geolocation_option);
-        addPhoto = findViewById(R.id.object_photo_option);
+        //addPhoto = findViewById(R.id.object_photo_option);
         save = findViewById(R.id.save);
         commentSection = findViewById(R.id.comments);
         commentInput = findViewById(R.id.comment_editor);
@@ -88,8 +91,9 @@ public class QRCodeEditor extends AppCompatActivity {
 
         // Get intent
         Intent intent = this.getIntent();
-        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
-
+//        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
+        QR = (QRCode) getIntent().getParcelableExtra("QRCodeValue");
+        int scoreValue = QR.getScore();
         // Set score value
         score.setText("Score: " + String.valueOf(scoreValue));
 
@@ -127,7 +131,6 @@ public class QRCodeEditor extends AppCompatActivity {
         comments = new ArrayList<>();
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
         commentSection.setAdapter(commentAdapter);
-
 
         }
 
@@ -217,6 +220,10 @@ public class QRCodeEditor extends AppCompatActivity {
         };
 
     }
-
+    public void addPhotos(View view) {
+        Intent takePhotoIntent = new Intent(getApplicationContext(), TakePhoto.class );
+        takePhotoIntent.putExtra("QRCodeFromEditor", (Parcelable) QR);
+        startActivity(takePhotoIntent);
+    }
 
 }
