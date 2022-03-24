@@ -116,7 +116,7 @@ public class MyScans extends AppCompatActivity implements ViewQRCodeFragment.OnF
                 //get the item clicked from the list.
                 QRCode qrcode = qrCodes.get(i);
                 Intent intent = new Intent(getApplicationContext(), ViewQRCode.class);
-                intent.putExtra("qrcode_info", (Parcelable) qrcode);
+                intent.putExtra("qrcode_info2", (Parcelable) qrcode);
                 startActivity(intent);
                 //new ViewQRCodeFragment(qrcode).show(getSupportFragmentManager(), "View QR code");
             }

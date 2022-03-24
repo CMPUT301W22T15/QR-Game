@@ -81,10 +81,6 @@ public class UserMenu extends AppCompatActivity {
                     //EL-end
                 } else if (position == 5) {
 
-                    //EL-start testing remove later
-                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
-                    startActivity(intent);
-                    //EL-end testing remove later
 
                 } else if (position == 6) {
                     Intent intent = new Intent(getApplicationContext(), OtherPlayers.class);

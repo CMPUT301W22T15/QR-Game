@@ -187,13 +187,11 @@ public class QRCode implements Parcelable {
         return location;
     }
 
-    /**
-     *
-     * @return True if this QRcode has photo attached to it, false otherwise
-     */
+
     public Boolean getHasPhoto() {
-        return this.hasPhoto;
+        return hasPhoto;
     }
+    
 
     /**
      * setter for HasPhoto attribue
