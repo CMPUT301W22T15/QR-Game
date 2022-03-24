@@ -151,8 +151,9 @@ public class QRCodeEditor extends AppCompatActivity {
                         String latitudeString = Double.toString(addresses.get(0).getLatitude());
                         String longitudeString = Double.toString(addresses.get(0).getLongitude());
                         int lengthQRCode = singletonPlayer.player.qrCodes.size();
-                        String locationString = latitudeString+""+longitudeString;  //TODO changed "-" to ""
+                        String locationString = latitudeString+" "+longitudeString;  //TODO changed "-" to ""
                         QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+                        // [0, 1, 2]
                         qrCode.idObject.setLocationStr(locationString);
                         String hashLoc = qrCode.getSha256Hex();
                         qrCode.idObject.setHashedID(hashLoc +"-"+ locationString);

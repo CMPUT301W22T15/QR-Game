@@ -31,6 +31,7 @@ public class GameMap extends AppCompatActivity {
     FirebaseFirestore db;
     ArrayList<Player> allPlayers;
     ArrayList<OverlayItem> items;
+    GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,21 +64,21 @@ public class GameMap extends AppCompatActivity {
         map = findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK); //render
         map.setBuiltInZoomControls(true); //zoomable
-        GeoPoint startPoint = new GeoPoint(53.600044, -113.530837);
+        GeoPoint startPoint = new GeoPoint(53.60004, -113.53083);
         IMapController mapController = map.getController();
         mapController.setCenter(startPoint);
         mapController.setZoom(18.0);
-        String go = "53.606863, -113.530837";
+        String go = "53.607426, -113.529866";
 
         //items = new ArrayList<>();
-        OverlayItem home = new OverlayItem("Em's test office", "my test office", new GeoPoint(43.65020, 7.00517));
+        OverlayItem home = new OverlayItem("Em's test office", "my test office", new GeoPoint(53.600044, -113.530837));
         Drawable m = home.getMarker(0);
 
         items.add(home);
-        items.add(new OverlayItem("Ajitt's test office", "Ajiit do some work", new GeoPoint(43.64950, 7.00517)));
+        //items.add(new OverlayItem("Ajitt's test office", "Ajiit do some work", new GeoPoint(43.64950, 7.00517)));
+        //items.add(new OverlayItem("Truonggggg", "Ajiit do some work", new GeoPoint(53.6085539, -113.53032780000001)));
 
-        //populateMap();
-
+        populateMap();
 
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getApplicationContext(),
                 items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
@@ -94,22 +95,6 @@ public class GameMap extends AppCompatActivity {
 
         mOverlay.setFocusItemsOnTap(true);
         map.getOverlays().add(mOverlay);
-
-
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                allPlayers.clear();
-                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
-                    Player p = doc.toObject(Player.class);
-                    allPlayers.add(p);
-                }
-                populateMap();
-                mOverlay.setFocusItemsOnTap(true);
-                map.getOverlays().add(mOverlay);
-                //displayMap();
-            }
-        });
     }
 
     @Override
@@ -125,62 +110,22 @@ public class GameMap extends AppCompatActivity {
     }
 
     public void populateMap() {
-
         ArrayList<QRCode> qrCodes = new ArrayList<>();
-        assert(allPlayers.size() > 0);
-        for (int i = 0; i < allPlayers.size(); i++) {
-            qrCodes = allPlayers.get(i).qrCodes;
+        assert(globalAllPlayers.allPlayers.size() > 0);
+        for (int i = 0; i < globalAllPlayers.allPlayers.size(); i++) {
+            qrCodes = globalAllPlayers.allPlayers.get(i).qrCodes;
             for (int j = 0; j < qrCodes.size(); j++) {
                 QRCode thisCode = qrCodes.get(j);
                 if (thisCode.getHasLocation() == true) {
+
                     String geolocation = qrCodes.get(j).getLocation();
-                    String latStr = geolocation.split("-")[0];
-                    String lonStr = geolocation.split("-")[1];
+                    String latStr = geolocation.split(" ")[0];
+                    String lonStr = geolocation.split(" ")[1];
                     double latDouble = Double.parseDouble(latStr);
                     double lonDouble = Double.parseDouble(lonStr);
                     items.add(new OverlayItem("truong", "bro", new GeoPoint(latDouble, lonDouble)));
                 }
             }
         }
-    }
-
-    public void displayMap() {
-        Configuration.getInstance().load(getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-
-        map = findViewById(R.id.map);
-        map.setTileSource(TileSourceFactory.MAPNIK); //render
-        map.setBuiltInZoomControls(true); //zoomable
-        GeoPoint startPoint = new GeoPoint(53.600044, -113.530837);
-        IMapController mapController = map.getController();
-        mapController.setCenter(startPoint);
-        mapController.setZoom(18.0);
-        String go = "53.606863, -113.530837";
-
-        //items = new ArrayList<>();
-        OverlayItem home = new OverlayItem("Em's test office", "my test office", new GeoPoint(43.65020, 7.00517));
-        Drawable m = home.getMarker(0);
-
-        items.add(home);
-        items.add(new OverlayItem("Ajitt's test office", "Ajiit do some work", new GeoPoint(43.64950, 7.00517)));
-
-        //populateMap();
-
-
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getApplicationContext(),
-                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-            @Override
-            public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
-            }
-
-            @Override
-            public boolean onItemLongPress(int index, OverlayItem item) {
-                return false;
-            }
-        });
-
-        mOverlay.setFocusItemsOnTap(true);
-        map.getOverlays().add(mOverlay);
     }
 }
