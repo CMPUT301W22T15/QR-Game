@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,6 +36,7 @@ public class NewUser extends AppCompatActivity {
     private EditText emailEdit;
     private EditText cityEdit;
     private Button createAccount;
+    private CheckBox rememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +48,43 @@ public class NewUser extends AppCompatActivity {
         nameEdit = (EditText) findViewById(R.id.name_text);
         emailEdit = (EditText) findViewById(R.id.email_text);
         cityEdit = (EditText) findViewById(R.id.city_region);
+        rememberMe = (CheckBox) findViewById(R.id.login_checkbox_new);
+        rememberMe.setEnabled(false);
         createAccount = (Button) findViewById(R.id.create_userBtn);
         createAccount.setEnabled(false);
 
         // Ensure username and email have been entered
         usernameEdit.addTextChangedListener(validTextWatcher);
         emailEdit.addTextChangedListener(validTextWatcher);
+        rememberMe.addTextChangedListener(validTextWatcher);
+
+        // Test to see if user wants to be remembers upon re-opening of application
+        // The concept of how to stay logged in was learned and obtained from:
+        // Video By: Stevdza-San
+        // Date: June 10, 2019
+        // URL: https://youtu.be/8pTcATGRDGM
+        rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                // Check if the box has been checked
+                if (compoundButton.isChecked()) {
+                    // Create key-value pair using SharedPreferences
+                    SharedPreferences preferences = getSharedPreferences("rememberMeBox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", usernameEdit.getText().toString());
+                    editor.apply();
+                    Toast.makeText(NewUser.this, "Persistence Enabled", Toast.LENGTH_SHORT).show();
+
+                } else if (!compoundButton.isChecked()) {
+                    // Create key-value pair using SharedPreferences
+                    SharedPreferences preferences = getSharedPreferences("rememberMeBox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "");
+                    editor.apply();
+                    Toast.makeText(NewUser.this, "Persistence Disabled", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
@@ -74,8 +111,10 @@ public class NewUser extends AppCompatActivity {
             // Check if valid
             if (usernameValid && emailValid) {
                 createAccount.setEnabled(true);
+                rememberMe.setEnabled(true);
             } else {
                 createAccount.setEnabled(false);
+                rememberMe.setEnabled(false);
             }
 
         }
@@ -107,26 +146,44 @@ public class NewUser extends AppCompatActivity {
         final CollectionReference collectionReference = db.collection("Players");
         singletonPlayer.player = new Player(username,0, email);
 
-        collectionReference
-                .document(username)
-                .set(SingletonPlayer.player)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
+        if (username.equals("gaethje")){
+            singletonPlayer.player.setOwner(true);
+            collectionReference
+                    .document(username)
+                    .set(SingletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Intent intent = new Intent(getApplicationContext(), OwnerMenu.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                        }
+                    });
 
-                    }
-                });
-        usernameEdit.setText("");
+        }else{
+            collectionReference
+                    .document(username)
+                    .set(SingletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Intent intent = new Intent(getApplicationContext(), UserMenu.class);
+                            intent.putExtra("userMenu_act", username);
+                            startActivity(intent);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-        Intent intent = new Intent(getApplicationContext(), UserMenu.class);
-        intent.putExtra("userMenu_act", (String) null);
-        startActivity(intent);
+                        }
+                    });
+        }
     }
 
 }

@@ -18,13 +18,16 @@ public class QRCode implements Parcelable {
     static int score;
     ID idObject;
     String sha256Hex;
-    static Boolean hasLocation = false;
-    static Boolean hasPhoto = false;
+    Boolean hasLocation;
+    Boolean hasPhoto;
     String location;
     String id;
+    String imageIDString;
 
     // Constructor required for adding this class to the firebase
     public QRCode(){
+        hasLocation = false;
+        hasPhoto = false;
 
     }
 
@@ -34,6 +37,8 @@ public class QRCode implements Parcelable {
      * @param location: the location,in "longtitude-latitute", where this code was scanned
      */
     public QRCode(String key, String location) {
+        hasLocation = false;
+        hasPhoto = false;
         this.key = key;
         Date date = new Date();
         this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();
@@ -71,6 +76,7 @@ public class QRCode implements Parcelable {
         sha256Hex = in.readString();
         location = in.readString();
         id = in.readString();
+        imageIDString = in.readString();
     }
 
     public static final Creator<QRCode> CREATOR = new Creator<QRCode>() {
@@ -225,10 +231,15 @@ public class QRCode implements Parcelable {
         parcel.writeString(sha256Hex);
         parcel.writeString(location);
         parcel.writeString(id);
+        parcel.writeString(imageIDString);
     }
 
-//    public int findScore(QRCode qrCode){
-//        score = new Score(qrCode).getScore();
-//        return score;
-//    }
+    public String getImageIDString() {
+        return this.imageIDString;
+    }
+
+    public void setImageIDString (String imageIDString) {
+        this.imageIDString = imageIDString;
+        //setHasPhoto(true);
+    }
 }

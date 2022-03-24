@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class ScannerView extends AppCompatActivity {
     TextView resultData;
     SingletonPlayer singletonPlayer;
     FirebaseFirestore db;
+
 
 
     /**
@@ -111,7 +113,8 @@ public class ScannerView extends AppCompatActivity {
                                 });
 
                         Intent intent = new Intent(ScannerView.this, QRCodeEditor.class);
-                        intent.putExtra("scoreValue", qrcode.getScore());
+//                        intent.putExtra("scoreValue", qrcode.getScore());
+                        intent.putExtra("QRCodeValue", (Parcelable) qrcode);
                         startActivity(intent);
                     }
                 });

@@ -1,64 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!-- updated by emily with take photo code (START)-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".TakePhoto">
-    <!-- TextView id: test_text and Button id: scan
-         Were created for the purposes of testing ScannerView and
-         may later be removed -->
 
-    <EditText
-        android:id="@+id/addUserName"
-        android:layout_width="75dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
-        android:hint="Add User Name" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button_takePhotoUpload"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Take Photo and Upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView_capturePhoto"
+        android:layout_width="406dp"
+        android:layout_height="620dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_takePhotoUpload"
+        app:srcCompat="@drawable/ic_launcher_background" />
 
-        <EditText
-            android:id="@+id/score"
-            android:layout_width="115dp"
-            android:layout_height="match_parent"
-            android:ems="8"
-            android:hint="Add Score">
-
-        </EditText>
-
-        <Button
-            android:id="@+id/scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Scan" />
-
-        <Button
-            android:id="@+id/addPlayer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="addPlayer" />
-
-        <TextView
-            android:id="@+id/playerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Player 1" />
-
-
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/player_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!-- updated by emily with take photo code (END)-->

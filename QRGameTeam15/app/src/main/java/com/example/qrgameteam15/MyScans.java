@@ -137,6 +137,7 @@ public class MyScans extends AppCompatActivity implements ViewQRCodeFragment.OnF
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Remove Session from listview
+                                singletonPlayer.player.qrCodes.remove(deleteQRCode);
                                 qrCodes.remove(deleteQRCode);
                                 scanAdapter.notifyDataSetChanged();
 
