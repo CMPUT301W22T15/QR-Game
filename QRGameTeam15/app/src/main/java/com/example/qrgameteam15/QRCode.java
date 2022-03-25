@@ -15,7 +15,7 @@ public class QRCode implements Parcelable {
     // Initialize variables
     static String dateStr;
     String key;
-    static int score;
+    int score;
     ID idObject;
     String sha256Hex;
     Boolean hasLocation;

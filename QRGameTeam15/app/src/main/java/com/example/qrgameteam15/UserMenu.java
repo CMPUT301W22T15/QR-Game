@@ -74,18 +74,13 @@ public class UserMenu extends AppCompatActivity {
                 } else if (position == 1) {
                     Intent intent = new Intent(getApplicationContext(), ScannerView.class);
                     startActivity(intent);
-
                 } else if (position == 2) {
                     Intent intent = new Intent(getApplicationContext(), MyScans.class);
-
 //                    intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 3) {
-
                     Intent intent = new Intent(getApplicationContext(), PlayerRanking.class);
                     startActivity(intent);
-
-
                 } else if (position == 4) {
                     // TODO: fetch player here?
 
