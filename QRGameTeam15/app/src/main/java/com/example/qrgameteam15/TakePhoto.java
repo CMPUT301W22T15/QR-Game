@@ -198,7 +198,6 @@ public class TakePhoto extends AppCompatActivity {
                         Toast.makeText(TakePhoto.this, "Add to QRCode FAILED.", Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
     //EL End - added 20220321, need testing
 
