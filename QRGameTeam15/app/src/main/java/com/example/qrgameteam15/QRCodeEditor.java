@@ -93,8 +93,11 @@ public class QRCodeEditor extends AppCompatActivity {
         Intent intent = this.getIntent();
 //        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
         QR = (QRCode) getIntent().getParcelableExtra("QRCodeValue");
-        int scoreValue = QR.getScore();
+        int lengthQRCode = singletonPlayer.player.qrCodes.size();
+        QRCode qrCodeLast = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+        int scoreValue = qrCodeLast.getScore();
         // Set score value
+
         score.setText("Score: " + String.valueOf(scoreValue));
 
         // Create the button listener
@@ -161,6 +164,7 @@ public class QRCodeEditor extends AppCompatActivity {
                         qrCode.hasLocation = true;
                         singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
                         String TAG = "working";
+                        Toast.makeText(QRCodeEditor.this, "saved geolocation", Toast.LENGTH_SHORT).show();
                         collectionReference
                                 .document(singletonPlayer.player.getUsername())
                                 .set(singletonPlayer.player)

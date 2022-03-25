@@ -6,6 +6,7 @@ import androidx.preference.PreferenceManager;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -120,13 +121,13 @@ public class GameMap extends AppCompatActivity {
             for (int j = 0; j < qrCodes.size(); j++) {
                 QRCode thisCode = qrCodes.get(j);
                 if (thisCode.getHasLocation() == true) {
-
                     String geolocation = qrCodes.get(j).getLocation();
                     String latStr = geolocation.split(" ")[0];
                     String lonStr = geolocation.split(" ")[1];
                     double latDouble = Double.parseDouble(latStr);
                     double lonDouble = Double.parseDouble(lonStr);
-                    items.add(new OverlayItem("truong", "bro", new GeoPoint(latDouble, lonDouble)));
+                    Log.i("latlong", latStr + " " + lonStr);
+                    items.add(new OverlayItem("name: " + thisCode.getKey(), "score: " + thisCode.getScore(), new GeoPoint(latDouble, lonDouble)));
                 }
             }
         }
