@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -39,9 +42,9 @@ public class ViewQRCode extends AppCompatActivity {
     private EditText commentInput;
     private Button postComment;
     private QRCode qrcode;
+
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private StorageReference photoRef;
 
     /**
      * This method creates the inital interface and obtains the necessary permissions
@@ -63,8 +66,12 @@ public class ViewQRCode extends AppCompatActivity {
         commentInput = findViewById(R.id.comment_editor);
         postComment = findViewById(R.id.submit_comment);
 
-        // display photo
-        displayPhotoFromFirebase();
+        // Create a storage reference from our app
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        //Display the image in the ImageView
+        retrieveBitmapImage();
 
         // Set values
         hashedID.setText("Hashed ID: " + qrcode.getId());
@@ -91,40 +98,39 @@ public class ViewQRCode extends AppCompatActivity {
         comments = new ArrayList<>();
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
         commentSection.setAdapter(commentAdapter);
-
-
     }
+
     /**
-     * This method displays the QR code photo if there is a photo associated to it stored
-     * in Firebase.
+     * This function displays the image associates with the corresponding QR code if exists.
      */
-    public void displayPhotoFromFirebase() {
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        String path = SingletonPlayer.player.getUsername() + "/" + qrcode.getImageIDString();
-        photoRef = storageReference.child(path);
+    private void retrieveBitmapImage() {
 
-        File localFile = null;
-        try {
-            localFile = File.createTempFile("images", "jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String filePath = SingletonPlayer.player.getUsername() + "/" + qrcode.getImageIDString();
+        StorageReference imageRef = storageReference.child(filePath);
 
-        File finalLocalFile = localFile;
-        photoRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Local temp file has been created
-                Uri imageUri = Uri.fromFile(finalLocalFile);
-                photo.setImageURI(imageUri);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        final long ONE_MEGABYTE = 1024 * 1024;
+        String TAG = "RETRIEVE_IMAGE";
+        imageRef.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        //Data for the image is returned
+                        Bitmap imageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                        //display the retrieved image in the ImageView
+                        photo.setImageBitmap(imageBitmap);
+                        Log.d(TAG, "Image retrieved successfully!");
+//                        Toast.makeText(ViewQRCode.this, "Image retrieved successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Handle any errors
+                        Log.d(TAG, "Image not retrieved, error: " + e.getMessage());
+//                        Toast.makeText(ViewQRCode.this, "Image not retrieved, error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
         photo = findViewById(R.id.qr_image);
     }
 
@@ -149,7 +155,6 @@ public class ViewQRCode extends AppCompatActivity {
         }
     }
 
-
     private View.OnClickListener saveQRCodeData() {
         return new View.OnClickListener() {
             /**
@@ -164,7 +169,5 @@ public class ViewQRCode extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-
     }
-
 }

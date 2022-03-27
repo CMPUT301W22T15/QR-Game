@@ -13,6 +13,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -44,6 +45,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -78,17 +80,40 @@ public class QRCodeEditor extends AppCompatActivity {
     FirebaseFirestore db;
     CollectionReference collectionReference;
 
-    private ImageView imageView;
-    private String currentPhotoPath;
-    private String filename;
-    Uri imageUri = null;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private QRCode QR;
-    
+
+
+    /**
+     * This replaces the deprecated function startActivityForResult
+     */
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+
+                @Override
+                public void onActivityResult(ActivityResult result) {
+
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null)
+                    {
+                        Bundle bundle = result.getData().getExtras();
+                        Bitmap bitmap = (Bitmap) bundle.get("data");
+
+                        String imageFilename = createImageFilename();
+                        //upload image to Firebase Storage as reduced size
+                        uploadImageBitmap(bitmap,imageFilename);
+
+                        //add the photo to the QR code scanned
+                        addPhotoToQRCode(imageFilename);
+                    }
+                }
+            }
+    );
 
     /**
      * This method creates the inital interface and obtains the necessary permissions
+     *
      * @param savedInstanceState
      */
     @Override
@@ -115,14 +140,10 @@ public class QRCodeEditor extends AppCompatActivity {
         Intent intent = this.getIntent();
 //        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
         QR = (QRCode) getIntent().getParcelableExtra("QRCodeValue");
-        
-        //EL Start - updated lengthQRCode, qrCodeLast to resolve .qrCodes reference error
+
         int lengthQRCode = singletonPlayer.player.qrCodes.size();
-        QRCode qrCodeLast = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+        QRCode qrCodeLast = singletonPlayer.player.qrCodes.get(lengthQRCode - 1);
 
-
-        //EL End - updated lengthQRCode, qrCodeLast to resolve .qrCodes reference error
-        
         int scoreValue = qrCodeLast.getScore();
         // Set score value
 
@@ -146,14 +167,14 @@ public class QRCodeEditor extends AppCompatActivity {
         addGeolocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ActivityCompat.checkSelfPermission(QRCodeEditor.this,
+                if (ActivityCompat.checkSelfPermission(QRCodeEditor.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(QRCodeEditor.this,
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     getLocation();
                 } else {
                     ActivityCompat.requestPermissions(QRCodeEditor.this,
-                            new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
                 }
             }
         });
@@ -163,7 +184,7 @@ public class QRCodeEditor extends AppCompatActivity {
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
         commentSection.setAdapter(commentAdapter);
 
-        }
+    }
 
     @SuppressLint("MissingPermission")
     private void getLocation() {
@@ -175,22 +196,22 @@ public class QRCodeEditor extends AppCompatActivity {
                     try {
                         Geocoder geocoder = new Geocoder(QRCodeEditor.this,
                                 Locale.getDefault());
-                        List<Address> addresses =geocoder.getFromLocation(
+                        List<Address> addresses = geocoder.getFromLocation(
                                 location.getLatitude(), location.getLongitude(), 1
                         );
 
                         String latitudeString = Double.toString(addresses.get(0).getLatitude());
                         String longitudeString = Double.toString(addresses.get(0).getLongitude());
                         int lengthQRCode = singletonPlayer.player.qrCodes.size();
-                        String locationString = latitudeString+" "+longitudeString;  //TODO changed "-" to ""
-                        QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+                        String locationString = latitudeString + " " + longitudeString;  //TODO changed "-" to ""
+                        QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode - 1);
                         // [0, 1, 2]
                         qrCode.idObject.setLocationStr(locationString);
                         String hashLoc = qrCode.getSha256Hex();
-                        qrCode.idObject.setHashedID(hashLoc +"-"+ locationString);
+                        qrCode.idObject.setHashedID(hashLoc + "-" + locationString);
                         qrCode.setLocation(locationString);
                         qrCode.hasLocation = true;
-                        singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
+                        singletonPlayer.player.qrCodes.set(lengthQRCode - 1, qrCode);
                         String TAG = "working";
                         Toast.makeText(QRCodeEditor.this, "saved geolocation", Toast.LENGTH_SHORT).show();
                         collectionReference
@@ -199,7 +220,7 @@ public class QRCodeEditor extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Log.d(TAG,"message");
+                                        Log.d(TAG, "message");
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -209,7 +230,7 @@ public class QRCodeEditor extends AppCompatActivity {
                                         Log.e("MYAPP", "exception: " + e.toString());
                                     }
                                 });
-                    } catch(IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -220,8 +241,8 @@ public class QRCodeEditor extends AppCompatActivity {
     /**
      * This method is executed from the OnClick() listener for the postComment button
      * It will take the text from the EditText and add it to the comment list if valid
-     * @param view
-     * View represents the User Interface for the activity
+     *
+     * @param view View represents the User Interface for the activity
      */
     private void addComment(View view) {
         String newComment = commentInput.getText().toString();
@@ -254,136 +275,104 @@ public class QRCodeEditor extends AppCompatActivity {
             }
         };
     }
+
+    /**
+     * This function will execute when add photo button is pressed.
+     * @param view
+     */
+    @SuppressLint("LongLogTag")
     public void addPhotos(View view) {
-        //Intent takePhotoIntent = new Intent(getApplicationContext(), TakePhoto.class );
-        //takePhotoIntent.putExtra("QRCodeFromEditor", (Parcelable) QR);
-        //startActivity(takePhotoIntent);
+
+        db = FirebaseFirestore.getInstance();
+        collectionReference = db.collection("Players");
+
+        //Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        //EL Start - added 20220321, need testing
-        db = FirebaseFirestore.getInstance();
-        collectionReference = db.collection("Players");
-        // Not using right now because we get the last QR code in firebase - el & manny
-        //QR = (QRCode) getIntent().getParcelableExtra("QRCodeFromEditor");
-        //EL End - added 20220321, need testing
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        // Create the File where the photo should go
-        File photoFile = null;
-        try {
-            photoFile = createImageFile();
-        } catch (IOException ex) {
-            // Error occurred while creating the File
-            Toast.makeText(QRCodeEditor.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        // Continue only if the File was successfully created
-        if (photoFile != null) {
-            Uri photoURI = FileProvider.getUriForFile(QRCodeEditor.this,
-                    "com.example.android.fileprovider",
-                    photoFile);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-
-            //startActivityForResult deprecated, use activityResult Launcher instead
-//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        String TAG = "ACTIVITY_RESULT_LAUNCHER";
+        if(takePictureIntent.resolveActivity(getPackageManager()) != null) {
             activityResultLauncher.launch(takePictureIntent);
-
+        }
+        else {
+            Log.d(TAG, "Error trying to launch activityResultLauncher.");
+            Toast.makeText(QRCodeEditor.this, "Error trying to launch activityResultLauncher.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK){
-
-                        File file = new File(currentPhotoPath);
-                        imageUri = Uri.fromFile(file);
-                        filename = file.getName();
-                        uploadImage();
-                        //EL Start - added 20220321, need testing
-                        addPhotoToQRCode();
-                        //EL End - added 20220321, need testing
-                        //Intent intent = new Intent(getApplicationContext(), UserMenu.class);
-                        //intent.putExtra("userMenu_session22", (String) null);
-                        //startActivity(intent);
+    /**
+     * This function will add the a string of the image filename to imageIDString in the QRCode.
+     * @param imageFilename the filename to set for imageIDString in the QRCode
+     */
+    public void addPhotoToQRCode(String imageFilename) {
+        int lengthQRCode = SingletonPlayer.player.qrCodes.size();
+        QRCode qrCode = SingletonPlayer.player.qrCodes.get(lengthQRCode - 1);
+        qrCode.setImageIDString(imageFilename);
+        qrCode.setHasPhoto(true);
+        SingletonPlayer.player.qrCodes.set(lengthQRCode - 1, qrCode);
+        String TAG = "ADD_FILENAME_TO_QR";
+        collectionReference
+                .document(SingletonPlayer.player.getUsername())
+                .set(SingletonPlayer.player)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Add image filename to QRCode successful.");
+//                        Toast.makeText(QRCodeEditor.this, "Add image filename to QRCode successful.", Toast.LENGTH_SHORT).show();
                     }
-                }
-            }
-    );
-        /**
-         * Funcation creates a file to store the photo in full-size
-         * @return
-         * @throws IOException
-         */
-        private File createImageFile() throws IOException {
-            // Create an image file name
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = timeStamp + "_";
-            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File image = File.createTempFile(
-                    imageFileName,  /* prefix */
-                    ".jpg",         /* suffix */
-                    storageDir      /* directory */
-            );
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Add image filename to QRCode FAILED: " + e.getMessage());
+//                        Toast.makeText(QRCodeEditor.this, "Add image filename to QRCode FAILED.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = image.getAbsolutePath();
-            return image;
-        }
+    /**
+     * This function create a string for the filename to use for the image file.
+     * @return a String of the filename
+     */
+    private String createImageFilename() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = timeStamp + ".jpg";
+        return imageFileName;
+    }
 
+    /**
+     * This function upload the reduced size image to Firebase Storage.
+     * @param imageBitmap the image to upload in Bitmap
+     * @param imageFilename the filename to use for the image when uploaded to Firebase Storage
+     */
+    private void uploadImageBitmap(Bitmap imageBitmap, String imageFilename){
 
-        private void uploadImage(){
-            String username = SingletonPlayer.player.getUsername();
-//        StorageReference imageRef = storageReference.child("images_em/" + fileName);
-            StorageReference imageRef = storageReference.child(username + "/" + filename);
+        //Images will be stored in the photo of that player's username
+        String folder = singletonPlayer.player.getUsername();
 
-
-            imageRef.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(QRCodeEditor.this, "Upload successful.", Toast.LENGTH_SHORT).show();
+        StorageReference imageRef = storageReference.child(folder + "/" + imageFilename);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] data = byteArrayOutputStream.toByteArray();
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(QRCodeEditor.this, "Image upload successful.", Toast.LENGTH_SHORT).show();
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle unsuccessful uploads
-                            Toast.makeText(QRCodeEditor.this, "Failed to upload" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-
-        //EL Start - added 20220321, need testing
-        public void addPhotoToQRCode() {
-            int lengthQRCode = SingletonPlayer.player.qrCodes.size();
-            QRCode qrCode = SingletonPlayer.player.qrCodes.get(lengthQRCode-1);
-            qrCode.setImageIDString(filename);
-            qrCode.setHasPhoto(true);
-            SingletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
-            String TAG = "add photo QR working";
-            collectionReference
-                    .document(SingletonPlayer.player.getUsername())
-                    .set(SingletonPlayer.player)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d(TAG,"message");
-                            Toast.makeText(QRCodeEditor.this, "Add to QRCode successful.", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("MYAPP", "exception: " + e.getMessage());
-                            Log.e("MYAPP", "exception: " + e.toString());
-                            Toast.makeText(QRCodeEditor.this, "Add to QRCode FAILED.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-        }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle unsuccessful uploads
+                        Toast.makeText(QRCodeEditor.this, "Image failed to upload: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
 }
