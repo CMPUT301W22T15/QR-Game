@@ -68,7 +68,13 @@ public class GameMap extends AppCompatActivity {
         map = findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK); //render
         map.setBuiltInZoomControls(true); //zoomable
+        // change start point
+
         GeoPoint startPoint = new GeoPoint(53.60004, -113.53083);
+        // if user saved his current location
+        if (singletonPlayer.lat  != -1 && singletonPlayer.lon != -1) {
+            startPoint = new GeoPoint(singletonPlayer.lat, singletonPlayer.lon);
+        }
         IMapController mapController = map.getController();
         mapController.setCenter(startPoint);
         mapController.setZoom(18.0);
