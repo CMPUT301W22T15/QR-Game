@@ -85,6 +85,7 @@ public class QRCodeEditor extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private QRCode QR;
+    
 
     /**
      * This method creates the inital interface and obtains the necessary permissions
@@ -114,8 +115,17 @@ public class QRCodeEditor extends AppCompatActivity {
         Intent intent = this.getIntent();
 //        int scoreValue = getIntent().getIntExtra("scoreValue", 0);
         QR = (QRCode) getIntent().getParcelableExtra("QRCodeValue");
-        int scoreValue = QR.getScore();
+        
+        //EL Start - updated lengthQRCode, qrCodeLast to resolve .qrCodes reference error
+        int lengthQRCode = singletonPlayer.player.qrCodes.size();
+        QRCode qrCodeLast = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+
+
+        //EL End - updated lengthQRCode, qrCodeLast to resolve .qrCodes reference error
+        
+        int scoreValue = qrCodeLast.getScore();
         // Set score value
+
         score.setText("Score: " + String.valueOf(scoreValue));
 
         // Create the button listener
@@ -172,13 +182,17 @@ public class QRCodeEditor extends AppCompatActivity {
                         String latitudeString = Double.toString(addresses.get(0).getLatitude());
                         String longitudeString = Double.toString(addresses.get(0).getLongitude());
                         int lengthQRCode = singletonPlayer.player.qrCodes.size();
-                        String locationString = latitudeString+"-"+longitudeString;
+                        String locationString = latitudeString+" "+longitudeString;  //TODO changed "-" to ""
                         QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+                        // [0, 1, 2]
                         qrCode.idObject.setLocationStr(locationString);
                         String hashLoc = qrCode.getSha256Hex();
                         qrCode.idObject.setHashedID(hashLoc +"-"+ locationString);
+                        qrCode.setLocation(locationString);
+                        qrCode.hasLocation = true;
                         singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
                         String TAG = "working";
+                        Toast.makeText(QRCodeEditor.this, "saved geolocation", Toast.LENGTH_SHORT).show();
                         collectionReference
                                 .document(singletonPlayer.player.getUsername())
                                 .set(singletonPlayer.player)
@@ -239,7 +253,6 @@ public class QRCodeEditor extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-
     }
     public void addPhotos(View view) {
         //Intent takePhotoIntent = new Intent(getApplicationContext(), TakePhoto.class );

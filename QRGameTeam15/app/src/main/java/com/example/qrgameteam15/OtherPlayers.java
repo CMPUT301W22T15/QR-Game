@@ -22,19 +22,28 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for displaying a list of all users playing the game
+ */
 public class OtherPlayers extends AppCompatActivity {
+    // Initialize variables
+    SingletonPlayer singletonPlayer;
     ArrayList<Player> allPlayers;
     FirebaseFirestore db;
     ArrayAdapter<Player> playerAdapter;
     ListView playerList;
+    Button scanCodeButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_players);
+
         // fetch all the document to display them on listview
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
 
+        // Prepare ListView and Adapter
         playerList = findViewById(R.id.otherPlayerListview);
         allPlayers = new ArrayList<>();
         playerAdapter = new OtherPlayerListAdapter(this, R.layout.other_player_listview_item, allPlayers);
@@ -46,12 +55,16 @@ public class OtherPlayers extends AppCompatActivity {
                 allPlayers.clear();
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
                     Player p = doc.toObject(Player.class);
-                    allPlayers.add(p);
+                    if (!p.getPlayerHash().equals(singletonPlayer.player.getPlayerHash())) {
+                        allPlayers.add(p);
+                    }
+
                 }
                 playerAdapter.notifyDataSetChanged();
             }
         });
 
+        // Be able to view a profile if we click a user
         playerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -64,6 +77,8 @@ public class OtherPlayers extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Be able to search for a player
         Button searchConfirmButton = findViewById(R.id.searchConfirmButton);
         searchConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +109,17 @@ public class OtherPlayers extends AppCompatActivity {
                     Toast.makeText(OtherPlayers.this, "Username Don't exist", Toast.LENGTH_SHORT).show();
                 }
                 searchbox.setText("");
+            }
+        });
+
+        // Be able to scan a button to search for a user
+        Button scanCodeButton = findViewById(R.id.scan_player_code);
+        scanCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OtherPlayers.this, ScannerView2.class);
+                intent.putExtra("scanProfileCode", true);
+                startActivity(intent);
             }
         });
     }

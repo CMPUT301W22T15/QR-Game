@@ -17,6 +17,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import androidx.annotation.Nullable;
+import com.google.firebase.firestore.EventListener;
+
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +36,7 @@ public class UserMenu extends AppCompatActivity {
     ArrayAdapter<String> menuAdapter;
     FirebaseFirestore db;
     SingletonPlayer singletonPlayer;
+    public GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();  // to fetch all aplayers from database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +53,13 @@ public class UserMenu extends AppCompatActivity {
 //        String name = intent.getStringExtra("userMenu_act");
 //        SingletonPlayer.player.setUsername(name);
 
-        
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Players");
+
         menuList = findViewById(R.id.userMenu_list);
-        String dataList[] = new String[]{SingletonPlayer.player.getUsername(), "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
+
+        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player"};
+
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,19 +73,16 @@ public class UserMenu extends AppCompatActivity {
                 } else if (position == 1) {
                     Intent intent = new Intent(getApplicationContext(), ScannerView.class);
                     startActivity(intent);
-
                 } else if (position == 2) {
                     Intent intent = new Intent(getApplicationContext(), MyScans.class);
-
 //                    intent.putExtra("scan_new_code", (String) null);
                     startActivity(intent);
                 } else if (position == 3) {
-
                     Intent intent = new Intent(getApplicationContext(), PlayerRanking.class);
                     startActivity(intent);
-
-
                 } else if (position == 4) {
+                    // TODO: fetch player here?
+
                     //EL-start
                     Intent intent = new Intent(getApplicationContext(), GameMap.class);
 //                    intent.putExtra("Codes_Near_Me", (String) null);
@@ -86,8 +95,25 @@ public class UserMenu extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), OtherPlayers.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        // FOR the sore purpose to have all the players before going to Gamemap activity.
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                globalAllPlayers.allPlayers.clear();
+                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
+                    Player p = doc.toObject(Player.class);
+                    globalAllPlayers.allPlayers.add(p);
+                }
 
             }
         });
+
+
+    }
+    public void fetchALLplayers() {
+
     }
 }
