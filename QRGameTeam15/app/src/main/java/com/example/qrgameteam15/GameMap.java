@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -33,10 +34,12 @@ public class GameMap extends AppCompatActivity {
     ArrayList<Player> allPlayers;
     ArrayList<OverlayItem> items;
     GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();
+    SingletonPlayer singletonPlayer = new SingletonPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_map);
+        Toast.makeText(GameMap.this, "lat " + singletonPlayer.lat + " lon " + singletonPlayer.lon, Toast.LENGTH_SHORT).show();
 
         items = new ArrayList<>();
         // fetch all players --------------------
