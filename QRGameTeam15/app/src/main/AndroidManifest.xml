@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QRGameTeam15">
         <activity
+            android:name=".ViewQRCode"
+            android:exported="false" />
+        <activity
             android:name=".GameMap"
             android:exported="false" />
         <activity
@@ -39,9 +42,6 @@
             android:exported="false" />
         <activity
             android:name=".MyScans"
-            android:exported="false" />
-        <activity
-            android:name=".TakePhoto"
             android:exported="false" />
         <activity
             android:name=".OwnerMenu"
@@ -73,6 +73,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <!--EL Start-->
         <provider

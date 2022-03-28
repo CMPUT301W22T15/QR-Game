@@ -202,13 +202,11 @@ public class QRCode implements Parcelable {
         return location;
     }
 
-    /**
-     *
-     * @return True if this QRcode has photo attached to it, false otherwise
-     */
+
     public Boolean getHasPhoto() {
-        return this.hasPhoto;
+        return hasPhoto;
     }
+    
 
     /**
      * setter for HasPhoto attribue
@@ -235,7 +233,6 @@ public class QRCode implements Parcelable {
         return hexString.toString();
     }
 
-    //EL-Start
     @Override
     public int describeContents() {
         return 0;
@@ -258,11 +255,4 @@ public class QRCode implements Parcelable {
         this.imageIDString = imageIDString;
         //setHasPhoto(true);
     }
-    //EL-End
-
-
-//    public int findScore(QRCode qrCode){
-//        score = new Score(qrCode).getScore();
-//        return score;
-//    }
 }
