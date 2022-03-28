@@ -92,7 +92,6 @@ public class ScannerView extends AppCompatActivity {
                         // Add scan to player in Database
                         singletonPlayer.player.addQrcode(qrcode);
                         singletonPlayer.player.setScore(qrcode.getScore());
-
                         String TAG = "working";
                         collectionReference
                                 .document(singletonPlayer.player.getUsername())
