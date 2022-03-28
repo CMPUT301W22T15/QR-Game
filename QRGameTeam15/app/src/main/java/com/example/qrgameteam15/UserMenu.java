@@ -106,7 +106,6 @@ public class UserMenu extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
 
-
         menuList = findViewById(R.id.userMenu_list);
 
         String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player", "save current location"};
@@ -141,10 +140,6 @@ public class UserMenu extends AppCompatActivity {
                     //EL-end
                 } else if (position == 5) {
 
-                    //EL-start testing remove later
-                    Intent intent = new Intent(getApplicationContext(), TakePhoto.class);
-                    startActivity(intent);
-                    //EL-end testing remove later
 
                 } else if (position == 6) {
                     Intent intent = new Intent(getApplicationContext(), OtherPlayers.class);
