@@ -41,9 +41,6 @@
             android:name=".MyScans"
             android:exported="false" />
         <activity
-            android:name=".TakePhoto"
-            android:exported="false" />
-        <activity
             android:name=".OwnerMenu"
             android:exported="false" />
         <activity
