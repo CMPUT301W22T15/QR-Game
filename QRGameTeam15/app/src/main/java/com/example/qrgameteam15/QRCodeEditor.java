@@ -34,6 +34,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -228,10 +230,23 @@ public class QRCodeEditor extends AppCompatActivity {
             }
         });
 
-        // Initialize variables for comment section and new comments
-        comments = new ArrayList<>();
-        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
-        commentSection.setAdapter(commentAdapter);
+        //Fetch everything from the database
+        DocumentReference playerDocRef = db.collection("Players").document(singletonPlayer.player.getUsername());
+        playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()){
+                        singletonPlayer.player = documentSnapshot.toObject(Player.class);
+                        Log.d("Success","12");
+                    }
+                }
+            }
+        });
+        //no need to validate existing/ non existing QR Codes, assuming they are unique
+        //we just fetch from database and display the comments
+        //if there's none, nothing will be displayed
 
     }
 
@@ -317,6 +332,31 @@ public class QRCodeEditor extends AppCompatActivity {
             comments.add(username + ": " + newComment);
             commentAdapter.notifyDataSetChanged();
             commentInput.setText("");
+
+            //Update the database once the comment has been posted
+            int lengthQRCode = singletonPlayer.player.qrCodes.size();
+            QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode - 1);
+            qrCode.comments.add(username + ": " + newComment);
+            singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
+
+            String TAG = "working";
+            collectionReference
+                    .document(singletonPlayer.player.getUsername())
+                    .set(singletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG,"message");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("MYAPP", "exception: " + e.getMessage());
+                            Log.e("MYAPP", "exception: " + e.toString());
+                        }
+                    });
+
         } else {
             Toast.makeText(getApplicationContext(), "Please enter a comment!", Toast.LENGTH_LONG).show();
         }
