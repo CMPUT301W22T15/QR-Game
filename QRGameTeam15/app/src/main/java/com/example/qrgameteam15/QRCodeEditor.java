@@ -92,6 +92,7 @@ public class QRCodeEditor extends AppCompatActivity {
         commentInput = findViewById(R.id.comment_editor);
         postComment = findViewById(R.id.submit_comment);
 
+        //FOR TESTING GEOLOCATION ON THE EMULATOR, THERE'S SOMETHING CAUSING NOT ALL PHONES TO WORK. (NEED TO FIGURE IT OUT).
 
         // Initialize fusedLocationProviderClient--------------------------------------------------
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
