@@ -227,7 +227,7 @@ public class QRCodeEditor extends AppCompatActivity {
                 }
             }
         });
-        
+
         // Initialize variables for comment section and new comments
         comments = new ArrayList<>();
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
