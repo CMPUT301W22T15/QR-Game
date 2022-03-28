@@ -75,7 +75,7 @@ public class ScannerView extends AppCompatActivity {
         // Set variable data
         scannerView = findViewById(R.id.scanner_view);
         codeScanner = new CodeScanner(this, scannerView);
-        resultData = findViewById(R.id.code_result);
+//        resultData = findViewById(R.id.code_result);
 
         // Decode data from QR code
         codeScanner.setDecodeCallback(new DecodeCallback() {
