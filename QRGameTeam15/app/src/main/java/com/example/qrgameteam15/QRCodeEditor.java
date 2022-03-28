@@ -33,6 +33,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.location.LocationRequest;
 
@@ -194,12 +196,26 @@ public class QRCodeEditor extends AppCompatActivity {
             }
         });
 
-        // Initialize variables for comment section and new comments
-        comments = new ArrayList<>();
-        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
-        commentSection.setAdapter(commentAdapter);
+        //Fetch everything from the database
+        DocumentReference playerDocRef = db.collection("Players").document(singletonPlayer.player.getUsername());
+        playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()){
+                        singletonPlayer.player = documentSnapshot.toObject(Player.class);
+                        Log.d("Success","12");
+                    }
+                }
+            }
+        });
 
-        }
+        //no need to validate existing/ non existing QR Codes, assuming they are unique
+        //we just fetch from database and display the comments
+        //if there's none, nothing will be displayed
+
+    }
 
     /**
      * outdated version that dont work on emulator

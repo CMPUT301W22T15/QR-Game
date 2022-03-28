@@ -142,6 +142,10 @@ public class QRCode implements Parcelable {
         return comments;
     }
 
+    public void setComments(ArrayList<String> comments) {
+        this.comments = comments;
+    }
+
     /**
      * setter for score
      * @param score
