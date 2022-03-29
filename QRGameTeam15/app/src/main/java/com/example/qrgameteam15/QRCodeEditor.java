@@ -234,6 +234,11 @@ public class QRCodeEditor extends AppCompatActivity {
         //we just fetch from database and display the comments
         //if there's none, nothing will be displayed
 
+        // Initialize variables for comment section and new comments
+        comments = new ArrayList<>();
+        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
+        commentSection.setAdapter(commentAdapter);
+
     }
 
     /**
