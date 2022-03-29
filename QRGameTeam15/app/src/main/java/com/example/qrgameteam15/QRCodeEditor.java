@@ -219,6 +219,30 @@ public class QRCodeEditor extends AppCompatActivity {
             comments.add(username + ": " + newComment);
             commentAdapter.notifyDataSetChanged();
             commentInput.setText("");
+
+            //Update the database once the comment has been posted
+            int lengthQRCode = singletonPlayer.player.qrCodes.size();
+            QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+            qrCode.comments.add(username + ": " + newComment);
+            singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
+
+            String TAG = "working";
+            collectionReference
+                    .document(singletonPlayer.player.getUsername())
+                    .set(singletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG,"message");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("MYAPP", "exception: " + e.getMessage());
+                            Log.e("MYAPP", "exception: " + e.toString());
+                        }
+                    });
         } else {
             Toast.makeText(getApplicationContext(), "Please enter a comment!", Toast.LENGTH_LONG).show();
         }

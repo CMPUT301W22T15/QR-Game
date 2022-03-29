@@ -4,11 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.format.DateFormat;
 
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class QRCode implements Parcelable {
@@ -23,6 +25,7 @@ public class QRCode implements Parcelable {
     String location;
     String id;
     String imageIDString;
+    ArrayList<String> comments;
 
     // Constructor required for adding this class to the firebase
     public QRCode(){
@@ -45,6 +48,7 @@ public class QRCode implements Parcelable {
 //        LocalDateTime date = LocalDateTime.now();
 //        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //        String dateStr = date.format(format);
+        this.comments = new ArrayList<>();
         this.location = location;
         if (location != ""){
             hasLocation = true;  //TODO implement Geolocation for location
@@ -137,6 +141,18 @@ public class QRCode implements Parcelable {
      */
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void addComment(String comment){
+        comments.add(comment);
+    }
+
+    public ArrayList<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<String> comments) {
+        this.comments = comments;
     }
 
     /**
