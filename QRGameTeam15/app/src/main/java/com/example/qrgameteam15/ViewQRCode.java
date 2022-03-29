@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -42,9 +44,11 @@ public class ViewQRCode extends AppCompatActivity {
     private EditText commentInput;
     private Button postComment;
     private QRCode qrcode;
-
+    SingletonPlayer singletonPlayer;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    FirebaseFirestore db;
+    CollectionReference collectionReference;
 
     /**
      * This method creates the inital interface and obtains the necessary permissions
@@ -69,6 +73,9 @@ public class ViewQRCode extends AppCompatActivity {
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        db = FirebaseFirestore.getInstance();
+        collectionReference = db.collection("Players");
 
         //Display the image in the ImageView
         retrieveBitmapImage();
@@ -150,6 +157,29 @@ public class ViewQRCode extends AppCompatActivity {
             comments.add(username + ": " + newComment);
             commentAdapter.notifyDataSetChanged();
             commentInput.setText("");
+            //Update the database once the comment has been posted
+            int lengthQRCode = singletonPlayer.player.qrCodes.size();
+            QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
+            qrCode.comments.add(username + ": " + newComment);
+            singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
+
+            String TAG = "working";
+            collectionReference
+                    .document(singletonPlayer.player.getUsername())
+                    .set(singletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG,"message");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("MYAPP", "exception: " + e.getMessage());
+                            Log.e("MYAPP", "exception: " + e.toString());
+                        }
+                    });
         } else {
             Toast.makeText(getApplicationContext(), "Please enter a comment!", Toast.LENGTH_LONG).show();
         }
