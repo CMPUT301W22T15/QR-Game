@@ -6,16 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".PlayerProfile">
 
+
     <Button
-        android:id="@+id/generate"
+        android:id="@+id/generate_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Generate Login"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@id/user_qrcode"
+        app:layout_constraintBottom_toTopOf="@id/generate_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043" />
+
+    <Button
+        android:id="@+id/generate_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate Profile Link"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@id/user_qrcode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/generate_login"
         app:layout_constraintVertical_bias="0.043" />
 
     <ImageView
@@ -25,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="@id/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/generate"
+        app:layout_constraintTop_toBottomOf="@id/generate_profile"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button

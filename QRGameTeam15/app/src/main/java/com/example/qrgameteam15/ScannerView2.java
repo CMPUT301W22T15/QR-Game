@@ -143,7 +143,8 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
     private void openPlayerProfile(String playerHash) {
         String userName;
         for (Player user: allPlayers) {
-            if (user.getPlayerHash().equals(playerHash)) {
+            String userPlayerHashProfile = user.getPlayerHash() + "~Profile.View";
+            if (userPlayerHashProfile.equals(playerHash)) {
                 userName = user.getUsername();
 
                 Intent profileIntent = new Intent(ScannerView2.this, OtherPlayerProfile.class);
