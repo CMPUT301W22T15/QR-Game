@@ -128,6 +128,21 @@ public class QRCodeEditor extends AppCompatActivity {
 
         //FOR TESTING GEOLOCATION ON THE EMULATOR, THERE'S SOMETHING CAUSING NOT ALL PHONES TO WORK. (NEED TO FIGURE IT OUT).
 
+        //Get the document in the FireStore (retrieve all the comments)
+        DocumentReference playerDocRef = db.collection("Players").document(singletonPlayer.player.getUsername());
+        playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()){
+                        singletonPlayer.player = documentSnapshot.toObject(Player.class);
+                        Log.d("Success","12");
+                    }
+                }
+            }
+        });
+
         // Initialize fusedLocationProviderClient--------------------------------------------------
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         // TODO: set up location request
@@ -199,6 +214,47 @@ public class QRCodeEditor extends AppCompatActivity {
 
         score.setText("Score: " + String.valueOf(scoreValue));
 
+        int x = 0;
+        for (int i = 0; i < singletonPlayer.player.qrCodes.size() - 1; i++){
+            if (singletonPlayer.player.qrCodes.get(i).sha256Hex.equals(qrCodeLast.sha256Hex)){
+                //set new comments
+                comments = singletonPlayer.player.qrCodes.get(i).getComments();
+
+                commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
+                commentSection.setAdapter(commentAdapter);
+                x += 1;
+            }
+        }
+        // if the qr code scanned was a non-existing qr code
+        if (x == 0){
+            comments = new ArrayList<>();
+            commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
+            commentSection.setAdapter(commentAdapter);
+        }else {
+            for (int j = 0; j < comments.size(); j++){
+                qrCodeLast.comments.add(comments.get(j));
+            }
+            singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCodeLast);
+
+            String TAG = "working";
+            collectionReference
+                    .document(singletonPlayer.player.getUsername())
+                    .set(singletonPlayer.player)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG,"message");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("MYAPP", "exception: " + e.getMessage());
+                            Log.e("MYAPP", "exception: " + e.toString());
+                        }
+                    });
+        }
+
         // Create the button listener
         save.setOnClickListener(saveQRCodeData());
         postComment.setOnClickListener(new View.OnClickListener() {
@@ -229,14 +285,15 @@ public class QRCodeEditor extends AppCompatActivity {
                 }
             }
         });
-
-        //Fetch everything from the database
-        comments = new ArrayList<>();
-        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
-        commentSection.setAdapter(commentAdapter);
         //no need to validate existing/ non existing QR Codes, assuming they are unique
         //we just fetch from database and display the comments
         //if there's none, nothing will be displayed
+
+        // Initialize variables for comment section and new comments
+//        comments = new ArrayList<>();
+//        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
+//        commentSection.setAdapter(commentAdapter);
+
 
     }
 
@@ -325,7 +382,7 @@ public class QRCodeEditor extends AppCompatActivity {
 
             //Update the database once the comment has been posted
             int lengthQRCode = singletonPlayer.player.qrCodes.size();
-            QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode - 1);
+            QRCode qrCode = singletonPlayer.player.qrCodes.get(lengthQRCode-1);
             qrCode.comments.add(username + ": " + newComment);
             singletonPlayer.player.qrCodes.set(lengthQRCode-1, qrCode);
 
