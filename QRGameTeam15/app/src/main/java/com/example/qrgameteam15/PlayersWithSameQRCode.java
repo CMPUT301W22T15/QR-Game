@@ -22,13 +22,18 @@ public class PlayersWithSameQRCode extends AppCompatActivity {
         playerList = findViewById(R.id.player_list);
 
         currentQRValue = getIntent().getStringExtra("idQRCode");
-
         for (Player player : listOfAllPlayers.allPlayers) {
-            if (player.qrCodes.contains(currentQRValue)) {
-                sameQRCodePlayers.add(player);
+            ArrayList<QRCode> q = player.qrCodes;
+
+            innerLoop:
+            for (int i = 0; i < player.qrCodes.size(); i++) {
+                if (q.get(i).getId().equals(currentQRValue)) {
+                    sameQRCodePlayers.add(player);
+                    break innerLoop;
+                }
             }
         }
-        playerArrayAdapter = new CustomList2(this, sameQRCodePlayers);
+        playerArrayAdapter = new OtherPlayerListAdapter(this, R.layout.other_player_listview_item, sameQRCodePlayers);
 
         playerList.setAdapter(playerArrayAdapter);
     }

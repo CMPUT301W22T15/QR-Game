@@ -107,6 +107,7 @@ public class ViewQRCode extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), PlayersWithSameQRCode.class);
                 intent.putExtra("idQRCode", qrcode.getId());
+                //intent.putExtra("currentUserName", )
                 startActivity(intent);
             }
         });
