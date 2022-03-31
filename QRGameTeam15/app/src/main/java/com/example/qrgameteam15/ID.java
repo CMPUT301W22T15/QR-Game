@@ -32,15 +32,13 @@ public class ID {
         return this.hashedID;
     }
 
-    public void setHashedID(String hashedID) {
-        this.hashedID = hashedID;
-    }
-
-    public void setLocationStr(String locationStr) {
-        this.locationStr = locationStr;
-    }
-
     public String getLocationStr() {
         return locationStr;
+    }
+
+    public void setLocationStr(String locationString) {
+    }
+
+    public void setHashedID(String s) {
     }
 }

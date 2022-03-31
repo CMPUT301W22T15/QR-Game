@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class QRCode implements Parcelable {
@@ -23,6 +24,7 @@ public class QRCode implements Parcelable {
     String location;
     String id;
     String imageIDString;
+    ArrayList<String> comments;
 
     // Constructor required for adding this class to the firebase
     public QRCode(){
@@ -40,6 +42,7 @@ public class QRCode implements Parcelable {
         hasLocation = false;
         hasPhoto = false;
         this.key = key;
+        this.comments = new ArrayList<>();
         Date date = new Date();
         this.dateStr = DateFormat.format("yyyy.MM.dd", date).toString();
 //        LocalDateTime date = LocalDateTime.now();
@@ -131,6 +134,18 @@ public class QRCode implements Parcelable {
         return this.score;
     }
 
+    public void addComment(String comment){
+        comments.add(comment);
+    }
+
+    public ArrayList<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<String> comments) {
+        this.comments = comments;
+    }
+
     /**
      * setter for score
      * @param score
@@ -187,13 +202,11 @@ public class QRCode implements Parcelable {
         return location;
     }
 
-    /**
-     *
-     * @return True if this QRcode has photo attached to it, false otherwise
-     */
+
     public Boolean getHasPhoto() {
-        return this.hasPhoto;
+        return hasPhoto;
     }
+    
 
     /**
      * setter for HasPhoto attribue
@@ -220,7 +233,6 @@ public class QRCode implements Parcelable {
         return hexString.toString();
     }
 
-    //EL-Start
     @Override
     public int describeContents() {
         return 0;
@@ -243,11 +255,4 @@ public class QRCode implements Parcelable {
         this.imageIDString = imageIDString;
         //setHasPhoto(true);
     }
-    //EL-End
-
-
-//    public int findScore(QRCode qrCode){
-//        score = new Score(qrCode).getScore();
-//        return score;
-//    }
 }

@@ -68,7 +68,6 @@ public class ScannerView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner_view);
-
         // Access a Cloud FireStore instance from Activity
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
@@ -76,7 +75,7 @@ public class ScannerView extends AppCompatActivity {
         // Set variable data
         scannerView = findViewById(R.id.scanner_view);
         codeScanner = new CodeScanner(this, scannerView);
-        resultData = findViewById(R.id.code_result);
+//        resultData = findViewById(R.id.code_result);
 
         // Decode data from QR code
         codeScanner.setDecodeCallback(new DecodeCallback() {
@@ -93,7 +92,6 @@ public class ScannerView extends AppCompatActivity {
                         // Add scan to player in Database
                         singletonPlayer.player.addQrcode(qrcode);
                         singletonPlayer.player.setScore(qrcode.getScore());
-
                         String TAG = "working";
                         collectionReference
                                 .document(singletonPlayer.player.getUsername())

@@ -28,15 +28,15 @@
         app:maskColor="#77000000"/>
 
 
-    <TextView
-        android:id="@+id/code_result"
-        android:layout_width="300dp"
-        android:layout_height="20dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="600dp"
-        tools:layout_editor_absoluteY="586dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/code_result"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:text=""-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_marginTop="600dp"-->
+<!--        tools:layout_editor_absoluteY="586dp" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
