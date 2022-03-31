@@ -18,9 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -86,6 +90,39 @@ public class ViewQRCode extends AppCompatActivity {
         location.setText("Location: " + qrcode.getHasLocation());
         score.setText("Score: " + qrcode.getScore());
 
+        //Get the document in the FireStore (retrieve all the comments)
+        DocumentReference playerDocRef = db.collection("Players").document(singletonPlayer.player.getUsername());
+        playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()){
+                        singletonPlayer.player = documentSnapshot.toObject(Player.class);
+                        Log.d("Success","12");
+                    }
+                }
+            }
+        });
+
+
+        int x = 0;
+        for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++){
+            if (singletonPlayer.player.qrCodes.get(i).sha256Hex.equals(qrcode.sha256Hex)){
+                //set new comments
+                comments = singletonPlayer.player.qrCodes.get(i).getComments();
+                commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
+                commentSection.setAdapter(commentAdapter);
+                x += 1;
+            }
+        }
+        // if the qr code scanned was a non-existing qr code
+        if (x == 0){
+            comments = new ArrayList<>();
+            commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
+            commentSection.setAdapter(commentAdapter);
+        }
+
         // Create the button listener
         save.setOnClickListener(saveQRCodeData());
         postComment.setOnClickListener(new View.OnClickListener() {
@@ -101,10 +138,6 @@ public class ViewQRCode extends AppCompatActivity {
             }
         });
 
-        // Initialize variables for comment section and new comments
-        comments = new ArrayList<>();
-        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
-        commentSection.setAdapter(commentAdapter);
     }
 
     /**
