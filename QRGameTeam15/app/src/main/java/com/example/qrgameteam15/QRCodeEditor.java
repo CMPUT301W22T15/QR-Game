@@ -231,19 +231,9 @@ public class QRCodeEditor extends AppCompatActivity {
         });
 
         //Fetch everything from the database
-        DocumentReference playerDocRef = db.collection("Players").document(singletonPlayer.player.getUsername());
-        playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()){
-                        singletonPlayer.player = documentSnapshot.toObject(Player.class);
-                        Log.d("Success","12");
-                    }
-                }
-            }
-        });
+        comments = new ArrayList<>();
+        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
+        commentSection.setAdapter(commentAdapter);
         //no need to validate existing/ non existing QR Codes, assuming they are unique
         //we just fetch from database and display the comments
         //if there's none, nothing will be displayed
@@ -251,7 +241,7 @@ public class QRCodeEditor extends AppCompatActivity {
     }
 
     /**
-     * outdated version that dont work on emulator
+     * outdated version that don't work on emulator
      */
     @SuppressLint("MissingPermission")
     private void getLocation() {

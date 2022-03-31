@@ -41,6 +41,7 @@ public class ViewQRCode extends AppCompatActivity {
     private ArrayAdapter<String> commentAdapter;
     private EditText commentInput;
     private Button postComment;
+    private Button checkSameQR;
     private QRCode qrcode;
 
     private FirebaseStorage storage;
@@ -65,6 +66,7 @@ public class ViewQRCode extends AppCompatActivity {
         commentSection = findViewById(R.id.comments);
         commentInput = findViewById(R.id.comment_editor);
         postComment = findViewById(R.id.submit_comment);
+        checkSameQR = findViewById(R.id.checkInOtherPlayers);
 
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
@@ -94,10 +96,20 @@ public class ViewQRCode extends AppCompatActivity {
             }
         });
 
+
         // Initialize variables for comment section and new comments
         comments = new ArrayList<>();
         commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
         commentSection.setAdapter(commentAdapter);
+
+        checkSameQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PlayersWithSameQRCode.class);
+                intent.putExtra("idQRCode", qrcode.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     /**
