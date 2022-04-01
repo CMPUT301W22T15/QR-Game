@@ -80,6 +80,28 @@ public class ViewQRCode extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
+        // make comment posting and stuff invisible if we are viewing from other player
+        String isOtherplayer ;
+        Intent ii = getIntent();
+        Bundle b1 = ii.getExtras();
+        if (b1 != null) {
+            // this is from otherplayer, make button invisible
+            isOtherplayer = (String)b1.get("isOtherPlayer");
+            if (isOtherplayer.equals("true")) {
+                commentInput.setVisibility(View.INVISIBLE);
+                postComment.setVisibility(View.INVISIBLE);
+                save.setVisibility(View.INVISIBLE);
+                checkSameQR.setVisibility(View.INVISIBLE);
+            } else {
+                commentInput.setVisibility(View.VISIBLE);
+                postComment.setVisibility(View.VISIBLE);
+                save.setVisibility(View.VISIBLE);
+                checkSameQR.setVisibility(View.VISIBLE);
+            }
+        }
+        // --------------------------------------
+
+
         db = FirebaseFirestore.getInstance();
         collectionReference = db.collection("Players");
 
@@ -99,9 +121,9 @@ public class ViewQRCode extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()){
+                    if (documentSnapshot.exists()) {
                         singletonPlayer.player = documentSnapshot.toObject(Player.class);
-                        Log.d("Success","12");
+                        Log.d("Success", "12");
                     }
                 }
             }
@@ -153,6 +175,9 @@ public class ViewQRCode extends AppCompatActivity {
 
             }
         });
+
+        // make comment button invisible
+
     }
 
     /**
