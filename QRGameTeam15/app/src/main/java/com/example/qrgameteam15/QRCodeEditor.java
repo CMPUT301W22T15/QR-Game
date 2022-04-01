@@ -298,7 +298,7 @@ public class QRCodeEditor extends AppCompatActivity {
     }
 
     /**
-     * outdated version that dont work on emulator
+     * outdated version that don't work on emulator
      */
     @SuppressLint("MissingPermission")
     private void getLocation() {

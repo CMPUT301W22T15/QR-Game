@@ -152,5 +152,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/qr_image" />
 
+    <Button
+        android:id="@+id/checkInOtherPlayers"
+        android:layout_width="102dp"
+        android:layout_height="36dp"
+        android:text="Who has the same QR Code"
+        app:layout_constraintBottom_toBottomOf="@+id/comments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/save"
+        app:layout_constraintTop_toBottomOf="@+id/submit_comment" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

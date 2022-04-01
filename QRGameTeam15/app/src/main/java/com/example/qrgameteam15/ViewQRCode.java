@@ -47,6 +47,7 @@ public class ViewQRCode extends AppCompatActivity {
     private ArrayAdapter<String> commentAdapter;
     private EditText commentInput;
     private Button postComment;
+    private Button checkSameQR;
     private QRCode qrcode;
     SingletonPlayer singletonPlayer;
     private FirebaseStorage storage;
@@ -73,6 +74,7 @@ public class ViewQRCode extends AppCompatActivity {
         commentSection = findViewById(R.id.comments);
         commentInput = findViewById(R.id.comment_editor);
         postComment = findViewById(R.id.submit_comment);
+        checkSameQR = findViewById(R.id.checkInOtherPlayers);
 
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
@@ -137,7 +139,20 @@ public class ViewQRCode extends AppCompatActivity {
                 addComment(view);
             }
         });
+        checkSameQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), PlayersWithSameQRCode.class);
+//                intent.putExtra("idQRCode", qrcode.getId());
+//                //intent.putExtra("currentUserName", )
+//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), PlayerWithSameQRCode2.class);
+                intent.putExtra("idQRCode", qrcode.getId());
+                //intent.putExtra("currentUserName", )
+                startActivity(intent);
 
+            }
+        });
     }
 
     /**
