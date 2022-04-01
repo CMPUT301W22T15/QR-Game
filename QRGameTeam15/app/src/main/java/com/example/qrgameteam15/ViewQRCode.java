@@ -139,6 +139,20 @@ public class ViewQRCode extends AppCompatActivity {
                 addComment(view);
             }
         });
+        checkSameQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), PlayersWithSameQRCode.class);
+//                intent.putExtra("idQRCode", qrcode.getId());
+//                //intent.putExtra("currentUserName", )
+//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), PlayerWithSameQRCode2.class);
+                intent.putExtra("idQRCode", qrcode.getId());
+                //intent.putExtra("currentUserName", )
+                startActivity(intent);
+
+            }
+        });
     }
 
     /**

@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QRGameTeam15">
         <activity
-            android:name=".PlayersWithSameQRCode"
+            android:name=".PlayerWithSameQRCode2"
             android:exported="false" />
         <activity
             android:name=".ViewQRCode"
