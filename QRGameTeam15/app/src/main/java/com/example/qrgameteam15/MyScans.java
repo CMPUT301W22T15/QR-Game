@@ -117,6 +117,8 @@ public class MyScans extends AppCompatActivity {
                 QRCode qrcode = qrCodes.get(i);
                 Intent intent = new Intent(getApplicationContext(), ViewQRCode.class);
                 intent.putExtra("qrcode_info2", (Parcelable) qrcode);
+                intent.putExtra("isOtherPlayer", "false");  // let viewQRcode know this is from otherplayer.
+
                 startActivity(intent);
                 //new ViewQRCodeFragment(qrcode).show(getSupportFragmentManager(), "View QR code");
             }

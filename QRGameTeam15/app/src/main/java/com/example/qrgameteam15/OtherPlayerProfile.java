@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -71,7 +74,18 @@ public class OtherPlayerProfile extends AppCompatActivity {
                 }
             }
         });
+        qrCodeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // go to viewQRcode activity
+                QRCode qrcode = qrCodes.get(i);
+                Intent intent = new Intent(getApplicationContext(), ViewQRCode.class);
+                intent.putExtra("qrcode_info2", (Parcelable) qrcode);
+                intent.putExtra("isOtherPlayer", "true");  // let viewQRcode know this is from otherplayer.
+                startActivity(intent);
 
+            }
+        });
 
     }
     public void displayPlayerInfo() {

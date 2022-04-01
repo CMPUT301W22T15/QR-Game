@@ -88,32 +88,59 @@ public class ScannerView extends AppCompatActivity {
                         Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
 
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
-
+                        if (isUnique(qrcode.getId())) {
+                            singletonPlayer.player.addQrcode(qrcode);
+                            singletonPlayer.player.setScore(qrcode.getScore());
+                            String TAG = "working";
+                            collectionReference
+                                    .document(singletonPlayer.player.getUsername())
+                                    .set(singletonPlayer.player)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG,"message");
+                                            Intent intent = new Intent(ScannerView.this, QRCodeEditor.class);
+                                            intent.putExtra("QRCodeValue", (Parcelable) qrcode);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e("MYAPP", "exception: " + e.getMessage());
+                                            Log.e("MYAPP", "exception: " + e.toString());
+                                        }
+                                    });
+                        } else {
+                            // not unique. close activity
+                            Toast.makeText(ScannerView.this, "you already scanned this one", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                         // Add scan to player in Database
-                        singletonPlayer.player.addQrcode(qrcode);
-                        singletonPlayer.player.setScore(qrcode.getScore());
-                        String TAG = "working";
-                        collectionReference
-                                .document(singletonPlayer.player.getUsername())
-                                .set(singletonPlayer.player)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Log.d(TAG,"message");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e("MYAPP", "exception: " + e.getMessage());
-                                        Log.e("MYAPP", "exception: " + e.toString());
-                                    }
-                                });
+//                        singletonPlayer.player.addQrcode(qrcode);
+//                        singletonPlayer.player.setScore(qrcode.getScore());
+//                        String TAG = "working";
+//                        collectionReference
+//                                .document(singletonPlayer.player.getUsername())
+//                                .set(singletonPlayer.player)
+//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void unused) {
+//                                        Log.d(TAG,"message");
+//                                        Intent intent = new Intent(ScannerView.this, QRCodeEditor.class);
+////                        intent.putExtra("scoreValue", qrcode.getScore());
+//                                        intent.putExtra("QRCodeValue", (Parcelable) qrcode);
+//                                        startActivity(intent);
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.e("MYAPP", "exception: " + e.getMessage());
+//                                        Log.e("MYAPP", "exception: " + e.toString());
+//                                    }
+//                                });
 
-                        Intent intent = new Intent(ScannerView.this, QRCodeEditor.class);
-//                        intent.putExtra("scoreValue", qrcode.getScore());
-                        intent.putExtra("QRCodeValue", (Parcelable) qrcode);
-                        startActivity(intent);
                     }
                 });
             }
@@ -165,6 +192,16 @@ public class ScannerView extends AppCompatActivity {
 
             }
         }).check();
+    }
+
+    public boolean isUnique(String id) {
+        for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++) {
+            QRCode current = singletonPlayer.player.qrCodes.get(i);
+            if (current.getId().equals(id)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
