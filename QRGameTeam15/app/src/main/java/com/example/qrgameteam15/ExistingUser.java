@@ -213,13 +213,16 @@ public class ExistingUser extends AppCompatActivity {
                     editor.apply();
                     Toast.makeText(ExistingUser.this, "Persistence Disabled", Toast.LENGTH_SHORT).show();
                 }
-                //singletonPlayer.player = allPlayers.get(i);
+
+                Intent intent = new Intent(getApplicationContext(), UserMenu.class);
+                intent.putExtra("userMenu_session", (String) null);
+                startActivity(intent);
                 break;
             }
         }
-        Intent intent = new Intent(getApplicationContext(), UserMenu.class);
-        intent.putExtra("userMenu_session", (String) null);
-        startActivity(intent);
+
+        // If QRCode is not assigned to a player login
+        Toast.makeText(ExistingUser.this, "Invalid Login Code", Toast.LENGTH_LONG).show();
     }
 
 }

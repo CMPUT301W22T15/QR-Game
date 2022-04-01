@@ -48,7 +48,7 @@ public class PlayerProfile extends AppCompatActivity {
 
         // Get user's name and ID
         String key = singletonPlayer.player.getPlayerHash();
-        String profileKey = key + "~Profile.View";
+        String profileKey = singletonPlayer.player.getUsername() + "~Profile.View";
 
 
         // Set onClick listener to generate QRCode
