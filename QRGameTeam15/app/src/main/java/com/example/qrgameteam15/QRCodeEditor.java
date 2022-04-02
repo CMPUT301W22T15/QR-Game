@@ -216,7 +216,7 @@ public class QRCodeEditor extends AppCompatActivity {
 
         int x = 0;
         for (int i = 0; i < singletonPlayer.player.qrCodes.size() - 1; i++){
-            if (singletonPlayer.player.qrCodes.get(i).sha256Hex.equals(qrCodeLast.sha256Hex)){
+            if (singletonPlayer.player.qrCodes.get(i).sha256Hex.equals(QR.sha256Hex)){
                 //set new comments
                 comments = singletonPlayer.player.qrCodes.get(i).getComments();
 
