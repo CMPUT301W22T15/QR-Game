@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,9 +19,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -166,23 +171,57 @@ public class NewUser extends AppCompatActivity {
                     });
 
         }else{
-            collectionReference
-                    .document(username)
-                    .set(SingletonPlayer.player)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Intent intent = new Intent(getApplicationContext(), UserMenu.class);
-                            intent.putExtra("userMenu_act", username);
-                            startActivity(intent);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+            // check if username is unique
+            DocumentReference playerDocRef = db.collection("Players").document(username);
+            playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        if (documentSnapshot.exists()){
+                            // player already exist
+                            Toast.makeText(NewUser.this, "Username already exist", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // player dont exist
+                            // set the player in firebase
+                            collectionReference
+                                    .document(username)
+                                    .set(SingletonPlayer.player)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Intent intent = new Intent(getApplicationContext(), UserMenu.class);
+                                            intent.putExtra("userMenu_act", username);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
 
+                                        }
+                                    });
                         }
-                    });
+                    }
+                }
+            });
+//            collectionReference
+//                    .document(username)
+//                    .set(SingletonPlayer.player)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                            Intent intent = new Intent(getApplicationContext(), UserMenu.class);
+//                            intent.putExtra("userMenu_act", username);
+//                            startActivity(intent);
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//
+//                        }
+//                    });
         }
     }
 
