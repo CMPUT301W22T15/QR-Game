@@ -12,6 +12,8 @@ public class Player {
     private String playerHash;
     private String email;
     private Boolean isOwner;
+    private String name;
+    private String region;
 
     // this constructor is required for adding this class to firebase
     Player() {
@@ -45,6 +47,38 @@ public class Player {
         this.playerHash += ("-" + email);
     }
     // setters and getters
+
+    /**
+     * setter for name
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * getter for name
+     * @return
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * setter for region
+     * @param region
+     */
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    /**
+     * getter for region
+     * @return
+     */
+    public String getRegion() {
+        return this.region;
+    }
 
     /**
      * @return: playerhash

@@ -50,4 +50,15 @@ public class PlayerTest {
         System.out.printf("player hash after : %s", testPlayer.getPlayerHash());
         assertEquals(0, 0);
     }
+
+    @Test
+    public void setterAndGetterTest() {
+        String username = "john";
+        testPlayer = new Player(username, 0, "@gmail");
+        testPlayer.setRegion("edm");
+        testPlayer.setName("john1");
+        assertEquals("john1", testPlayer.getName());
+        assertEquals("edm", testPlayer.getRegion());
+    }
+
 }
