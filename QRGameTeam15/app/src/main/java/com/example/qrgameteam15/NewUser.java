@@ -150,6 +150,8 @@ public class NewUser extends AppCompatActivity {
         SingletonPlayer singletonPlayer = new SingletonPlayer();
         final CollectionReference collectionReference = db.collection("Players");
         singletonPlayer.player = new Player(username,0, email);
+        singletonPlayer.player.setName(name);
+        singletonPlayer.player.setRegion(cityRegion);
 
         if (username.equals("gaethje")){
             singletonPlayer.player.setOwner(true);
