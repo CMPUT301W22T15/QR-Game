@@ -220,7 +220,7 @@ public class ExistingUser extends AppCompatActivity {
                     editor.apply();
                     Toast.makeText(ExistingUser.this, "Persistence Disabled", Toast.LENGTH_SHORT).show();
                 }
-
+                loggedInOwner = true;
                 Intent intent = new Intent(getApplicationContext(), UserMenu.class);
                 intent.putExtra("userMenu_session", (String) null);
                 startActivity(intent);

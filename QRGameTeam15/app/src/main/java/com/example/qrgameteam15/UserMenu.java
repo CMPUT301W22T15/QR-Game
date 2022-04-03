@@ -109,7 +109,7 @@ public class UserMenu extends AppCompatActivity {
         menuList = findViewById(R.id.userMenu_list);
         String userName = singletonPlayer.player.getUsername();
 
-        String dataList[] = new String[]{userName, "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player", "save current location"};
+        String dataList[] = new String[]{userName, "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Other Player", "save current location"};
 
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);
@@ -140,12 +140,9 @@ public class UserMenu extends AppCompatActivity {
                     startActivity(intent);
                     //EL-end
                 } else if (position == 5) {
-
-
-                } else if (position == 6) {
                     Intent intent = new Intent(getApplicationContext(), OtherPlayers.class);
                     startActivity(intent);
-                } else if (position == 7) {
+                } else if (position == 6) {
                     // save player location
                     Log.i("TAG0", "in 153");
                     if(ActivityCompat.checkSelfPermission(UserMenu.this,

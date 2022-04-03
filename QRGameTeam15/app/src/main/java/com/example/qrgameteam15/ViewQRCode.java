@@ -78,6 +78,8 @@ public class ViewQRCode extends AppCompatActivity {
         qrcode = getIntent().getParcelableExtra("qrcode_info2");
         otherPlayer = getIntent().getStringExtra("isOtherPlayer");
         db = FirebaseFirestore.getInstance();
+        collectionReference = db.collection("Players");
+
         if (otherPlayer.equals("false")) {
             qrcodes = singletonPlayer.player.getQrCodes();
             player2 = singletonPlayer.player;
