@@ -85,13 +85,14 @@ public class ScannerView extends AppCompatActivity {
                     @Override
                     public void run() {
                         //resultData.setText(result.getText());
-                        Toast.makeText(ScannerView.this, result.getText(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ScannerView.this, "Scanned Successfully", Toast.LENGTH_SHORT).show();
 
                         QRCode qrcode = new QRCode(result.getText(),""); //TODO create the location string
+                        qrcode.setKey("classified information");
                         if (isUnique(qrcode.getId())) {
                             singletonPlayer.player.addQrcode(qrcode);
-                            singletonPlayer.player.setScore(qrcode.getScore());
                             String TAG = "working";
+
                             collectionReference
                                     .document(singletonPlayer.player.getUsername())
                                     .set(singletonPlayer.player)

@@ -184,14 +184,7 @@ public class MyScans extends AppCompatActivity {
     private void updateTotalScans() {
         // Initialize Variable
         int totalNumberScans = 0;
-        int totalSums = 0;
-
-        // Loop through scans
-        for (int i = 0; i < qrCodes.size(); i++) {
-            totalNumberScans += 1;
-            totalSums = totalSums + qrCodes.get(i).getScore();
-
-        }
+        int totalSums = singletonPlayer.player.getTotalScore();
 
         // Update count
         totalScans.setText("Total Scans: " + String.valueOf(totalNumberScans));

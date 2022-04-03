@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Player {
     private String username;
     public ArrayList<QRCode> qrCodes;
-    private int score;
     private String playerHash;
+    private Integer totalScore;
     private String email;
     private Boolean isOwner;
     private String name;
@@ -25,13 +25,12 @@ public class Player {
      * Normal constructors to initialize its attributes
      *
      * @param username
-     * @param score
      */
-    Player(String username, int score, String email) {
+    Player(String username, String email) {
         this.username = username;
         this.qrCodes = new ArrayList<>();
-        this.score = score;
         this.email = email;
+        this.totalScore = getTotalScore();
         this.isOwner = false;
         // create the sha256 hash (hex) ------------------
         // Method from https://www.baeldung.com/sha-256-hashing-java
@@ -142,12 +141,8 @@ public class Player {
      *
      * @return; score
      */
-    public int getScore() {
-        return this.score;
-    }
-
     public void setScore(int score) {
-        this.score = score;
+       this.totalScore = score;
     }
 
     /**
