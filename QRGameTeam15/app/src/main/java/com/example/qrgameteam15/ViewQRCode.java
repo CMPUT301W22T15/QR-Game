@@ -1,6 +1,7 @@
 package com.example.qrgameteam15;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,7 +27,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -53,9 +58,12 @@ public class ViewQRCode extends AppCompatActivity {
     private String otherPlayer;
     private ArrayList<QRCode> qrcodes;
     private String otherName;
+    private Player player2;
     SingletonPlayer singletonPlayer;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private GlobalAllPlayers allOtherPlayers;
+    private ArrayList<Player> allOtherPlayersList;
     FirebaseFirestore db;
     CollectionReference collectionReference;
 
@@ -69,13 +77,26 @@ public class ViewQRCode extends AppCompatActivity {
         setContentView(R.layout.activity_view_qrcode);
         qrcode = getIntent().getParcelableExtra("qrcode_info2");
         otherPlayer = getIntent().getStringExtra("isOtherPlayer");
+        db = FirebaseFirestore.getInstance();
         if (otherPlayer.equals("false")) {
-            otherName = getIntent().getStringExtra("otherPlayerName");
             qrcodes = singletonPlayer.player.getQrCodes();
+            player2 = singletonPlayer.player;
         } else {
-                // still working on it
+            otherName = getIntent().getStringExtra("otherPlayerName");
+            allOtherPlayers = new GlobalAllPlayers();
+            allOtherPlayersList = allOtherPlayers.allPlayers;
+            //Toast.makeText(ViewQRCode.this, String.valueOf(allOtherPlayersList.size()), Toast.LENGTH_SHORT).show();
+            for (int i = 0; i < allOtherPlayersList.size(); i++){
+                if (allOtherPlayersList.get(i).getUsername().equals(otherName)) {
+                    player2 = allOtherPlayersList.get(i);
+                    qrcodes = player2.getQrCodes();
+                    Toast.makeText(ViewQRCode.this, player2.getUsername(), Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
         }
-        for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++){
+        Toast.makeText(ViewQRCode.this, player2.getUsername(), Toast.LENGTH_SHORT).show();
+        for (int i = 0; i < player2.getQrCodes().size(); i++){
             if (qrcodes.get(i).getId().equals(qrcode.getId())) {
                 qrcode = qrcodes.get(i);
                 break;
@@ -117,7 +138,6 @@ public class ViewQRCode extends AppCompatActivity {
             }
         }
         // --------------------------------------
-        db = FirebaseFirestore.getInstance();
         // Set values
         hashedID.setText("Hashed ID: " + (String) qrcode.getId());
         date.setText("Date: " + (String) qrcode.getDateStr());
@@ -204,6 +224,7 @@ public class ViewQRCode extends AppCompatActivity {
         if (qrcode.getHasPhoto()) {
             Intent intent = new Intent(getApplicationContext(), ViewImage.class);
             intent.putExtra("view_qr_image", (String) qrcode.getImageIDString());
+            intent.putExtra("pass_username", (String) player2.getUsername());
             startActivity(intent);
         }
     }

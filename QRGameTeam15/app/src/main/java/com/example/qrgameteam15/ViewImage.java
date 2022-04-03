@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -18,6 +19,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class ViewImage extends AppCompatActivity {
     private String imageId;
+    private String userName;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     FirebaseFirestore db;
@@ -30,6 +32,8 @@ public class ViewImage extends AppCompatActivity {
         setContentView(R.layout.activity_view_image);
 
         imageId = getIntent().getStringExtra("view_qr_image");
+        userName = getIntent().getStringExtra("pass_username");
+        Toast.makeText(ViewImage.this, imageId, Toast.LENGTH_SHORT).show();
 
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
@@ -47,7 +51,7 @@ public class ViewImage extends AppCompatActivity {
      */
     private void retrieveBitmapImage() {
 
-        String filePath = SingletonPlayer.player.getUsername() + "/" + imageId;
+        String filePath = userName + "/" + imageId;
         StorageReference imageRef = storageReference.child(filePath);
 
         final long ONE_MEGABYTE = 1024 * 1024;
