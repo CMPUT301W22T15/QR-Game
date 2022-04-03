@@ -15,6 +15,7 @@ public class Player {
     private String name;
     private String region;
 
+
     // this constructor is required for adding this class to firebase
     Player() {
 
