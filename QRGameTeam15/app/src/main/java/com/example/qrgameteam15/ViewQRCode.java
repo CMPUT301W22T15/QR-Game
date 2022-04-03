@@ -126,10 +126,10 @@ public class ViewQRCode extends AppCompatActivity {
             // this is from otherplayer, make button invisible
             isOtherplayer = (String)b1.get("isOtherPlayer");
             if (isOtherplayer.equals("true")) {
-                commentInput.setVisibility(View.INVISIBLE);
-                postComment.setVisibility(View.INVISIBLE);
-                save.setVisibility(View.INVISIBLE);
-                checkSameQR.setVisibility(View.INVISIBLE);
+//                commentInput.setVisibility(View.INVISIBLE);
+//                postComment.setVisibility(View.INVISIBLE);
+//                save.setVisibility(View.INVISIBLE);
+//                checkSameQR.setVisibility(View.INVISIBLE);
             } else {
                 commentInput.setVisibility(View.VISIBLE);
                 postComment.setVisibility(View.VISIBLE);
@@ -148,28 +148,33 @@ public class ViewQRCode extends AppCompatActivity {
         }
         score.setText("Score: " + (String) String.valueOf(qrcode.getScore()));
 
-        //Get the document in the FireStore (retrieve all the comments)
-        DocumentReference playerDocRef = db.collection("Players").document(singletonPlayer.player.getUsername());
-        playerDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()) {
-                        singletonPlayer.player = documentSnapshot.toObject(Player.class);
-                        Log.d("Success", "12");
-                    }
-                }
-            }
-        });
-
+//        int x = 0;
+//        int index = 0;
+//        for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++){
+//            if (singletonPlayer.player.qrCodes.get(i).getId().equals(qrcode.getId())){
+//
+//                //set new comments
+//                comments = singletonPlayer.player.qrCodes.get(i).getComments();
+//                commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
+//                commentSection.setAdapter(commentAdapter);
+//                x += 1;
+//                index = i;
+//                break;
+//            }
+//        }
+//        // if the qr code scanned was a non-existing qr code
+//        if (x == 0){
+//            comments = new ArrayList<>();
+//            commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
+//            commentSection.setAdapter(commentAdapter);
+//        }
         int x = 0;
         int index = 0;
-        for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++){
-            if (singletonPlayer.player.qrCodes.get(i).getId().equals(qrcode.getId())){
+        for (int i = 0; i < player2.qrCodes.size(); i++){
+            if (player2.qrCodes.get(i).getId().equals(qrcode.getId())){
 
                 //set new comments
-                comments = singletonPlayer.player.qrCodes.get(i).getComments();
+                comments = player2.qrCodes.get(i).getComments();
                 commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
                 commentSection.setAdapter(commentAdapter);
                 x += 1;
@@ -184,10 +189,11 @@ public class ViewQRCode extends AppCompatActivity {
             commentSection.setAdapter(commentAdapter);
         }
 
+
         // Create the button listener
         save.setOnClickListener(saveQRCodeData());
         int finalIndex = index;
-        QRCode qrCode = singletonPlayer.player.qrCodes.get(finalIndex);
+        QRCode qrCode = player2.qrCodes.get(finalIndex);
         postComment.setOnClickListener(new View.OnClickListener() {
             /**
              * This method overrides the onClick listener for the postComment button
@@ -242,7 +248,7 @@ public class ViewQRCode extends AppCompatActivity {
      */
     private void addComment(View view, QRCode qrCode, int y) {
         String newComment = commentInput.getText().toString();
-        String username = SingletonPlayer.player.getUsername();
+//        String username = player2.getUsername();
 
         // Check a message has been entered
         if (newComment.trim().length() > 0) {
@@ -251,15 +257,15 @@ public class ViewQRCode extends AppCompatActivity {
 //            commentAdapter.notifyDataSetChanged();
 ////            commentInput.setText("");
             //Update the database once the comment has been posted
-            qrCode.comments.add(username + ": " + newComment);
+            qrCode.comments.add(singletonPlayer.player.getUsername() + ": " + newComment);
             commentAdapter.notifyDataSetChanged();
             commentInput.setText("");
-            singletonPlayer.player.qrCodes.set(y, qrCode);
+            player2.qrCodes.set(y, qrCode);
 
             String TAG = "working";
             collectionReference
-                    .document(singletonPlayer.player.getUsername())
-                    .set(singletonPlayer.player)
+                    .document(player2.getUsername())
+                    .set(player2)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

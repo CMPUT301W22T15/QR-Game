@@ -98,10 +98,11 @@
     <ListView
         android:id="@+id/comments"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
         android:text="Comments"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="2dp"
+        android:layout_weight="1"
         app:layout_constraintTop_toBottomOf="@+id/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -153,7 +154,6 @@
         android:layout_width="102dp"
         android:layout_height="36dp"
         android:text="Who has the same QR Code"
-        app:layout_constraintBottom_toBottomOf="@+id/comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toEndOf="@+id/save"
