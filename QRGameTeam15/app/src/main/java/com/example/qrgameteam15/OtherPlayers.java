@@ -55,7 +55,7 @@ public class OtherPlayers extends AppCompatActivity {
                 allPlayers.clear();
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
                     Player p = doc.toObject(Player.class);
-                    if (!p.getPlayerHash().equals(singletonPlayer.player.getPlayerHash())) {
+                    if (!p.getPlayerHash().equals(singletonPlayer.player.getPlayerHash()) && !p.getOwner()) {
                         allPlayers.add(p);
                     }
 
