@@ -129,7 +129,6 @@ public class ViewQRCode extends AppCompatActivity {
             }
         });
 
-
         int x = 0;
         int index = 0;
         for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++){

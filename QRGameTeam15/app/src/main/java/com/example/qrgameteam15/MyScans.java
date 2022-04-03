@@ -140,7 +140,6 @@ public class MyScans extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Remove Session from listview
                                 singletonPlayer.player.qrCodes.remove(deleteQRCode);
-                                qrCodes.remove(deleteQRCode);
                                 scanAdapter.notifyDataSetChanged();
 
                                 // Update database with the removed data
