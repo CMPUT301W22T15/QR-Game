@@ -90,12 +90,10 @@ public class ViewQRCode extends AppCompatActivity {
                 if (allOtherPlayersList.get(i).getUsername().equals(otherName)) {
                     player2 = allOtherPlayersList.get(i);
                     qrcodes = player2.getQrCodes();
-                    Toast.makeText(ViewQRCode.this, player2.getUsername(), Toast.LENGTH_SHORT).show();
                     break;
                 }
             }
         }
-        Toast.makeText(ViewQRCode.this, player2.getUsername(), Toast.LENGTH_SHORT).show();
         for (int i = 0; i < player2.getQrCodes().size(); i++){
             if (qrcodes.get(i).getId().equals(qrcode.getId())) {
                 qrcode = qrcodes.get(i);

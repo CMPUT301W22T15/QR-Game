@@ -33,7 +33,6 @@ public class ViewImage extends AppCompatActivity {
 
         imageId = getIntent().getStringExtra("view_qr_image");
         userName = getIntent().getStringExtra("pass_username");
-        Toast.makeText(ViewImage.this, imageId, Toast.LENGTH_SHORT).show();
 
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
