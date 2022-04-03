@@ -40,7 +40,7 @@ public class CustomList extends ArrayAdapter<Player> {
         TextView score = view.findViewById(R.id.score_text);
 
         userName.setText(player.getUsername());
-        score.setText(player.getScore());
+        score.setText(player.getTotalScore());
 
         return view;
     }

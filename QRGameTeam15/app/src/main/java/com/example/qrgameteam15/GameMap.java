@@ -136,7 +136,7 @@ public class GameMap extends AppCompatActivity {
                     double latDouble = Double.parseDouble(latStr);
                     double lonDouble = Double.parseDouble(lonStr);
                     Log.i("latlong", latStr + " " + lonStr);
-                    items.add(new OverlayItem("name: " + thisCode.getKey(), "score: " + thisCode.getScore(), new GeoPoint(latDouble, lonDouble)));
+                    items.add(new OverlayItem("Date Scanned: " + thisCode.getDateStr(), "Score: " + thisCode.getScore(), new GeoPoint(latDouble, lonDouble)));
                 }
             }
         }

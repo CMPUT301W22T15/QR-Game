@@ -149,7 +149,7 @@ public class NewUser extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         SingletonPlayer singletonPlayer = new SingletonPlayer();
         final CollectionReference collectionReference = db.collection("Players");
-        singletonPlayer.player = new Player(username,0, email);
+        singletonPlayer.player = new Player(username,email);
         singletonPlayer.player.setName(name);
         singletonPlayer.player.setRegion(cityRegion);
 
