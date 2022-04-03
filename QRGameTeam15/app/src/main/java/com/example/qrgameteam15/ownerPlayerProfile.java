@@ -117,7 +117,7 @@ public class ownerPlayerProfile extends AppCompatActivity {
                                                 Log.e("MYAPP", "exception: " + e.toString());
                                             }
                                         });
-                                // Update ranking again
+                                // Update score again
 
                             }
                         })
