@@ -81,6 +81,7 @@ public class OtherPlayerProfile extends AppCompatActivity {
                 QRCode qrcode = qrCodes.get(i);
                 Intent intent = new Intent(getApplicationContext(), ViewQRCode.class);
                 intent.putExtra("qrcode_info2", (Parcelable) qrcode);
+                intent.putExtra("otherPlayerName", playerUserName);
                 intent.putExtra("isOtherPlayer", "true");  // let viewQRcode know this is from otherplayer.
                 startActivity(intent);
 
