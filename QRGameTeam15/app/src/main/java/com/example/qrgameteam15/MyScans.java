@@ -67,7 +67,7 @@ public class MyScans extends AppCompatActivity {
         totalScore = findViewById(R.id.total_score);
         sortByDate = findViewById(R.id.sort_by_date);
         displayExtremum = findViewById(R.id.display_minMax);
-        totalScans.setText("Total Scans: " + qrCodes.size());
+        totalScans.setText("Total Scans: " + singletonPlayer.player.numberOfCode());
         totalScore.setText("Total Score: 0");
 
         // Access a Cloud FireStore instance from Activity
@@ -183,7 +183,7 @@ public class MyScans extends AppCompatActivity {
      */
     private void updateTotalScans() {
         // Initialize Variable
-        int totalNumberScans = 0;
+        int totalNumberScans = singletonPlayer.player.numberOfCode();
         int totalSums = singletonPlayer.player.getTotalScore();
 
         // Update count
