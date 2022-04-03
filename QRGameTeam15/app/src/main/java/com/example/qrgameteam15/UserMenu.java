@@ -107,8 +107,9 @@ public class UserMenu extends AppCompatActivity {
         final CollectionReference collectionReference = db.collection("Players");
 
         menuList = findViewById(R.id.userMenu_list);
+        String userName = singletonPlayer.player.getUsername();
 
-        String dataList[] = new String[]{"Player Name", "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player", "save current location"};
+        String dataList[] = new String[]{userName, "Scan New Code", "My Scans", "Ranking", "Codes Near Me", "Edit PLayer/QR Code List", "Other Player", "save current location"};
 
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         menuList.setAdapter(menuAdapter);

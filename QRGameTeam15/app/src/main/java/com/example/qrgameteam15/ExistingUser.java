@@ -174,7 +174,6 @@ public class ExistingUser extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == ExistingUser.RESULT_OK) {
                 String playerhash = data.getStringExtra("playerhash");
-
                 completeLogin(playerhash);
 
             }
@@ -189,11 +188,19 @@ public class ExistingUser extends AppCompatActivity {
     private void completeLogin(String playerHash) {
 
         // at this point, the snapshot listener should fetch all the data
+        boolean loggedInOwner = false;
         for (int i = 0; i < allPlayers.size(); i++) {
+
+            if (allPlayers.get(i).getUsername().equals(playerHash)) {  // only gaethje would go to this
+                singletonPlayer.player = allPlayers.get(i);
+                Intent intent = new Intent(getApplicationContext(), OwnerMenu.class);
+                loggedInOwner = true;
+                startActivity(intent);
+            }
+
             if (allPlayers.get(i).getPlayerHash().equals(playerHash)) {
                 Player user = allPlayers.get(i);
                 singletonPlayer.player = user;
-
                 // The concept of how to stay logged in was learned and obtained from:
                     // Video By: Stevdza-San
                     // Date: June 10, 2019
@@ -222,7 +229,11 @@ public class ExistingUser extends AppCompatActivity {
         }
 
         // If QRCode is not assigned to a player login
-        Toast.makeText(ExistingUser.this, "Invalid Login Code", Toast.LENGTH_LONG).show();
+        if (loggedInOwner) {
+
+        } else {
+            Toast.makeText(ExistingUser.this, "Invalid Login Code", Toast.LENGTH_LONG).show();
+        }
     }
 
 }
