@@ -141,12 +141,14 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
      * This string represents the HashedID of the user
      */
     private void openPlayerProfile(String playerHash) {
+        boolean valid = false;
         String userName, userHash;
         for (Player user: allPlayers) {
             String userPlayerHashProfile = user.getUsername() + "~Profile.View";
             if (userPlayerHashProfile.equals(playerHash)) {
+                valid = true;
                 userName = user.getUsername();
-                userHash = user.getUsername();
+                userHash = user.getPlayerHash();
 
                 Intent profileIntent = new Intent(ScannerView2.this, OtherPlayerProfile.class);
                 profileIntent.putExtra("playerUserName", userName);
@@ -157,11 +159,12 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
         }
 
         // If QRCode is not assigned to a player
-        Toast.makeText(ScannerView2.this, "Invalid Profile Code", Toast.LENGTH_LONG).show();
-        Intent intent =new Intent(ScannerView2.this, OtherPlayers.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-
+        if (!valid) {
+            Toast.makeText(ScannerView2.this, "Invalid Profile Code", Toast.LENGTH_LONG).show();
+            Intent intent =new Intent(ScannerView2.this, OtherPlayers.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
 
     }
 
