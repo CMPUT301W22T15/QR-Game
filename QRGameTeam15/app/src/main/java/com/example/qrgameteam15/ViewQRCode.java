@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -49,6 +50,9 @@ public class ViewQRCode extends AppCompatActivity {
     private Button postComment;
     private Button checkSameQR;
     private QRCode qrcode;
+    private String otherPlayer;
+    private ArrayList<QRCode> qrcodes;
+    private String otherName;
     SingletonPlayer singletonPlayer;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -64,6 +68,19 @@ public class ViewQRCode extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_qrcode);
         qrcode = getIntent().getParcelableExtra("qrcode_info2");
+        otherPlayer = getIntent().getStringExtra("isOtherPlayer");
+        if (otherPlayer.equals("false")) {
+            otherName = getIntent().getStringExtra("otherPlayerName");
+            qrcodes = singletonPlayer.player.getQrCodes();
+        } else {
+                // still working on it
+        }
+        for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++){
+            if (qrcodes.get(i).getId().equals(qrcode.getId())) {
+                qrcode = qrcodes.get(i);
+                break;
+            }
+        }
         // Set variable data
         title = findViewById(R.id.title);
         hashedID = findViewById(R.id.hashedID_text);
@@ -100,19 +117,16 @@ public class ViewQRCode extends AppCompatActivity {
             }
         }
         // --------------------------------------
-
-
         db = FirebaseFirestore.getInstance();
-        collectionReference = db.collection("Players");
-
-        //Display the image in the ImageView
-        retrieveBitmapImage();
-
         // Set values
-        hashedID.setText("Hashed ID: " + qrcode.getId());
-        date.setText("Date: " + qrcode.getDateStr());
-        location.setText("Location: " + qrcode.getHasLocation());
-        score.setText("Score: " + qrcode.getScore());
+        hashedID.setText("Hashed ID: " + (String) qrcode.getId());
+        date.setText("Date: " + (String) qrcode.getDateStr());
+        if (!(qrcode.getHasLocation())) {
+            location.setText("Location: N/A");
+        } else {
+            location.setText("Location: " + (String) qrcode.getLocation());
+        }
+        score.setText("Score: " + (String) String.valueOf(qrcode.getScore()));
 
         //Get the document in the FireStore (retrieve all the comments)
         DocumentReference playerDocRef = db.collection("Players").document(singletonPlayer.player.getUsername());
@@ -181,37 +195,17 @@ public class ViewQRCode extends AppCompatActivity {
     }
 
     /**
-     * This function displays the image associates with the corresponding QR code if exists.
+     * This method is called when the user taps the Image button, and it opens a new activity corresponding
+     * to the image associated to the qr code if it exists.
+     * @param view
+     * Expects an object from the View class
      */
-    private void retrieveBitmapImage() {
-
-        String filePath = SingletonPlayer.player.getUsername() + "/" + qrcode.getImageIDString();
-        StorageReference imageRef = storageReference.child(filePath);
-
-        final long ONE_MEGABYTE = 1024 * 1024;
-        String TAG = "RETRIEVE_IMAGE";
-        imageRef.getBytes(ONE_MEGABYTE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        //Data for the image is returned
-                        Bitmap imageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                        //display the retrieved image in the ImageView
-                        photo.setImageBitmap(imageBitmap);
-                        Log.d(TAG, "Image retrieved successfully!");
-//                        Toast.makeText(ViewQRCode.this, "Image retrieved successfully!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Handle any errors
-                        Log.d(TAG, "Image not retrieved, error: " + e.getMessage());
-//                        Toast.makeText(ViewQRCode.this, "Image not retrieved, error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        photo = findViewById(R.id.qr_image);
+    public void viewImage(View view) {
+        if (qrcode.getHasPhoto()) {
+            Intent intent = new Intent(getApplicationContext(), ViewImage.class);
+            intent.putExtra("view_qr_image", (String) qrcode.getImageIDString());
+            startActivity(intent);
+        }
     }
 
     /**
