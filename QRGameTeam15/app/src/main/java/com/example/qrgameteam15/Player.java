@@ -13,6 +13,7 @@ public class Player {
     private String email;
     private Boolean isOwner;
 
+
     // this constructor is required for adding this class to firebase
     Player() {
 
