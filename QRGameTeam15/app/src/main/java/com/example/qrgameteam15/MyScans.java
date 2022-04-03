@@ -74,6 +74,9 @@ public class MyScans extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
 
+        if (singletonPlayer.player.numberOfCode() == 0) {
+            displayExtremum.setEnabled(false);
+        }
         displayExtremum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
