@@ -134,3 +134,7 @@ Resources used:
     - https://online.visual-paradigm.com/
 - Map
     - https://www.youtube.com/watch?v=4JnYKkSSZgc&t=392s&ab_channel=Fr%C3%A9d%C3%A9ricRALLO
+- Android Studio
+    - https://developer.android.com/guide
+- Firebase
+    - https://firebase.google.com/docs/build
