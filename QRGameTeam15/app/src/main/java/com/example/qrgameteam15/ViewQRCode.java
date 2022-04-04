@@ -293,9 +293,16 @@ public class ViewQRCode extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewQRCode.this, MyScans.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                if (otherPlayer.equals("false")) {
+                    Intent intent = new Intent(ViewQRCode.this, MyScans.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(ViewQRCode.this, OtherPlayers.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+
             }
         };
     }
