@@ -42,8 +42,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class is responsible for the interface that allows Users to scan codes
- * Ensures that users grant camera permission prior to use
+ * This class is responsible for the interface that allows Users to scan codes.
+ * Ensures that users grant camera permission prior to use.
  */
 
 // The concept of scanning and creating this class was obtained from the following video:
@@ -52,17 +52,16 @@ import java.util.HashMap;
     // URL: https://youtu.be/Iuj4CuWjYF8
 public class ScannerView extends AppCompatActivity {
     // Initalize variables
-    CodeScanner codeScanner;
-    CodeScannerView scannerView;
-    TextView resultData;
-    SingletonPlayer singletonPlayer;
-    FirebaseFirestore db;
-
-
+    private CodeScanner codeScanner;
+    private CodeScannerView scannerView;
+    private TextView resultData;
+    private SingletonPlayer singletonPlayer;
+    private FirebaseFirestore db;
 
     /**
-     * This method creates the inital interface and obtains the necessary permissions
+     * This method creates the inital interface and obtains the necessary permissions.
      * @param savedInstanceState
+     * Expects object of type Bundle.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,31 +116,6 @@ public class ScannerView extends AppCompatActivity {
                             Toast.makeText(ScannerView.this, "you already scanned this one", Toast.LENGTH_SHORT).show();
                             finish();
                         }
-                        // Add scan to player in Database
-//                        singletonPlayer.player.addQrcode(qrcode);
-//                        singletonPlayer.player.setScore(qrcode.getScore());
-//                        String TAG = "working";
-//                        collectionReference
-//                                .document(singletonPlayer.player.getUsername())
-//                                .set(singletonPlayer.player)
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//                                        Log.d(TAG,"message");
-//                                        Intent intent = new Intent(ScannerView.this, QRCodeEditor.class);
-////                        intent.putExtra("scoreValue", qrcode.getScore());
-//                                        intent.putExtra("QRCodeValue", (Parcelable) qrcode);
-//                                        startActivity(intent);
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.e("MYAPP", "exception: " + e.getMessage());
-//                                        Log.e("MYAPP", "exception: " + e.toString());
-//                                    }
-//                                });
-
                     }
                 });
             }
@@ -158,7 +132,7 @@ public class ScannerView extends AppCompatActivity {
     }
 
     /**
-     * Overwritten to start camera and search for codes to scan
+     * Overwritten to start camera and search for codes to scan.
      */
     @Override
     protected void onResume() {
@@ -167,10 +141,10 @@ public class ScannerView extends AppCompatActivity {
     }
 
     /**
-     * This method asks for permission to use camera
-     * If accepted, then the Camera will open and scan
-     * If denied, a message will appear saying that permission is still needed
-     * Otherwise, it continues to display the message
+     * This method asks for permission to use camera.
+     * If accepted, then the Camera will open and scan.
+     * If denied, a message will appear saying that permission is still needed.
+     * Otherwise, it continues to display the message.
      */
     private void requestForCamera(){
         Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {

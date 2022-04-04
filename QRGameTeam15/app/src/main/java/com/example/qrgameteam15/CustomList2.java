@@ -11,11 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-
+/**
+ * This class acts as an adapter for MyScans list.
+ * It adds the Date and Score to the list, as well as
+ * suggests where the QRCodes has an associated Photo and/or Location.
+ */
 public class CustomList2 extends ArrayAdapter<Player> {
     private ArrayList<Player> playersWithSameQRCode;
     private Context context;
-
+    /**
+     * Constructor for the CustomList.
+     * @param context
+     * Expects object from Context class.
+     * @param playersWithSameQRCode
+     * Expects a Player ArrayList object with list of players with the same code.
+     */
     public CustomList2(Context context, ArrayList<Player> playersWithSameQRCode) {
         super(context, 0, playersWithSameQRCode);
         this.context = context;

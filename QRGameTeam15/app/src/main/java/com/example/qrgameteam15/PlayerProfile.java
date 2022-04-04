@@ -18,8 +18,8 @@ import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 /**
- * This class displays the user's information
- * Also allows the option to generate a QRcode to log into their account on a different device
+ * This class displays the user's information, and also
+ * allows the option to generate a QR code to log into their account on a different device.
  */
 
 // The concept of generating QRCodes was obtained from the following video:
@@ -83,18 +83,17 @@ public class PlayerProfile extends AppCompatActivity {
     }
 
     /**
-     * This method takes in a string and generates a QRCode using that string
+     * This method takes in a string and generates a QRCode using that string.
      * @param key
-     * String that will be the message for the QRCode
+     * String that will be the message for the QRCode.
      * @return
-     * View of the User Interface
+     * Returns view of the User Interface.
      */
     private View.OnClickListener generateImage(String key) {
         return new View.OnClickListener() {
             /**
-             * This method will update the QRCode data in the database
-             *
-             * @param view View represents the User interface for the activity
+             * This method will update the QRCode data in the database.
+             * @param view View represents the User interface for the activity.
              */
             @Override
             public void onClick(View view) {

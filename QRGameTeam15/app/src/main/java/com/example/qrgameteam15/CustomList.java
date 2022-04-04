@@ -12,12 +12,21 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
+/**
+ * This class creates an ArrayList of players to be displayed as a
+ * custom view.
+ */
 public class CustomList extends ArrayAdapter<Player> {
 
     private ArrayList<Player> players;
     private Context context;
-
+    /**
+     * Constructor for the CustomList.
+     * @param context
+     * Expects object from Context class.
+     * @param players
+     * Expects a Player ArrayList object with list of players.
+     */
     public CustomList(Context context, ArrayList<Player> players){
         super(context,0,players);
         this.players = players;

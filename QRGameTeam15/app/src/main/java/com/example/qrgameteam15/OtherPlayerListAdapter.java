@@ -11,12 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-
+/**
+ * This class acts as an adapter for OtherPlayerList list.
+ */
 public class OtherPlayerListAdapter extends ArrayAdapter<Player> {
     private ArrayList<Player> players;
     private Context context;
-    int myRecource;
-
+    private int myRecource;
+    /**
+     * Constructor for OtherPlayerListAdapter.
+     * @param context
+     * Expects object from Context class.
+     * @param resource
+     * Expects object from Integer class.
+     * @param players
+     * Expects ArrayList of type Player.
+     */
     public OtherPlayerListAdapter(Context context, int resource, ArrayList<Player> players){
         super(context,resource,players);
         this.players = players;

@@ -50,10 +50,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * This class is responsible for editing details about the scanned code
- * It allows user to either take a photo of the object or track geolocation
- * Displays score obtained from the code
- * Users can also comment on the image
+ * This class is responsible for editing details about the scanned code.
+ * It allows user to either take a photo of the object or track geolocation.
+ * Displays score obtained from the code.
+ * Users can also comment on the image.
  */
 public class QRCodeEditor extends AppCompatActivity {
     // Initialize variables
@@ -67,20 +67,19 @@ public class QRCodeEditor extends AppCompatActivity {
     private ArrayAdapter<String> commentAdapter;
     private EditText commentInput;
     private Button postComment;
-    SingletonPlayer singletonPlayer = new SingletonPlayer();
-    FusedLocationProviderClient fusedLocationProviderClient;
-    FirebaseFirestore db;
-    CollectionReference collectionReference;
-    LocationCallback locationCallback;
-    LocationRequest locationRequest;
-
+    private SingletonPlayer singletonPlayer = new SingletonPlayer();
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private FirebaseFirestore db;
+    private CollectionReference collectionReference;
+    private LocationCallback locationCallback;
+    private LocationRequest locationRequest;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private QRCode QR;
 
 
     /**
-     * This replaces the deprecated function startActivityForResult
+     * This replaces the deprecated function startActivityForResult.
      */
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -106,9 +105,9 @@ public class QRCodeEditor extends AppCompatActivity {
     );
 
     /**
-     * This method creates the inital interface and obtains the necessary permissions
-     *
+     * This method creates the initial interface and obtains the necessary permissions.
      * @param savedInstanceState
+     * Expects object of type Bundle.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,10 +258,10 @@ public class QRCodeEditor extends AppCompatActivity {
         save.setOnClickListener(saveQRCodeData());
         postComment.setOnClickListener(new View.OnClickListener() {
             /**
-             * This method overrides the onClick listener for the postComment button
-             * It send the view to the addComment method
+             * This method overrides the onClick listener for the postComment button.
+             * It send the view to the addComment method.
              * @param view
-             * View represents the User Interface for the activity
+             * View represents the User Interface for the activity.
              */
             @Override
             public void onClick(View view) {
@@ -288,17 +287,10 @@ public class QRCodeEditor extends AppCompatActivity {
         //no need to validate existing/ non existing QR Codes, assuming they are unique
         //we just fetch from database and display the comments
         //if there's none, nothing will be displayed
-
-        // Initialize variables for comment section and new comments
-//        comments = new ArrayList<>();
-//        commentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, comments);
-//        commentSection.setAdapter(commentAdapter);
-
-
     }
 
     /**
-     * outdated version that don't work on emulator
+     * Outdated version that doesn't work on emulator.
      */
     @SuppressLint("MissingPermission")
     private void getLocation() {
@@ -354,7 +346,7 @@ public class QRCodeEditor extends AppCompatActivity {
 
 
     /**
-     * get the location and go to the callback when done
+     * Get the location and go to the callback when done.
      */
     @SuppressLint("MissingPermission")
     public void getLocation1() {
@@ -364,10 +356,11 @@ public class QRCodeEditor extends AppCompatActivity {
     }
 
     /**
-     * This method is executed from the OnClick() listener for the postComment button
-     * It will take the text from the EditText and add it to the comment list if valid
+     * This method is executed from the OnClick() listener for the postComment button.
+     * It will take the text from the EditText and add it to the comment list if valid.
      *
-     * @param view View represents the User Interface for the activity
+     * @param view
+     * View represents the User Interface for the activity.
      */
     private void addComment(View view) {
         String newComment = commentInput.getText().toString();
@@ -413,9 +406,9 @@ public class QRCodeEditor extends AppCompatActivity {
     private View.OnClickListener saveQRCodeData() {
         return new View.OnClickListener() {
             /**
-             * This method will update the QRCode data in the database
+             * This method will update the QRCode data in the database.
              * @param view
-             * View represents the User interface for the activity
+             * View represents the User interface for the activity.
              */
             @Override
             public void onClick(View view) {
@@ -429,6 +422,7 @@ public class QRCodeEditor extends AppCompatActivity {
     /**
      * This function will execute when add photo button is pressed.
      * @param view
+     * Expects object from View class.
      */
     @SuppressLint("LongLogTag")
     public void addPhotos(View view) {
@@ -446,7 +440,8 @@ public class QRCodeEditor extends AppCompatActivity {
 
     /**
      * This function will add the a string of the image filename to imageIDString in the QRCode.
-     * @param imageFilename the filename to set for imageIDString in the QRCode
+     * @param imageFilename
+     * The filename to set for imageIDString in the QRCode.
      */
     public void addPhotoToQRCode(String imageFilename) {
         int lengthQRCode = SingletonPlayer.player.qrCodes.size();
@@ -478,7 +473,7 @@ public class QRCodeEditor extends AppCompatActivity {
 
     /**
      * This function create a string for the filename to use for the image file.
-     * @return a String of the filename
+     * @return Returns a String of the filename.
      */
     private String createImageFilename() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -488,8 +483,10 @@ public class QRCodeEditor extends AppCompatActivity {
 
     /**
      * This function upload the reduced size image to Firebase Storage.
-     * @param imageBitmap the image to upload in Bitmap
-     * @param imageFilename the filename to use for the image when uploaded to Firebase Storage
+     * @param imageBitmap
+     * The image to upload in Bitmap.
+     * @param imageFilename
+     * The filename to use for the image when uploaded to Firebase Storage.
      */
     private void uploadImageBitmap(Bitmap imageBitmap, String imageFilename){
 

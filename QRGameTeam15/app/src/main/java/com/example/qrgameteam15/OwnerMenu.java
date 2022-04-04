@@ -9,10 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+/**
+ * This class acts as a menu for the owner and displays appropriate owner options.
+ */
 public class OwnerMenu extends AppCompatActivity {
-    ListView ownerMenu;
-    ArrayAdapter<String> ownerMenuAdapter;
+    private ListView ownerMenu;
+    private ArrayAdapter<String> ownerMenuAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

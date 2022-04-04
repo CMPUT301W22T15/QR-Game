@@ -4,19 +4,31 @@ package com.example.qrgameteam15;
 import static java.lang.Math.pow;
 
 import java.util.ArrayList;
-
+/**
+ * This class computes a QR code's score.
+ */
 public class Score {
     // function that compute QRCODE score
     private int score;
     private char temp;
     private String hash;
-    ArrayList<Character> numRepeats;
+    private ArrayList<Character> numRepeats;
 
+    /**
+     * Constructor for Score.
+     * @param hash
+     * Expects object from String class that represents the hash.
+     */
     public Score(String hash) {
         this.hash = hash;
         this.score = score;
     }
 
+    /**
+     * This method computes and returns the score for a QR code.
+     * @return score
+     * Expects object of type Integer with score value.
+     */
     public int getScore() {
         //total score is score
         score = 0;

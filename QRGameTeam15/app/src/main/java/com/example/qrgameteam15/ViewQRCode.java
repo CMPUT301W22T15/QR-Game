@@ -39,7 +39,10 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * This activity displays the information on a QR code and it allows the
+ * user to add new comments or open a picture associated to it if there is one.
+ */
 public class ViewQRCode extends AppCompatActivity {
     private TextView title;
     private TextView hashedID;
@@ -59,17 +62,18 @@ public class ViewQRCode extends AppCompatActivity {
     private ArrayList<QRCode> qrcodes;
     private String otherName;
     private Player player2;
-    SingletonPlayer singletonPlayer;
+    private SingletonPlayer singletonPlayer;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private GlobalAllPlayers allOtherPlayers;
     private ArrayList<Player> allOtherPlayersList;
-    FirebaseFirestore db;
-    CollectionReference collectionReference;
+    private FirebaseFirestore db;
+    private CollectionReference collectionReference;
 
     /**
-     * This method creates the inital interface and obtains the necessary permissions
+     * This method creates the inital interface and obtains the necessary permissions.
      * @param savedInstanceState
+     * Expects object of type Bundle.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,26 +152,6 @@ public class ViewQRCode extends AppCompatActivity {
         }
         score.setText("Score: " + (String) String.valueOf(qrcode.getScore()));
 
-//        int x = 0;
-//        int index = 0;
-//        for (int i = 0; i < singletonPlayer.player.qrCodes.size(); i++){
-//            if (singletonPlayer.player.qrCodes.get(i).getId().equals(qrcode.getId())){
-//
-//                //set new comments
-//                comments = singletonPlayer.player.qrCodes.get(i).getComments();
-//                commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
-//                commentSection.setAdapter(commentAdapter);
-//                x += 1;
-//                index = i;
-//                break;
-//            }
-//        }
-//        // if the qr code scanned was a non-existing qr code
-//        if (x == 0){
-//            comments = new ArrayList<>();
-//            commentAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, comments);
-//            commentSection.setAdapter(commentAdapter);
-//        }
         int x = 0;
         int index = 0;
         for (int i = 0; i < player2.qrCodes.size(); i++){
@@ -196,10 +180,10 @@ public class ViewQRCode extends AppCompatActivity {
         QRCode qrCode = player2.qrCodes.get(finalIndex);
         postComment.setOnClickListener(new View.OnClickListener() {
             /**
-             * This method overrides the onClick listener for the postComment button
-             * It send the view to the addComment method
+             * This method overrides the onClick listener for the postComment button.
+             * It send the view to the addComment method.
              * @param view
-             * View represents the User Interface for the activity
+             * View represents the User Interface for the activity.
              */
             @Override
             public void onClick(View view) {
@@ -229,7 +213,7 @@ public class ViewQRCode extends AppCompatActivity {
      * This method is called when the user taps the Image button, and it opens a new activity corresponding
      * to the image associated to the qr code if it exists.
      * @param view
-     * Expects an object from the View class
+     * Expects an object from the View class.
      */
     public void viewImage(View view) {
         if (qrcode.getHasPhoto()) {
@@ -241,10 +225,10 @@ public class ViewQRCode extends AppCompatActivity {
     }
 
     /**
-     * This method is executed from the OnClick() listener for the postComment button
-     * It will take the text from the EditText and add it to the comment list if valid
+     * This method is executed from the OnClick() listener for the postComment button.
+     * It will take the text from the EditText and add it to the comment list if valid.
      * @param view
-     * View represents the User Interface for the activity
+     * View represents the User Interface for the activity.
      */
     private void addComment(View view, QRCode qrCode, int y) {
         String newComment = commentInput.getText().toString();
@@ -287,9 +271,9 @@ public class ViewQRCode extends AppCompatActivity {
     private View.OnClickListener saveQRCodeData() {
         return new View.OnClickListener() {
             /**
-             * This method will update the QRCode data in the database
+             * This method will update the QRCode data in the database.
              * @param view
-             * View represents the User interface for the activity
+             * View represents the User interface for the activity.
              */
             @Override
             public void onClick(View view) {

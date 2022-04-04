@@ -10,13 +10,15 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
+/**
+ * This class displays the current user's information in respect to all players in the Database.
+ */
 public class PlayerWithSameQRCode2 extends AppCompatActivity {
     private String currentQRValue;
-    GlobalAllPlayers listOfAllPlayers = new GlobalAllPlayers();
-    ArrayList<Player> sameQRCodePlayers = new ArrayList<>();
-    ListView playerList;
-    ArrayAdapter<Player> playerArrayAdapter;
+    private GlobalAllPlayers listOfAllPlayers = new GlobalAllPlayers();
+    private ArrayList<Player> sameQRCodePlayers = new ArrayList<>();
+    private ListView playerList;
+    private ArrayAdapter<Player> playerArrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

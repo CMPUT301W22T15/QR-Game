@@ -36,8 +36,8 @@ import java.util.ArrayList;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
- * This class is responsible for the interface that allows Users to scan codes
- * Ensures that users grant camera permission prior to use
+ * This class is responsible for the interface that allows Users to scan codes.
+ * Ensures that users grant camera permission prior to use.
  */
 
 // The concept of scanning and creating this class was obtained from the following video:
@@ -46,12 +46,13 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 // URL: https://youtu.be/MegowI4T_L8
 public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     // Intialize Scanner
-    ZXingScannerView scannerView;
-    FirebaseFirestore db;
-    ArrayList<Player> allPlayers = new ArrayList<>();
+    private ZXingScannerView scannerView;
+    private FirebaseFirestore db;
+    private ArrayList<Player> allPlayers = new ArrayList<>();
     /**
-     * This method creates the inital interface and obtains the necessary permissions
+     * This method creates the inital interface and obtains the necessary permissions.
      * @param savedInstanceState
+     * Expects object of type Bundle.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +89,9 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
     }
 
     /**
-     * Obtains data from scanned code and displays Toast message
+     * Obtains data from scanned code and displays Toast message.
      * @param rawResult
-     *  Result obtained from successful scan
+     * Return result obtained from successful scan.
      */
     @Override
     public void handleResult(Result rawResult) {
@@ -136,9 +137,9 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
     }
 
     /**
-     * This method will open the OtherPlayerProfile activity depending on the userScan
+     * This method will open the OtherPlayerProfile activity depending on the userScan.
      * @param playerHash
-     * This string represents the HashedID of the user
+     * This string represents the HashedID of the user.
      */
     private void openPlayerProfile(String playerHash) {
         boolean valid = false;
@@ -169,7 +170,7 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
     }
 
     /**
-     * Overwritten to stop camera usage when not being used
+     * Overwritten to stop camera usage when not being used.
      */
     @Override
     protected void onPause() {
@@ -178,7 +179,7 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
     }
 
     /**
-     * Overwritten to start camera and search for codes to scan
+     * Overwritten to start camera and search for codes to scan.
      */
     @Override
     protected void onResume() {
@@ -188,7 +189,7 @@ public class ScannerView2 extends AppCompatActivity implements ZXingScannerView.
     }
 
     /**
-     * Overwritten to stop camera usage on closure
+     * Overwritten to stop camera usage on closure.
      */
     @Override
     protected void onDestroy() {

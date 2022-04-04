@@ -32,10 +32,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * This activity is responsible for displaying the main user interface when the user first opens
+ * the app, and calls activities accordingly with the users input.
+ */
 public class MainActivity extends AppCompatActivity {
     private SingletonPlayer singletonPlayer;
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the user taps the New User button, and it opens a new activity corresponding
      * to the new user sign up.
      * @param view
-     * Expects an object from the View class
+     * Expects an object from the View class.
      */
     public void newUser(View view) {
         Intent intent = new Intent(getApplicationContext(), NewUser.class);
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the user taps the Sign In button, and it opens a new activity corresponding
      * to the user sign in.
      * @param view
-     * Expects an object from the View class
+     * Expects an object from the View class.
      */
     public void SignIn(View view) {
         Intent intent = new Intent(getApplicationContext(), ExistingUser.class);
