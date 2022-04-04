@@ -16,14 +16,16 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
+/**
+ * This activity displays the image associated to a QR code.
+ */
 public class ViewImage extends AppCompatActivity {
     private String imageId;
     private String userName;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    FirebaseFirestore db;
-    CollectionReference collectionReference;
+    private FirebaseFirestore db;
+    private CollectionReference collectionReference;
     private ImageView photo;
 
     @Override

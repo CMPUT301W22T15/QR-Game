@@ -33,7 +33,10 @@ import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
+/**
+ * This activity opens if a user does not already have an existing account,
+ * and is responsible for creating a new user account for the user.
+ */
 public class NewUser extends AppCompatActivity {
     // Initialize variables
     private EditText usernameEdit;
@@ -134,10 +137,9 @@ public class NewUser extends AppCompatActivity {
      * This method is called when the user taps the Create Account button, and it opens the user menu activity 
      * if a new user successfully signs up.
      * @param view
-     * Expects an object from the View class
+     * Expects an object from the View class.
      */
     public void createUser(View view) {
-        /** Basic layout, will have to ensure user enters info and that the info is correct later */
         // Obtain variables
         String username = usernameEdit.getText().toString();
         String name = nameEdit.getText().toString();
@@ -207,23 +209,6 @@ public class NewUser extends AppCompatActivity {
                     }
                 }
             });
-//            collectionReference
-//                    .document(username)
-//                    .set(SingletonPlayer.player)
-//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void unused) {
-//                            Intent intent = new Intent(getApplicationContext(), UserMenu.class);
-//                            intent.putExtra("userMenu_act", username);
-//                            startActivity(intent);
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//
-//                        }
-//                    });
         }
     }
 

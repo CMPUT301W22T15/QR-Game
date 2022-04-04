@@ -43,19 +43,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * This activity is responsible for displaying the main user menu.
+ * It allows the user to make a selection from the menu, and it
+ * opens the corresponding activity.
+ */
 public class UserMenu extends AppCompatActivity {
-    ListView menuList;
-    //EditText menuItem;
-    ArrayAdapter<String> menuAdapter;
-    FirebaseFirestore db;
-    SingletonPlayer singletonPlayer;
+    private ListView menuList;
+    private ArrayAdapter<String> menuAdapter;
+    private FirebaseFirestore db;
+    private SingletonPlayer singletonPlayer;
     public GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();  // to fetch all aplayers from database
 
     // LOCATION SETUP
-    LocationCallback locationCallback;
-    LocationRequest locationRequest;
-    FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationCallback locationCallback;
+    private LocationRequest locationRequest;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
 
     @Override
@@ -92,17 +95,6 @@ public class UserMenu extends AppCompatActivity {
             }
         };
 
-        //menuItem = findViewById(R.id.menu_nameEntry);
-//        List<QRCode> qarray = singletonPlayer.player.qrCodes;
-//
-//        // Access a Cloud FireStore instance from Activity
-//        db = FirebaseFirestore.getInstance();
-//        final CollectionReference collectionReferenceQR = db.collection("QRCodes");
-
-//        Intent intent = getIntent();
-//        String name = intent.getStringExtra("userMenu_act");
-//        SingletonPlayer.player.setUsername(name);
-
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
 
@@ -116,8 +108,6 @@ public class UserMenu extends AppCompatActivity {
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                /** To do ... call different activities when any menu item is clicked... so far only scan
-                 * new code has been implemented */
                 if (position == 0) {
                     Intent intent = new Intent(getApplicationContext(), PlayerProfile.class);
                     startActivity(intent);
@@ -174,7 +164,7 @@ public class UserMenu extends AppCompatActivity {
 
     }
     /**
-     * get the location and go to the callback when done
+     * Get the location and go to the callback when done.
      */
     @SuppressLint("MissingPermission")
     public void getLocation1() {

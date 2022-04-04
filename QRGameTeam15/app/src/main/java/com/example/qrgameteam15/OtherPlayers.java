@@ -23,16 +23,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 /**
- * This class is responsible for displaying a list of all users playing the game
+ * This class is responsible for displaying a list of all users playing the game.
  */
 public class OtherPlayers extends AppCompatActivity {
     // Initialize variables
-    SingletonPlayer singletonPlayer;
-    ArrayList<Player> allPlayers;
-    FirebaseFirestore db;
-    ArrayAdapter<Player> playerAdapter;
-    ListView playerList;
-    Button scanCodeButton;
+    private SingletonPlayer singletonPlayer;
+    private ArrayList<Player> allPlayers;
+    private FirebaseFirestore db;
+    private ArrayAdapter<Player> playerAdapter;
+    private ListView playerList;
+    private Button scanCodeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,14 +21,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-
+/**
+ * This class is responsible for displaying other player information.
+ */
 public class OtherPlayerProfile extends AppCompatActivity {
-    String playerUserName;
-    String playerHash;
-    FirebaseFirestore db;
-    Player player;
-    ArrayAdapter<QRCode> scanAdapter;
-    ArrayList<QRCode> qrCodes;
+    private String playerUserName;
+    private String playerHash;
+    private FirebaseFirestore db;
+    private Player player;
+    private ArrayAdapter<QRCode> scanAdapter;
+    private ArrayList<QRCode> qrCodes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,9 @@ public class OtherPlayerProfile extends AppCompatActivity {
         });
 
     }
+    /**
+     * This method displays the other players information.
+     */
     public void displayPlayerInfo() {
         TextView userNameTextView = findViewById(R.id.OtherPlayerProfileName);
         userNameTextView.setText("username: " + playerUserName);

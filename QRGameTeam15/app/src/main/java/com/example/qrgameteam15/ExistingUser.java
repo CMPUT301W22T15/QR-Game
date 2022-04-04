@@ -36,30 +36,21 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This class allows the user to scan a QRCode to log into their account from another device
+ * This class allows the user to scan a QRCode to log into their account from another device.
  */
 public class ExistingUser extends AppCompatActivity {
     // Initialize variables
-    SingletonPlayer singletonPlayer = new SingletonPlayer();
-    FirebaseFirestore db;
-    Button scanButton;
-    ArrayList<Player> allPlayers = new ArrayList<>();
+    private SingletonPlayer singletonPlayer = new SingletonPlayer();
+    private FirebaseFirestore db;
+    private Button scanButton;
+    private ArrayList<Player> allPlayers = new ArrayList<>();
     private CheckBox rememberMe;
-    // ---------------------------------
-    // each qrcode we fetch from database from "QRCodes" collection set these value so we can easily
-    // create document
-//    public boolean qrExistInDB = false;
-//    public int individualQRcodescore = -1;
-//    public String individualQRcodeDate = "";
-//    public String individualQRcodeName = "";
-//    public String individualQRcodeLocation = "";
-    // ------------------------------------
-    // Access a Cloud FireStore instance from Activity
-    String TAG = "tag";
+    private String TAG = "tag";
 
     /**
-     * This method creates the inital interface and obtains the necessary permissions
+     * This method creates the initial interface and obtains the necessary permissions.
      * @param savedInstanceState
+     * Expects a Bundle object.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +90,9 @@ public class ExistingUser extends AppCompatActivity {
      * This method is called when the user taps the Log In button, and it opens the user menu activity 
      * if the user successfully logs in.
      * @param view
-     * Expects an object from the View class
+     * Expects an object from the View class.
      */
     public void login(View view) {
-        /** To do.. verify it is a valid user */
         EditText usernameEdit = (EditText) findViewById(R.id.username1_text);
         String username = usernameEdit.getText().toString();
 
@@ -158,13 +148,13 @@ public class ExistingUser extends AppCompatActivity {
     }
 
     /**
-     * This method obtains date from ScannerView2 upon return
+     * This method obtains date from ScannerView2 upon return.
      * @param requestCode
-     * This code checks that activities are transitioning correctly
+     * This code checks that activities are transitioning correctly.
      * @param resultCode
-     * This code should match that of the other activity that was called
+     * This code should match that of the other activity that was called.
      * @param data
-     * Data contains the information that was returned from the previous activity
+     * Data contains the information that was returned from the previous activity.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -181,9 +171,9 @@ public class ExistingUser extends AppCompatActivity {
     }
 
     /**
-     * This method checks if the user is already in the database
+     * This method checks if the user is already in the database.
      * @param playerHash
-     * The unique ID corresponding to a player in the database
+     * The unique ID corresponding to a player in the database.
      */
     private void completeLogin(String playerHash) {
 

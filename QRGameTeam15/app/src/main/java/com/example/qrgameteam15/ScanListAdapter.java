@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class acts as an adapter for MyScans list
- * It adds the Date and Score to the list
- * Also suggests where the QRCodes has an associated Photo and/or Location
+ * This class acts as an adapter for MyScans list.
+ * It adds the Date and Score to the list.
+ * Also suggests where the QRCodes has an associated Photo and/or Location.
  */
 public class ScanListAdapter extends ArrayAdapter<QRCode> {
     private Context myContext;
@@ -25,13 +25,13 @@ public class ScanListAdapter extends ArrayAdapter<QRCode> {
     private ArrayList<QRCode> qrCodes;
 
     /**
-     * Constructor for the ScanListAdapter
+     * Constructor for the ScanListAdapter.
      * @param context
-     * Represents the context of the application
+     * Represents the context of the application.
      * @param resource
-     * Suggests the layout to be used
+     * Suggests the layout to be used.
      * @param qrCodes
-     * Suggests the items that will be contained in the list
+     * Suggests the items that will be contained in the list.
      */
     public ScanListAdapter(Context context, int resource, ArrayList<QRCode> qrCodes) {
         super(context, resource, qrCodes);

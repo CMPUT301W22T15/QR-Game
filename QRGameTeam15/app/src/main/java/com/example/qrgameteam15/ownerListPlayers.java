@@ -27,14 +27,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
+/**
+ * This is an Adapter class for custom listview of player.
+ */
 public class ownerListPlayers extends AppCompatActivity {
-
-    ArrayList<Player> allPlayers;
-    FirebaseFirestore db;
-    ArrayAdapter<Player> playerAdapter;
-    ListView playerList;
-    SingletonPlayer singletonPlayer;
+    private ArrayList<Player> allPlayers;
+    private FirebaseFirestore db;
+    private ArrayAdapter<Player> playerAdapter;
+    private ListView playerList;
+    private SingletonPlayer singletonPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

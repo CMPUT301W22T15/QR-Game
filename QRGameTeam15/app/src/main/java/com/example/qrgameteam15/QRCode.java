@@ -11,19 +11,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-
+/**
+ * This activity is responsible for creating an object of type QRCode, that represents
+ * an instance of a QR code in the game.
+ */
 public class QRCode implements Parcelable {
     // Initialize variables
     static String dateStr;
-    String key;
-    int score;
+    private String key;
+    private int score;
     ID idObject;
     String sha256Hex;
     Boolean hasLocation;
     Boolean hasPhoto;
-    String location;
-    String id;
-    String imageIDString;
+    private String location;
+    private String id;
+    private String imageIDString;
     ArrayList<String> comments;
 
     // Constructor required for adding this class to the firebase
@@ -34,9 +37,11 @@ public class QRCode implements Parcelable {
     }
 
     /**
-     *
-     * @param key: the decoded msg of the QRcode
-     * @param location: the location,in "longtitude-latitute", where this code was scanned
+     * Constructor for QRCode.
+     * @param key
+     * Expects decoded msg of the QR code.
+     * @param location
+     * Expects location in "longtitude-latitute", where this code was scanned.
      */
     public QRCode(String key, String location) {
         hasLocation = false;
@@ -95,131 +100,149 @@ public class QRCode implements Parcelable {
     };
 
     /**
-     * setter for date
+     * Setter for date.
      * @param date
+     * Expects object of type String representing date.
      */
     public void setDate(String date) {
         this.dateStr = date;
     }
 
     /**
-     * getter for QRcode key/name
-     * @return: the qrcode key
+     * Getter for QRcode key/name.
+     * @return Return the qrcode key.
      */
     public String getKey() {
         return key;
     }
 
     /**
-     * setter for qrcode Key
+     * Setter for qrcode Key.
      * @param key
+     * Expects object of type String representing key.
      */
     public void setKey(String key) {
         this.key = key;
     }
 
     /**
-     * setter for location string
-     * @param location: "longtitude-latitude" strign
+     * Setter for location string.
+     * @param location
+     * Expects "longtitude-latitude" String.
      */
     public void setLocation(String location) {
         this.location = location;
     }
 
     /**
-     * getter for score
-     * @return: score
+     * Getter for score.
+     * @return Returns the Score.
      */
     public int getScore() {
         return this.score;
     }
-
+    /**
+     * Adds comment to  comments list.
+     * @param comment
+     * Expects object from String class representing comment.
+     */
     public void addComment(String comment){
         comments.add(comment);
     }
-
+    /**
+     * Getter for comments.
+     * @return Returns the list of comments.
+     */
     public ArrayList<String> getComments() {
         return comments;
     }
-
+    /**
+     * Setter for comments.
+     * @param comments
+     * Expects ArrayList of type String with all of the comments.
+     */
     public void setComments(ArrayList<String> comments) {
         this.comments = comments;
     }
 
     /**
-     * setter for score
+     * Setter for score.
      * @param score
+     * Expects object of type Integer representing score.
      */
     public void setScore(int score) {
         this.score = score;
     }
 
     /**
-     * getter for the pure sha256 hash of the qrcode key
-     * @return: pure sha256 hash of the qrcode key
+     * Getter for the pure sha256 hash of the qrcode key.
+     * @return Returns pure sha256 hash of the qrcode key.
      */
     public String getSha256Hex() {
         return this.sha256Hex;
     }
 
     /**
-     * getter for ID object which contains the sha256 and (sha256 + location)
-     * @return: ID object
+     * Getter for ID object which contains the sha256 and (sha256 + location).
+     * @return Returns ID object.
      */
     public ID getIdObject() {
         return idObject;
     }
 
     /**
-     * getter for ID object
-     * @return: ID object
+     * Getter for ID.
+     * @return Returns ID.
      */
     public String getId() {
         return id;
     }
 
     /**
-     * getter for the string of date, formatted using simpledateformate
-     * @return: nicely formatted date.
+     * Getter for the string of date, formatted using simple date format.
+     * @return Returns nicely formatted date.
      */
     public String getDateStr() {
         return this.dateStr;
     }
 
     /**
-     *
-     * @return: true if this QRcode has location, false otherwise.
+     * Getter for hasLocation.
+     * @return Returns true if this QRcode has location, false otherwise.
      */
     public Boolean getHasLocation() {
         return this.hasLocation;
     }
 
     /**
-     * getter for location String
-     * @return: "longitute-latitude" String
+     * Getter for location String.
+     * @return Returns "longitute-latitude" String.
      */
     public String getLocation() {
         return location;
     }
-
-
+    /**
+     * Getter for hasPhoto.
+     * @return Returns hasPhoto Boolean.
+     */
     public Boolean getHasPhoto() {
         return hasPhoto;
     }
-    
-
     /**
-     * setter for HasPhoto attribue
+     * Setter for HasPhoto attribute.
      * @param hasPhoto
+     * Expects object of type Boolean representing hasPhoto attribute.
      */
     public void setHasPhoto(Boolean hasPhoto) {
         this.hasPhoto = hasPhoto;
     }
     // ---------------------------------------------------------------------
     /**
-     * This method was copied from https://www.baeldung.com/sha-256-hashing-java
-     * @param hash: byte hash of the input
-     * @return: the sha256 hash of the input
+     * This method was copied from https://www.baeldung.com/sha-256-hashing-java.
+     * @param hash
+     * Expects byte hash of the input.
+     * @returns
+     * Returns the sha256 hash of the input.
      */
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
@@ -246,11 +269,18 @@ public class QRCode implements Parcelable {
         parcel.writeString(id);
         parcel.writeString(imageIDString);
     }
-
+    /**
+     * Getter for getImageIDString.
+     * @return Returns the imageIDString.
+     */
     public String getImageIDString() {
         return this.imageIDString;
     }
-
+    /**
+     * Setter for getImageIDString.
+     * @param  imageIDString
+     * Expects object of type String representing image ID.
+     */
     public void setImageIDString (String imageIDString) {
         this.imageIDString = imageIDString;
         //setHasPhoto(true);

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * This class displays the current user's information in respect to all players in the Database
+ * This class displays the current user's information in respect to all players in the Database.
  */
 public class PlayerRanking extends AppCompatActivity {
     // Initialize variables
@@ -65,7 +65,7 @@ public class PlayerRanking extends AppCompatActivity {
     }
 
     /**
-     * This method calculated the relative position of the player, in terms of all players, for various categories
+     * This method calculated the relative position of the player, in terms of all players, for various categories.
      */
     private void displayInformation() {
         // Obtain lists for allHighScores, allTotalScans, and allTotalSums

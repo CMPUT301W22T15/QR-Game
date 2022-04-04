@@ -28,24 +28,25 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 /**
- * This activity displays a list of all the user's scans
- * User can click on a scan to obtain more information
- * User can long click on a scan to delete
+ * This activity displays a list of all the user's scans.
+ * User can click on a scan to obtain more information.
+ * User can long click on a scan to delete.
  */
 public class MyScans extends AppCompatActivity {
     // Initialize list of content
-    SingletonPlayer singletonPlayer;
-    ArrayList<QRCode> qrCodes;
-    ArrayAdapter<QRCode> scanAdapter;
-    TextView totalScans;
-    TextView totalScore;
-    Button sortByDate;
-    Button displayExtremum;
-    FirebaseFirestore db;
+    private SingletonPlayer singletonPlayer;
+    private ArrayList<QRCode> qrCodes;
+    private ArrayAdapter<QRCode> scanAdapter;
+    private TextView totalScans;
+    private TextView totalScore;
+    private Button sortByDate;
+    private Button displayExtremum;
+    private FirebaseFirestore db;
 
     /**
-     * This method sets up the initial user interface
+     * This method sets up the initial user interface.
      * @param savedInstanceState
+     * Expects object of type Bundle.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +180,7 @@ public class MyScans extends AppCompatActivity {
     }
 
     /**
-     * Updates the total scans aafter user deletes
+     * Updates the total scans after user deletes.
      */
     private void updateTotalScans() {
         // Initialize Variable

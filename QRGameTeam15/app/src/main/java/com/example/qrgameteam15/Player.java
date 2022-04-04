@@ -4,7 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-
+/**
+ * This activity is responsible for creating an object of type Player, that represents
+ * an instance of a player in the game.
+ */
 public class Player {
     private String username;
     public ArrayList<QRCode> qrCodes;
@@ -22,9 +25,11 @@ public class Player {
     }
 
     /**
-     * Normal constructors to initialize its attributes
-     *
+     * Normal constructors to initialize its attributes.
      * @param username
+     * Expects object of type String that represents username.
+     * @param email
+     * Expects object of type String that represents email.
      */
     Player(String username, String email) {
         this.username = username;
@@ -49,48 +54,51 @@ public class Player {
     // setters and getters
 
     /**
-     * setter for name
+     * Setter for name.
      * @param name
+     * Expects object of type String representing name.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * getter for name
-     * @return
+     * Getter for name.
+     * @return Returns String containing name.
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     * setter for region
+     * Setter for region.
      * @param region
+     * Expects object of type String representing region.
      */
     public void setRegion(String region) {
         this.region = region;
     }
 
     /**
-     * getter for region
-     * @return
+     * Getter for region.
+     * @return Returns String containing region.
      */
     public String getRegion() {
         return this.region;
     }
 
     /**
-     * @return: playerhash
+     * Getter for player hash.
+     * @return Returns String containing player hash.
      */
     public String getPlayerHash() {
         return this.playerHash;
     }
 
     /**
-     * setter for email attribute
-     *
+     * Setter for email attribute.
      * @param email
+     * Expects object of type String representing email.
      */
     public void setEmail(String email) {
         this.email = email;
@@ -101,7 +109,7 @@ public class Player {
     }
 
     /**
-     * recreate the player has, call this function after setEmail()
+     * Recreate the player hash, call this function after setEmail().
      */
     public void createPlayerHash() {
         // create the sha256 hash (hex) ------------------
@@ -128,54 +136,51 @@ public class Player {
     }
 
     /**
-     * username Getter
-     *
-     * @return: username
+     * Username Getter.
+     * @return Returns String containing username.
      */
     public String getUsername() {
         return this.username;
     }
 
     /**
-     * Score getter
-     *
-     * @return; score
+     * Setter for score.
+     * @param score
+     * Expects object of type Integer representing score.
      */
     public void setScore(int score) {
        this.totalScore = score;
     }
 
     /**
-     * getter for the array of qrcodes
-     *
-     * @return: arraylist of qrcodes
+     * Getter for the array of QR codes.
+     * @return Returns arraylist of QR codes.
      */
     public ArrayList<QRCode> getQrCodes() {
         return qrCodes;
     }
 
     /**
-     * Add qrcode to the arrayliste
-     *
-     * @param newQrCode: newqrcode
+     * Add QR code to the array list.
+     * @param newQrCode
+     * Expects object from QRCode class representing new qrcode.
      */
     public void addQrcode(QRCode newQrCode) {
         qrCodes.add(newQrCode);
     }
 
     /**
-     * Setter for username if the player wants to change this
-     *
+     * Setter for username if the player wants to change this.
      * @param user
+     * Expects object of type String representing username.
      */
     public void setUsername(String user) {
         this.username = user;
     }
 
     /**
-     * returns the current number of qrcodes scanned
-     *
-     * @return: the number of qrcodes
+     * Returns the current number of QR codes scanned.
+     * @return Returns number of QR codes.
      */
     public int numberOfCode() {
         //return this.qrCodes.size();
@@ -188,10 +193,10 @@ public class Player {
     }
 
     /**
-     * Check if a QRCode object exists.
-     *
-     * @param q: the qrcode object to test the membership of
-     * @return true if q exist, false otherwise
+     * Check if a QR Code object exists.
+     * @param q
+     * The qr code object to test the membership of.
+     * @return true if q exist, false otherwise.
      */
     public boolean hasQRcode(QRCode q) {
         String qID = q.getId();
@@ -206,9 +211,9 @@ public class Player {
 
     /**
      * This method was copied from https://www.baeldung.com/sha-256-hashing-java
-     *
-     * @param hash: byte hash of the input
-     * @return: the sha256 hash of the input
+     * @param hash
+     * Expects byte hash of the input.
+     * @return Return the sha256 hash of the input.
      */
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
@@ -223,10 +228,8 @@ public class Player {
     }
 
     /**
-     * This method returns the highest scoring QRCode for the player
-     *
-     * @return highestScore
-     * Integer value for the highest score
+     * This method returns the highest scoring QRCode for the player.
+     * @return Return the highest Integer value of the Score.
      */
     public int getHighestScore() {
         int highestScore = 0;
@@ -239,9 +242,8 @@ public class Player {
     }
 
     /**
-     * This method returns the total sum of all scans
-     * @return totalScore
-     * Integer value for the sum of all scores
+     * This method returns the total sum of all scans.
+     * @return Return the sum of total Score.
      */
     public int getTotalScore() {
         int totalScore = 0;

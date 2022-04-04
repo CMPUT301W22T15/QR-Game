@@ -26,15 +26,17 @@ import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
-
+/**
+ * This class helps in plotting the latitude longitude on the map.
+ */
 public class GameMap extends AppCompatActivity {
-
     private MapView map;
-    FirebaseFirestore db;
-    ArrayList<Player> allPlayers;
-    ArrayList<OverlayItem> items;
-    GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();
-    SingletonPlayer singletonPlayer = new SingletonPlayer();
+    private FirebaseFirestore db;
+    private ArrayList<Player> allPlayers;
+    private ArrayList<OverlayItem> items;
+    private GlobalAllPlayers globalAllPlayers = new GlobalAllPlayers();
+    private SingletonPlayer singletonPlayer = new SingletonPlayer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,20 +50,6 @@ public class GameMap extends AppCompatActivity {
         allPlayers = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Players");
-//        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-//                allPlayers.clear();
-//                for (QueryDocumentSnapshot doc: queryDocumentSnapshots){
-//                    Player p = doc.toObject(Player.class);
-//                    allPlayers.add(p);
-//                }
-//                populateMap();
-//                //displayMap();
-//            }
-//        });
-        // ---------------------------------------
-
         Configuration.getInstance().load(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
 
@@ -85,9 +73,6 @@ public class GameMap extends AppCompatActivity {
         Drawable m = home.getMarker(0);
 
         items.add(home);
-        //items.add(new OverlayItem("Ajitt's test office", "Ajiit do some work", new GeoPoint(43.64950, 7.00517)));
-        //items.add(new OverlayItem("Truonggggg", "Ajiit do some work", new GeoPoint(53.6085539, -113.53032780000001)));
-
         populateMap();
 
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getApplicationContext(),
@@ -120,7 +105,7 @@ public class GameMap extends AppCompatActivity {
     }
 
     /**
-     * given an array of All players. get all location of the qrcode and put it on the OSM
+     * given an array of All players, get all location of the qrcode and put it on the OSM.
      */
     public void populateMap() {
         ArrayList<QRCode> qrCodes = new ArrayList<>();
