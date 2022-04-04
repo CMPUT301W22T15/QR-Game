@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Random;
 
 
@@ -107,7 +108,7 @@ public class MainNavigationTest {
         solo.assertCurrentActivity("Wrong Activity", QRCodeEditor.class);  // assert we in editor
 
         // get the score textview
-        String scoreTextV = solo.getText(1).getText().toString();
+        String scoreTextVofScannedCode = solo.getText(1).getText().toString();
 
         solo.clickOnView(solo.getView(R.id.save));  // go back to main menu
         solo.sleep(2000);
@@ -115,7 +116,22 @@ public class MainNavigationTest {
 
         solo.clickInList(3); // click myscan
         solo.sleep(2000);
-        solo.assertCurrentActivity("Wrong Activity", MyScans.class);  // assert we in menu
+        solo.assertCurrentActivity("Wrong Activity", MyScans.class);  // assert we in myscan
+
+        // we check if the score value is the same of the qrcode we just clicked.
+        // go to the 1st qrcode in myscans
+        ListView qrcodeList = (ListView) solo.getView(R.id.scan_list);
+        View firstItem = qrcodeList.getChildAt(0);  //
+        solo.clickOnView(firstItem);
+        solo.sleep(2000);
+        solo.assertCurrentActivity("Wrong Activity", ViewQRCode.class);  // assert we in Viewqrcode
+
+        ViewQRCode  viewQRCode = (ViewQRCode) solo.getCurrentActivity();
+        TextView viewQRscoreText = viewQRCode.findViewById(R.id.score_text);
+        String viewQRscoreTextStr = viewQRscoreText.getText().toString();
+
+        // test if the qrcode we just scan matches the one display in the myscan
+        assertEquals(scoreTextVofScannedCode,  viewQRscoreTextStr);
     }
 
 
