@@ -128,5 +128,9 @@ Stories that have not been started:
 - Location:
     - None
 
-Resources used to update UML:
-https://online.visual-paradigm.com/
+
+Resources used:
+- UML:
+    - https://online.visual-paradigm.com/
+- Map
+    - https://www.youtube.com/watch?v=4JnYKkSSZgc&t=392s&ab_channel=Fr%C3%A9d%C3%A9ricRALLO
