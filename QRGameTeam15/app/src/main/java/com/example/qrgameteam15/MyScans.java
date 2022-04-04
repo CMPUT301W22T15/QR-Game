@@ -66,7 +66,7 @@ public class MyScans extends AppCompatActivity {
         // Initialize variables
         totalScans = findViewById(R.id.total_scans);
         totalScore = findViewById(R.id.total_score);
-        sortByDate = findViewById(R.id.sort_by_date);
+//        sortByDate = findViewById(R.id.sort_by_date);
         displayExtremum = findViewById(R.id.display_minMax);
         totalScans.setText("Total Scans: " + singletonPlayer.player.numberOfCode());
         totalScore.setText("Total Score: 0");
