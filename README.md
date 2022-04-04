@@ -2,7 +2,7 @@
 
 ##PLEASE READ THE FILE##
 
-- Please navigate to the Wiki page to see progress upates for this project. 
+- Please navigate to the Wiki page to see progress updates for this project. 
 
 
 Resources used:
