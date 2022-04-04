@@ -35,3 +35,15 @@ Resources used:
    
 - Firebase documentation
     - https://firebase.google.com/docs/build
+
+- Code-Scanner
+    - https://github.com/yuriy-budiyev/code-scanner
+    
+- Android Runtime Permissions
+    - https://github.com/Karumi/Dexter
+    
+- Barcode Scanning
+    - https://github.com/zxing/zxing
+
+- QRCode Generator
+    - https://github.com/androidmads/QRGenerator  
