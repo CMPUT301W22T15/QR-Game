@@ -39,30 +39,51 @@ public class MainNavigationTest {
     }
 
     /**
-     * navigate to main menu
+     * Create a new user, navigate to main menu and log out test.
      */
     @Test
     public void navigateToMainMenu() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnButton("New User"); //Click ADD CITY Button
         solo.sleep(2000); // 2 pause
-        // enter a different user each test
+
+        // create a random user each time
         solo.assertCurrentActivity("Wrong Activity", NewUser.class);
         Random random = new Random();
         int randomint = random.nextInt(100 - 0) + 0;
         String enterUsername = "AndroidTestUser" + Integer.toString(randomint);
         solo.enterText((EditText) solo.getView(R.id.username_text), enterUsername);
         solo.enterText((EditText) solo.getView(R.id.name_text), "1");
-        solo.enterText((EditText) solo.getView(R.id.email_text), "1");
-        solo.enterText((EditText) solo.getView(R.id.city_region), "1");
-        solo.clickOnButton("Create Account"); //Click ADD CITY Button
+        solo.enterText((EditText) solo.getView(R.id.email_text), "1@gmail.com");
+        solo.enterText((EditText) solo.getView(R.id.city_region), "edmonton");
+        //solo.clickOnButton("CREATE ACCOUNT");  // Click ADD CITY Button
+
+        solo.clickOnView(solo.getView(R.id.create_userBtn));
+
         solo.sleep(2000); // 2 pause
         solo.assertCurrentActivity("Wrong Activity", UserMenu.class);
+        // go to
+
+        
+
+
+
+        // test logout functionaly
+        solo.assertCurrentActivity("Wrong Activity", UserMenu.class);
+        // click userprofile
+        solo.clickInList(1); // click "user profile
+        solo.sleep(2000); // 2 pause
+        solo.assertCurrentActivity("Wrong Activity", PlayerProfile.class);
+        solo.clickOnView(solo.getView(R.id.logout));
+
+        solo.sleep(2000); // 2 pause
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);  // we back to login screen
+
     }
 
     @Test
     public void scanAQRcode() {
-        
+        // click scannerView
     }
 
 
