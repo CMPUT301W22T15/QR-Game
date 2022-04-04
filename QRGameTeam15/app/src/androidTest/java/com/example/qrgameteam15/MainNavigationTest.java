@@ -1,6 +1,7 @@
 package com.example.qrgameteam15;
 
 import android.app.Activity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -79,6 +80,10 @@ public class MainNavigationTest {
 
     }
 
+    /**
+     * scan a qrcode, view myscan, check it is the qrcode we just scan, delete it, check that it's
+     * been deleted
+     */
     @Test
     public void scanAQRcode() {
         // click scannerView
@@ -108,7 +113,9 @@ public class MainNavigationTest {
         solo.assertCurrentActivity("Wrong Activity", QRCodeEditor.class);  // assert we in editor
 
         // get the score textview
-        String scoreTextVofScannedCode = solo.getText(1).getText().toString();
+        QRCodeEditor qrCodeEditorA = (QRCodeEditor) solo.getCurrentActivity();
+
+        String scoreTextVofScannedCode = ((TextView)(qrCodeEditorA.findViewById(R.id.score))).getText().toString();
 
         solo.clickOnView(solo.getView(R.id.save));  // go back to main menu
         solo.sleep(2000);
@@ -131,8 +138,34 @@ public class MainNavigationTest {
         String viewQRscoreTextStr = viewQRscoreText.getText().toString();
 
         // test if the qrcode we just scan matches the one display in the myscan
+
         assertEquals(scoreTextVofScannedCode,  viewQRscoreTextStr);
+
+        // and delete qrcode?
+        viewQRCode.finish();  // go back to myscan
+        solo.sleep(2000);
+        solo.assertCurrentActivity("Wrong Activity", MyScans.class);  // assert we in myscan
+
+
+        // delete the qrocde we just scanned
+        qrcodeList = (ListView) solo.getView(R.id.scan_list);
+        firstItem = qrcodeList.getChildAt(0);  // we wa
+        solo.clickLongOnView(firstItem);
+        solo.sleep(2000);
+        solo.clickOnView(solo.getView(android.R.id.button1));  // click ok button to delete
+        solo.sleep(2000);
+        // check that the listview is empty
+        qrcodeList = (ListView) solo.getView(R.id.scan_list);
+        int listviewsize = qrcodeList.getAdapter().getCount();
+        assertEquals(0, listviewsize);  // assert we have 0 qrcode in myscan
+
     }
+
+    @Test
+    public void testOtherPlayer() {
+        // test other player
+    }
+
 
 
 
